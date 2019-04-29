@@ -1,6 +1,42 @@
 from django.db import models
 
 # Create your models here.
+class Admin(models.Model):
+    phone = models.CharField(max_length=10)
+    #fk
+    user = models.OneToOneField('auth.User', on_delete=models.CASCADE)
+
+class Customer(models.Model):
+    address = models.TextField()
+    phone = models.CharField(max_length=10)
+    blacklist = models.BooleanField()
+    # DEALER = 'dealer'
+    # choice = (
+    #     (DEALER, 'dealer')
+    # )
+    # type = models.CharField(max_length=6, choices=choice)
+    #fk
+    user = models.OneToOneField('auth.User', on_delete=models.CASCADE)
+    admin = models.ManyToManyField(Admin, through='Admin_Customer')
+
+class Admin_Customer(models.Model):
+    admin = models.ForeignKey(Admin, models.CASCADE)
+    customer = models.ForeignKey(Customer, models.CASCADE)
+    CHECK = 'check'
+    UNCHECK = 'uncheck'
+    choices = (
+        (CHECK, 'check'),
+        (UNCHECK, 'uncheck')
+    )
+    result = models.CharField(max_length=7, choices=choices)
+    date = models.DateField()
+    evidence = models.TextField()
+
+class Dealer(Customer):
+    # customer = models.OneToOneField(Customer, on_delete=models.CASCADE)
+    discount = models.DecimalField(max_digits=8, decimal_places=2)
+    amount = models.DecimalField(max_digits=8, decimal_places=2)
+
 class Manufactor(models.Model):
     name = models.CharField(max_length=255)
     location = models.CharField(max_length=255)
@@ -15,7 +51,70 @@ class Product(models.Model):
     #fk
     manufactor = models.ForeignKey(Manufactor, on_delete=models.PROTECT)
 
+class DealerStock(models.Model):
+    dealer = models.OneToOneField(Dealer, on_delete=models.CASCADE)
+    product = models.ManyToManyField(Product, through='Product_DealerStock')
 
 
+class Product_DealerStock(models.Model):
+    product = models.ForeignKey(Product, models.CASCADE)
+    dealer_stock = models.ForeignKey(DealerStock, models.CASCADE)
+    quantity = models.IntegerField()
 
 
+class ProductLot(models.Model):
+    mfd = models.DateField()
+    exp_date = models.DateField()
+    quantity = models.IntegerField()
+    #fk
+    product = models.ForeignKey(Product, on_delete=models.PROTECT)
+
+class Order(models.Model):
+    date = models.DateField()
+    detail = models.TextField()
+    total_price1 = models.DecimalField(max_digits=8, decimal_places=2)
+    total_price2 = models.DecimalField(max_digits=8, decimal_places=2)
+    #fk
+    admin = models.ForeignKey(Admin, on_delete=models.CASCADE)
+    reason = models.CharField(max_length=255)
+    cancel_date = models.DateField()
+    customer = models.ForeignKey(Customer, on_delete=models.CASCADE)
+
+class OrderDetail(models.Model):
+    detail = models.TextField()
+    price = models.DecimalField(max_digits=8, decimal_places=2)
+    quantity = models.IntegerField()
+    amount = models.DecimalField(max_digits=8, decimal_places=2)
+    #fk
+    order = models.ForeignKey(Order, on_delete=models.CASCADE)
+    product = models.ForeignKey(Product, on_delete=models.PROTECT)
+
+
+class FeedBack(models.Model):
+    READ = 'READ'
+    UNREAD = 'UNREAD'
+    choices = (
+        (READ, 'read'),
+        (UNREAD, 'unread')
+    )
+    status = models.CharField(max_length=6, choices=choices)
+    detail = models.TextField()
+    #fk
+    customer = models.ForeignKey(Customer, on_delete=models.CASCADE)
+    admin = models.ForeignKey(Admin, on_delete=models.CASCADE)
+
+class Shipment(models.Model):
+    track_number = models.CharField(max_length=20, primary_key=True)
+    name = models.CharField(max_length=255)
+    receive_date = models.DateField()
+    ARRIVEDATDESTINATIONSTATION = 'Arrivedatdestinationstation'
+    ARRIVEATHUB = 'ArrivedatHub'
+    SHIPMENTPICKUP = 'Shipmentpickedup'
+    choices = (
+        (ARRIVEDATDESTINATIONSTATION, 'Arrived at destination station'),
+        (ARRIVEATHUB,  'Arrived at Hub'),
+        (SHIPMENTPICKUP, 'Shipment picked up')
+    )
+    status = models.CharField(max_length=30, choices=choices)
+    #fk
+    order = models.ForeignKey(Order, models.CASCADE)
