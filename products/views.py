@@ -1,5 +1,5 @@
 from django.contrib.auth import authenticate, login, logout
-from django.contrib.auth.models import User
+from django.contrib.auth.models import User, Group
 from django.forms import formset_factory
 from django.shortcuts import render, redirect
 
@@ -54,6 +54,14 @@ def register(request):
             u.save()
             check = form.save(commit=False)
             check.user_id = u.id
+            dealer = Dealer.objects.create(
+                customer_ptr_id = u.id,
+                discount = 0,
+                amount = 0
+            )
+            group = Group.objects.get(name='customer')
+            u.groups.add(group)
+            dealer.save()
             form.save()
             return redirect('login')
     else:
