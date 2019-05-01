@@ -1,11 +1,12 @@
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.models import User
+from django.forms import formset_factory
 from django.shortcuts import render, redirect
 
 
 # Create your views here.
-from products.forms import RegisterForm
-from products.models import Dealer, Customer
+from products.forms import RegisterForm, FeedBackForm
+from products.models import Dealer, Customer, FeedBack
 
 
 def index(request):
@@ -27,13 +28,13 @@ def my_login(request):
             else:
                 return redirect('index')
         else:
-            context['usernae'] = username
+            context['username'] = username
             context['password'] = password
             context['error'] = "Wrong username or Password !"
     next_url = request.GET.get('next')
     if next_url:
         context['next_url'] = next_url
-    return render(request, template_name="products/login.html", context=context)
+    return render(request, template_name="user/login.html", context=context)
 
 def my_logout(request):
     logout(request)
@@ -51,13 +52,45 @@ def register(request):
                 last_name = form.cleaned_data.get('surname')
             )
             u.save()
-            # print("SAVE USER")
             check = form.save(commit=False)
             check.user_id = u.id
             form.save()
-            # print("FORM SAVE")
             return redirect('login')
     else:
         form = RegisterForm()
     context = {'form': form}
-    return render(request, template_name="products/register.html", context=context)
+    return render(request, template_name="user/register.html", context=context)
+
+def create_feedback(request):
+    if request.method == "POST":
+        form = FeedBackForm(request.POST)
+        if form.is_valid():
+            print("VALID")
+            check = form.save(commit=False)
+            check.customer_id = request.user.id
+            form.save()
+            return redirect('feedback')
+    else:
+        form = FeedBackForm()
+    context = {'form':form}
+    context['name'] = request.user.first_name
+    context['surname'] = request.user.last_name
+    return render(request, 'feedback/create-feedback.html', context)
+
+def feedback(request):
+    data = []
+    feedbacks = FeedBack.objects.filter(customer_id=request.user.id)
+    for detail in feedbacks.all():
+        print(detail.status)
+        data.append(
+            {
+                'customer_id': detail.customer.user.id,
+                'detail': detail.detail,
+                'status': detail.status
+            }
+        )
+
+    FeedBackFormSet = formset_factory(FeedBackForm, max_num=len(data))
+    formset = FeedBackFormSet(initial=data)
+    context = {'formset': formset}
+    return render(request, 'feedback/feedback.html', context)

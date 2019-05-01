@@ -4,7 +4,7 @@ from django.db import models
 class Admin(models.Model):
     phone = models.CharField(max_length=10)
     #fk
-    user = models.OneToOneField('auth.User', on_delete=models.CASCADE)
+    user = models.OneToOneField('auth.User', on_delete=models.CASCADE, primary_key=True)
 
 class Customer(models.Model):
     address = models.TextField()
@@ -16,7 +16,7 @@ class Customer(models.Model):
     # )
     # type = models.CharField(max_length=6, choices=choice)
     #fk
-    user = models.OneToOneField('auth.User', on_delete=models.CASCADE)
+    user = models.OneToOneField('auth.User', on_delete=models.CASCADE, primary_key=True)
     admin = models.ManyToManyField(Admin, through='Admin_Customer')
 
 class Admin_Customer(models.Model):
@@ -91,17 +91,17 @@ class OrderDetail(models.Model):
 
 
 class FeedBack(models.Model):
-    READ = 'READ'
-    UNREAD = 'UNREAD'
+    READ = 'read'
+    UNREAD = 'unread'
     choices = (
         (READ, 'read'),
         (UNREAD, 'unread')
     )
-    status = models.CharField(max_length=6, choices=choices)
+    status = models.CharField(max_length=6, choices=choices, default='unread')
     detail = models.TextField()
     #fk
-    customer = models.ForeignKey(Customer, on_delete=models.CASCADE)
-    admin = models.ForeignKey(Admin, on_delete=models.CASCADE)
+    customer = models.ForeignKey(Customer, on_delete=models.CASCADE, blank=True, null=True)
+    admin = models.ForeignKey(Admin, on_delete=models.CASCADE, blank=True, null=True)
 
 class Shipment(models.Model):
     track_number = models.CharField(max_length=20, primary_key=True)

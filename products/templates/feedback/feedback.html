@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+FEEDBACK
+{{ formset.management_form }}
+<table>
+    <tr>
+        <td style="width: 250px">detail</td>
+        <td style="width: 250px">status</td>
+    </tr>
+
+    {% for form in formset %}
+        <tr>
+            <td>{{ form.detail.value }}</td>
+            <td>{{ form.status.value }}</td>
+        </tr>
+    {% endfor %}
+</table>
+</body>
+</html>
