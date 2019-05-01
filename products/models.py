@@ -5,7 +5,8 @@ class Admin(models.Model):
     phone = models.CharField(max_length=10)
     #fk
     user = models.OneToOneField('auth.User', on_delete=models.CASCADE, primary_key=True)
-
+    def __str__(self):
+        return self.user.username
 class Customer(models.Model):
     address = models.TextField()
     phone = models.CharField(max_length=10)
@@ -18,7 +19,8 @@ class Customer(models.Model):
     #fk
     user = models.OneToOneField('auth.User', on_delete=models.CASCADE, primary_key=True)
     admin = models.ManyToManyField(Admin, through='Admin_Customer')
-
+    def __str__(self):
+        return self.user.username
 class Admin_Customer(models.Model):
     admin = models.ForeignKey(Admin, models.CASCADE)
     customer = models.ForeignKey(Customer, models.CASCADE)
@@ -31,7 +33,6 @@ class Admin_Customer(models.Model):
     result = models.CharField(max_length=7, choices=choices)
     date = models.DateField()
     evidence = models.TextField()
-
 class Dealer(Customer):
     # customer = models.OneToOneField(Customer, on_delete=models.CASCADE)
     discount = models.DecimalField(max_digits=8, decimal_places=2)
