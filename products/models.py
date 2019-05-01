@@ -22,7 +22,7 @@ class Customer(models.Model):
     def __str__(self):
         return self.user.username
 class Admin_Customer(models.Model):
-    admin = models.ForeignKey(Admin, models.CASCADE)
+    admin = models.ForeignKey(Admin, models.CASCADE, null=True, blank=True)
     customer = models.ForeignKey(Customer, models.CASCADE)
     CHECK = 'check'
     UNCHECK = 'uncheck'
@@ -30,7 +30,7 @@ class Admin_Customer(models.Model):
         (CHECK, 'check'),
         (UNCHECK, 'uncheck')
     )
-    result = models.CharField(max_length=7, choices=choices)
+    result = models.CharField(max_length=7, choices=choices, default='uncheck')
     date = models.DateField()
     evidence = models.TextField()
 class Dealer(Customer):
