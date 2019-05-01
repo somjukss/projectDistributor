@@ -1,0 +1,55 @@
+<!doctype html>
+{% load static %}
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Register</title>
+    <link rel="stylesheet" href="{% static 'css/bootstrap.min.css' %}">
+</head>
+<body>
+<form action="{% url 'register' %}" method="POST">`
+    {% csrf_token %}
+    <table>
+        <tr>
+            <td><label id="{{ form.username.id_for_label }}">USERNAME : </label></td>
+            <td>{{ form.username }}</td>
+        </tr>
+        <tr>
+            <td><label id="{{ form.password.id_for_label }}">PASSWORD : </label></td>
+            <td>{{ form.password }}</td>
+        </tr>
+        <tr>
+            <td><label id="{{ form.re_password.id_for_label }}">RE-PASSWORD : </label></td>
+            <td>{{ form.re_password }}</td>
+        </tr>
+        <tr>
+            <td><label id="{{ form.name.id_for_label }}">NAME : </label></td>
+            <td>{{ form.name }}</td>
+        </tr>
+        <tr>
+            <td><label id="{{ form.surname.id_for_label }}">SURNAME : </label></td>
+            <td>{{ form.surname }}</td>
+        </tr>
+        <tr>
+            <td><label id="{{ form.email.id_for_label }}">EMAIL : </label></td>
+            <td>{{ form.email }}</td>
+        </tr>
+        <tr>
+            <td><label id="{{ form.address.id_for_label }}">Address : </label></td>
+            <td>{{ form.address }}</td>
+        </tr>
+        <tr>
+            <td><label id="{{ form.phone.id_for_label }}">PHONE : </label></td>
+            <td>{{ form.phone }}</td>
+        </tr>
+    </table>
+    <input type="submit" value="SAVE">
+</form>
+
+<script src="{% static 'js/bootstrap.min.js' %}"></script>
+</body>
+</html>
+

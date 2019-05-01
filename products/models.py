@@ -9,7 +9,7 @@ class Admin(models.Model):
 class Customer(models.Model):
     address = models.TextField()
     phone = models.CharField(max_length=10)
-    blacklist = models.BooleanField()
+    blacklist = models.BooleanField(default=False)
     # DEALER = 'dealer'
     # choice = (
     #     (DEALER, 'dealer')
