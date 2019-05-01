@@ -5,12 +5,28 @@ from django.shortcuts import render, redirect
 
 
 # Create your views here.
-from products.forms import RegisterForm, FeedBackForm
-from products.models import Dealer, Customer, FeedBack
+from products.forms import RegisterForm, FeedBackForm, ProductForm
+from products.models import Dealer, Customer, FeedBack, Product
 
 
 def index(request):
-    context ={}
+    data = []
+    products = Product.objects
+    for product in products.all():
+        data.append(
+            {
+                'name': product.name,
+                'describe': product.describe,
+                'minimum_stock': product.minimum_stock,
+                'quantity': product.quantity,
+                'price': product.price,
+                'manufactor_id': product.manufactor_id
+            }
+        )
+        print(data)
+        ProductFormSet = formset_factory(ProductForm, max_num=len(data))
+        formset = ProductFormSet(initial=data)
+        context = {'formset': formset}
     return  render(request, 'products/index.html', context)
 
 def my_login(request):
