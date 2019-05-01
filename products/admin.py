@@ -25,11 +25,10 @@ class FeedBackAdmin(admin.ModelAdmin):
     # fields = ['detail', 'status']
     readonly_fields = ['detail', 'admin', 'customer']
     def save_model(self, request, obj, form, change):
-        print(request.user, "    id")
-        print(obj.admin, "       obj")
         if not obj.admin:
             obj.admin = request.user.admin
-        obj.save()
+        if obj.status == 'read':
+            obj.save()
 
 admin.site.register(FeedBack, FeedBackAdmin)
 class DealerAdmin(admin.ModelAdmin):
