@@ -39,13 +39,6 @@ class Admin_CustomerInline(admin.StackedInline):
     extra = 1
     readonly_fields = ['admin']
     fields = ['date', 'evidence']
-    # def save_model(self, request, obj, form, change):
-    #     print(obj.admin)
-    #     print(obj.result)
-    #     if not obj.admin:
-    #         obj.admin = request.user.admin
-    #         obj.result = 'check'
-    #     obj.save()
 class DealerAdmin(admin.ModelAdmin):
     list_display = ['address','phone', 'blacklist', 'discount', 'amount']
     readonly_fields = ['address', 'phone', 'user']
