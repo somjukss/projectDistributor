@@ -52,6 +52,8 @@ class Product(models.Model):
     price = models.DecimalField(max_digits=8, decimal_places=2)
     #fk
     manufactor = models.ForeignKey(Manufactor, on_delete=models.PROTECT)
+    def __str__(self):
+        return self.name
 
 class DealerStock(models.Model):
     dealer = models.OneToOneField(Dealer, on_delete=models.CASCADE)
@@ -63,14 +65,12 @@ class Product_DealerStock(models.Model):
     dealer_stock = models.ForeignKey(DealerStock, models.CASCADE)
     quantity = models.IntegerField()
 
-
 class ProductLot(models.Model):
     mfd = models.DateField()
     exp_date = models.DateField()
     quantity = models.IntegerField()
     #fk
     product = models.ForeignKey(Product, on_delete=models.PROTECT)
-
 class Order(models.Model):
     date = models.DateField()
     detail = models.TextField()

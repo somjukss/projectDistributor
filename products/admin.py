@@ -6,7 +6,7 @@ from django.contrib.auth.admin import UserAdmin
 from django.contrib.auth.models import User
 from django.forms import BaseInlineFormSet
 
-from products.models import Dealer, Customer, FeedBack, Admin, Admin_Customer
+from products.models import Dealer, Customer, FeedBack, Admin, Admin_Customer, ProductLot, Product, Manufactor
 
 
 class AdminInline(admin.StackedInline):
@@ -16,6 +16,8 @@ class AdminInline(admin.StackedInline):
 class CustomUserAdmin(UserAdmin):
     inlines = (AdminInline, )
     def get_inline_instances(self, request, obj=None):
+        # if obj.customer.user.groups.filter(name='customer').exists():
+
         if not obj:
             return list()
         return super(CustomUserAdmin, self).get_inline_instances(request, obj)
@@ -51,3 +53,25 @@ class DealerAdmin(admin.ModelAdmin):
             instance.save()
         formset.save_m2m()
 admin.site.register(Dealer, DealerAdmin)
+
+class ProductLotInline(admin.StackedInline):
+    model = ProductLot
+    extra = 1
+class ProductAdmin(admin.ModelAdmin):
+    readonly_fields = ['manufactor', 'name', 'describe', 'quantity']
+    inlines = [ProductLotInline]
+
+    def save_related(self, request, form, formsets, change):
+        super(ProductAdmin, self).save_related(request, form, formsets, change)
+        product = form.instance
+        for formset in formsets:
+            instances = formset.save(commit=False)
+            for instance in instances:
+                new_quantity = instance.quantity
+                product.quantity += new_quantity
+                instance.save()
+            formset.save_m2m()
+        form.save_m2m()
+        product.save()
+
+admin.site.register(Product, ProductAdmin)
