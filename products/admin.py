@@ -45,9 +45,10 @@ class Admin_CustomerInline(admin.StackedInline):
     readonly_fields = ['admin']
     fields = ['date', 'evidence']
 class DealerAdmin(admin.ModelAdmin):
-    list_display = ['address','phone', 'blacklist', 'discount', 'amount']
+    list_display = ['dealer', 'address', 'phone', 'blacklist', 'discount', 'amount']
     readonly_fields = ['address', 'phone', 'user']
     inlines = [Admin_CustomerInline]
+
     def save_formset(self, request, form, formset, change):
         instances = formset.save(commit=False)
         for instance in instances:

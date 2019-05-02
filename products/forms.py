@@ -1,6 +1,6 @@
 from django import forms
 
-from products.models import Customer, FeedBack, Product
+from products.models import Customer, FeedBack, Product, Dealer
 
 
 class RegisterForm(forms.ModelForm):
@@ -27,3 +27,12 @@ class ProductForm(forms.ModelForm):
         model = Product
         exclude = ['manufactor']
         # fields = '__all__'
+
+class DealerForm(forms.ModelForm):
+    username = forms.CharField(max_length=255)
+    first_name = forms.CharField(max_length=255)
+    last_name = forms.CharField(max_length=255)
+    e_mail = forms.EmailField()
+    class Meta:
+        model = Dealer
+        exclude = ['user', 'admin']

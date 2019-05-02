@@ -34,10 +34,10 @@ class Admin_Customer(models.Model):
     date = models.DateField()
     evidence = models.TextField()
 class Dealer(Customer):
-    # customer = models.OneToOneField(Customer, on_delete=models.CASCADE)
     discount = models.DecimalField(max_digits=8, decimal_places=2)
     amount = models.DecimalField(max_digits=8, decimal_places=2)
-
+    def __str__(self):
+        return self.user.first_name + " " + self.user.last_name
 class Manufactor(models.Model):
     name = models.CharField(max_length=255)
     location = models.CharField(max_length=255)

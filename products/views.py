@@ -5,7 +5,7 @@ from django.shortcuts import render, redirect
 
 
 # Create your views here.
-from products.forms import RegisterForm, FeedBackForm, ProductForm
+from products.forms import RegisterForm, FeedBackForm, ProductForm, DealerForm
 from products.models import Dealer, Customer, FeedBack, Product
 
 
@@ -120,3 +120,20 @@ def feedback(request):
     name = request.user.first_name + " "  + request.user.last_name
     context['name'] = name
     return render(request, 'feedback/feedback.html', context)
+
+def profile(request):
+    dealer = Dealer.objects.filter(customer_ptr_id=request.user.id)
+    data = {}
+    for detail in dealer.all():
+        data['username'] = detail.user.username
+        data['first_name'] = detail.user.first_name
+        data['last_name'] = detail.user.last_name
+        data['e_mail'] = detail.user.email
+        data['address'] = detail.address
+        data['phone'] = detail.phone
+        data['discount'] = detail.discount
+        data['amount'] = detail.amount
+        data['blacklist'] = detail.blacklist
+    form = DealerForm(initial=data)
+    context = {'form': form}
+    return render(request, 'customer/profile.html', context)
