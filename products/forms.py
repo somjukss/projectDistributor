@@ -25,4 +25,5 @@ class FeedBackForm(forms.ModelForm):
 class ProductForm(forms.ModelForm):
     class Meta:
         model = Product
-        fields = '__all__'
+        exclude = ['manufactor']
+        # fields = '__all__'

@@ -117,4 +117,6 @@ def feedback(request):
     FeedBackFormSet = formset_factory(FeedBackForm, max_num=len(data))
     formset = FeedBackFormSet(initial=data)
     context = {'formset': formset}
+    name = request.user.first_name + " "  + request.user.last_name
+    context['name'] = name
     return render(request, 'feedback/feedback.html', context)
