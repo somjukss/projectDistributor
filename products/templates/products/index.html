@@ -8,83 +8,7 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Document</title>
     <link rel="stylesheet" href="{% static 'css/bootstrap.min.css' %}">
-    <style>
-        body {
-  font-family: tahoma;
-  color: #282828;
-  margin: 0px;
-}
-
-.nav-bar {
-  background: linear-gradient(-90deg, #84CF6A, #16C0B0);
-  height: 60px;
-  margin-bottom: 15px;
-}
-
-.product {
-  display: flex;
-}
-
-img {
-  border: 1px solid #d8d8d8;
-  width: 70%;
-  margin: 40px;
-  box-shadow: 0px .5px 1px #d8d8d8;
-}
-
-.product-image {
-  flex-basis: 700px;
-}
-
-.product-info {
-  margin-top: 10px;
-  flex-basis: 500px;
-}
-
-.color-box {
-  width: 40px;
-  height: 40px;
-  margin-top: 5px;
-}
-
-.cart {
-  margin-right: 25px;
-  float: right;
-  border: 1px solid #d8d8d8;
-  padding: 5px 20px;
-}
-
-button {
-  margin-top: 30px;
-  border: none;
-  background-color: #1E95EA;
-  color: white;
-  height: 40px;
-  width: 100px;
-  font-size: 14px;
-}
-
-.disabledButton {
-  background-color: #d8d8d8;
-}
-
-.review-form {
-  width: 30%;
-  padding: 20px;
-  border: 1px solid #d8d8d8;
-}
-
-input {
-  width: 100%;
-  height: 25px;
-  margin-bottom: 20px;
-}
-
-textarea {
-  width: 100%;
-  height: 60px;
-}
-    </style>
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
 </head>
 <body>
 
@@ -95,20 +19,76 @@ textarea {
 
 <div id="app">
     [[info]]
-  <div class="cart">
-    <p>Cart([[ cart.length ]])</p>
-  </div>
+    <div class="col-dx">
+      <div class="cart">
+        <h2>Your Cart</h2>
+        <table class="cart-list" v-if="cart.length">
+          <thead>
+            <tr>
+              <th class="head-title">Product</th>
+              <th class="head-price">Price</th>
+              <th class="head-quantity">Quantity</th>
+              <th class="head-total">Total</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr class="cart-item" v-for="(item, id) in cart" :key="'id-' + id">
+              <td>
+                <h4 class="title">[[ item.name ]]</h4>
+              </td>
+              <td>
+                <div class="price">[[ item.price ]]</div>
+              </td>
+              <td>
+                <div class="quantity">
+                   [[ item.quantity ]]<span class="qty-handler"><span @click="add(item)">+</span><span @click="sub(item)">-</span></span></div>
+              </td>
+              <td>
+                <div class="total">[[ item.price * item.quantity ]]</div>
+              </td>
+            </tr>
+          </tbody>
+          <tfoot>
+            <tr>
+              <th colspan="3">
+                <h4 class="total-title">Total</h4>
+              </th>
+              <th>[[ total ]]</th>
+            </tr>
+          </tfoot>
+        </table>
+        <div class="empty-contents" v-else="v-else">
+          <div class="draw">
+            <div class="cactus">
+              <div class="arm"></div>
+              <div class="arm"></div>
+            </div>
+            <div class="cactus">
+              <div class="arm"></div>
+              <div class="arm"></div>
+            </div>
+            <div class="cactus">
+              <div class="arm"></div>
+              <div class="arm"></div>
+            </div>
+            <div class="sky">
+              <div class="montain"></div>
+              <div class="montain two"></div>
+              <div class="sun"></div>
+            </div>
+          </div>
+          <p class="no-items-text">Your cart is actually empty</p>
+        </div>
+      </div>
+    </div>
+
   <product v-for="product in info"
-           :name="product.name"
            :key="product.id"
-           :product_id= "product.id"
-           :price="product.price"
-           :describe="product.describe"
-           :quantity="product.quantity"
-           :img_url="product.img_url"
+           :product="product"
            @add-to-cart="updateCart"
-           @remove-from-cart="removeItem">
+           >
   </product>
+
 </div>
 
 <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
@@ -122,12 +102,7 @@ textarea {
     Vue.component('product', {
         delimiters: ['[[', ']]'],
     props: {
-            product_id:null,
-            name: null,
-            describe: null,
-            price: null,
-            quantity: null,
-            img_url: null,
+            product:null,
     },
     template: `
      <div class="product">
@@ -137,21 +112,16 @@ textarea {
         </div>
 
         <div class="product-info">
-            <h1>[[ name ]]</h1>
+            <h1>[[ product.name ]]</h1>
             <p v-if="inStock">In Stock</p>
             <p v-else>Out of Stock</p>
-            <p>[[describe]]</p>
+            <p>[[product.describe]]</p>
 
             <button v-on:click="addToCart"
               :disabled="!inStock"
               :class="{ disabledButton: !inStock }"
               >
             Add to cart
-            </button>
-
-            <button @click="removeFromCart"
-              >
-            Remove from cart
             </button>
 
          </div>
@@ -165,21 +135,15 @@ textarea {
 
       methods: {
         addToCart: function() {
-            this.$emit('add-to-cart', this.product_id)
+            this.$emit('add-to-cart', this.product)
         },
-        updateProduct: function(index) {
-            this.selectedVariant = index
-        },
-        removeFromCart: function() {
-             this.$emit('remove-from-cart', this.product_id)
-        }
       },
       computed: {
           image(){
-              return this.img_url
+              return this.product.img_url
           },
           inStock(){
-              return this.quantity
+              return this.product.quantity
           }
       }
   })
@@ -190,7 +154,8 @@ textarea {
       data: {
           info: null,
         premium: true,
-        cart: []
+        cart: [],
+          total: 0,
       },
       mounted () {
     axios
@@ -198,28 +163,58 @@ textarea {
       .then(response => (this.info = response.data.products))
   },
       methods: {
-        updateCart(id) {
-          this.cart.push(id);
-          for (var i=0; i<this.info.length; i++){
-              if(this.info[i].id === id){
-                  this.info[i].quantity -= 1;
-              }
-          }
-        },
-        removeItem(id) {
-            var count = 0;
-          for(var i = this.cart.length - 1; i >= 0; i--) {
-            if (this.cart[i] === id) {
-                count += 1;
-               this.cart.splice(i, 1);
+        updateCart(product) {
+            this.total += parseFloat(product.price);
+            let inCart = false;
+            for(let i = 0; i < this.cart.length; i++){
+                if(this.cart[i].id === product.id){
+                    inCart = true;
+                    this.cart[i].quantity+=1;
+                    break;
+                }
             }
+            if(! inCart){
+                this.cart.push({
+                    id: product.id,
+                    name: product.name,
+                    price: product.price,
+                    quantity: 1
+        });
+      }
+            for (var i=0; i<this.info.length; i++){
+                if(this.info[i].id === product.id){
+                    this.info[i].quantity -= 1;
+                }
+            }
+        },
+          add(item){
+      this.total += parseFloat(item.price);
+      item.quantity++;
+      for (var i=0; i<this.info.length; i++){
+          if(this.info[i].id === item.id){
+              this.info[i].quantity -= 1;
           }
-          for(var i=0; i<this.info.length; i++){
-              if(this.info[i].id === id){
-                  this.info[i].quantity += count;
-              }
+      }
+    },
+          sub(item){
+      this.total -= item.price;
+      if(item.quantity > 1){
+        item.quantity--;
+        for(let i=0; i<this.cart.length; i++) {
+            if(this.cart[i].id === this.info[i].id) {
+                this.info[i].quantity += 1;
+            }
+        }
+      } else{
+        for( let i = 0; i < this.cart.length; i++){
+          if(this.cart[i].id === item.id){
+            this.cart.splice(i, 1);
+            this.info[i].quantity += 1;
+            break;
           }
         }
+      }
+    }
       }
   })
 </script>
