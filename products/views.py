@@ -1,5 +1,6 @@
 import datetime
 import json
+from decimal import Decimal
 
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
@@ -41,12 +42,13 @@ def api_index(request):
         total_price1 = int()
         for product in product_list:
             total_price1 = product['total']
+        total_price2 = total_price1 - (customer.dealer.discount*total_price1)
         #create object order
         order = Order(
             date=datetime.date.today(),
             detail=customer.address,
             total_price1=total_price1,
-            total_price2=total_price1 - (customer.dealer.discount*total_price1),
+            total_price2=total_price2,
             customer_id=request.user.id
         )
         order.save()
@@ -92,6 +94,10 @@ def api_index(request):
                 form.save()
             else:
                 error_list.append(form.errors.as_text())
+        # increase amount of dealer
+        dealer = Dealer.objects.filter(customer_ptr_id=request.user.id).all()[0]
+        dealer.amount += total_price2
+        dealer.save()
         if len(error_list) == 0:
             return JsonResponse({'message': 'success'}, status=200)
         else:
