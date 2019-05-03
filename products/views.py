@@ -15,7 +15,7 @@ from rest_framework.generics import ListAPIView, RetrieveAPIView
 from rest_framework.permissions import AllowAny
 
 from products.forms import RegisterForm, FeedBackForm, ProductForm, DealerForm, OrderForm, OrderDetailForm
-from products.models import Dealer, FeedBack, Product, Customer, Order, DealerStock
+from products.models import Dealer, FeedBack, Product, Customer, Order, DealerStock, Product_DealerStock
 
 from rest_framework import status
 from rest_framework.decorators import api_view
@@ -64,13 +64,33 @@ def api_index(request):
             product = Product.objects.get(pk=my_product['id'])
             product.quantity -= my_product['quantity']
             product.save()
+            #dealer-stock
+            dealerStock = DealerStock.objects.filter(dealer_id=request.user.id).all()
+            # update stock
+            product_dealerStock = Product_DealerStock.objects
+            if Product_DealerStock.objects.filter(dealer_stock=dealerStock[0]):
+                # have product
+                if Product_DealerStock.objects.filter(dealer_stock=dealerStock[0]).filter(product=product):
+                    product_dealerStock = Product_DealerStock.objects.filter(dealer_stock=dealerStock[0]).filter(product=product).all()[0]
+                    product_dealerStock.quantity += my_product['quantity']
+                else:
+                    product_dealerStock = Product_DealerStock.objects.create(
+                        quantity=my_product['quantity'],
+                        dealer_stock=dealerStock[0],
+                        product=product
+                    )
+            else:
+                product_dealerStock = Product_DealerStock.objects.create(
+                    quantity=my_product['quantity'],
+                    dealer_stock=dealerStock[0],
+                    product=product
+                )
+            product_dealerStock.save()
             #save orderdetail
             if form.is_valid():
                 form.save()
             else:
                 error_list.append(form.errors.as_text())
-            #add stock to dealer stock
-            dealer_stock = DealerStock.objects.get(dea)
         if len(error_list) == 0:
             return JsonResponse({'message': 'success'}, status=200)
         else:
