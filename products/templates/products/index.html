@@ -13,6 +13,7 @@
 <body>
     <div class="nav-bar"></div>
     <div id="app">
+        [[info]]
         <div class="col-dx">
             <div class="cart">
                 <h2>Your Cart</h2>
@@ -40,6 +41,7 @@
                             </td>
                             <td>
                                 <div class="total">[[ item.price * item.quantity ]]</div>
+
                             </td>
                         </tr>
                     </tbody>
@@ -49,6 +51,12 @@
                                 <h4 class="total-title">Total</h4>
                             </th>
                             <th>[[ total ]]</th>
+                        </tr>
+                        <tr>
+                            <th colspan="3">
+                                <h5 class="total-title">Include Discount</h5>
+                            </th>
+                            <th>[[total_discount]]</th>
                         </tr>
                         <tr>
                             <th colspan="3">
@@ -133,6 +141,13 @@
                 premium: true,
                 cart: [],
                 total: 0,
+
+            },
+
+            computed: {
+                total_discount() {
+                    return this.total - (this.total * {{ dealer.discount }})
+                }
             },
             mounted() {
                 axios

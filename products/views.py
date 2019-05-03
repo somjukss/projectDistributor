@@ -27,7 +27,8 @@ from .serializers import *
 
 @login_required
 def index(request):
-    context = {}
+    dealer = Dealer.objects.filter(customer_ptr_id=request.user.id).all()[0]
+    context = {'dealer': dealer}
     return render(request, 'products/index.html', context)
 def api_index(request):
     if request.method == 'POST':
@@ -45,7 +46,7 @@ def api_index(request):
             date=datetime.date.today(),
             detail=customer.address,
             total_price1=total_price1,
-            total_price2=customer.dealer.discount,
+            total_price2=total_price1 - (customer.dealer.discount*total_price1),
             customer_id=request.user.id
         )
         order.save()
