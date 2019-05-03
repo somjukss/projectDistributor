@@ -1,110 +1,89 @@
-<!doctype html>
-{% load static %}
+<!doctype html> {% load static %}
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport"
-          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Document</title>
     <link rel="stylesheet" href="{% static 'css/bootstrap.min.css' %}">
     <link rel="stylesheet" href="{% static 'css/style.css' %}">
 </head>
+
 <body>
+    <div class="nav-bar"></div>
+    <div id="app">
+        [[info]]
+        <div class="col-dx">
+            <div class="cart">
+                <h2>Your Cart</h2>
+                <table class="cart-list">
+                    <thead>
+                        <tr>
+                            <th class="head-title">Product</th>
+                            <th class="head-price">Price</th>
+                            <th class="head-quantity">Quantity</th>
+                            <th class="head-total">Total</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr class="cart-item" v-for="(item, id) in cart" :key="'id-' + id">
+                            <td>
+                                <h4 class="title">[[ item.name ]]</h4>
+                            </td>
+                            <td>
+                                <div class="price">[[ item.price ]]</div>
+                            </td>
+                            <td>
+                                <div class="quantity">
+                                    [[ item.quantity ]]<span class="qty-handler"><span @click="add(item)">+</span><span @click="sub(item)">-</span></span>
+                                </div>
+                            </td>
+                            <td>
+                                <div class="total">[[ item.price * item.quantity ]]</div>
+                            </td>
+                        </tr>
+                    </tbody>
+                    <tfoot>
+                        <tr>
+                            <th colspan="3">
+                                <h4 class="total-title">Total</h4>
+                            </th>
+                            <th>[[ total ]]</th>
+                        </tr>
+                        <tr>
+                            <th colspan="3">
+                            </th>
+                            <th>
+                                <input type="submit" value="submit" @click.validate="submit">
+                            </th>
+                        </tr>
+                    </tfoot>
 
-{#{{ formset.as_p }}#}
-
-
-<div class="nav-bar"></div>
-
-<div id="app">
-    [[info]]
-    <div class="col-dx">
-      <div class="cart">
-        <h2>Your Cart</h2>
-        <table class="cart-list" v-if="cart.length">
-          <thead>
-            <tr>
-              <th class="head-title">Product</th>
-              <th class="head-price">Price</th>
-              <th class="head-quantity">Quantity</th>
-              <th class="head-total">Total</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr class="cart-item" v-for="(item, id) in cart" :key="'id-' + id">
-              <td>
-                <h4 class="title">[[ item.name ]]</h4>
-              </td>
-              <td>
-                <div class="price">[[ item.price ]]</div>
-              </td>
-              <td>
-                <div class="quantity">
-                   [[ item.quantity ]]<span class="qty-handler"><span @click="add(item)">+</span><span @click="sub(item)">-</span></span></div>
-              </td>
-              <td>
-                <div class="total">[[ item.price * item.quantity ]]</div>
-              </td>
-            </tr>
-          </tbody>
-          <tfoot>
-            <tr>
-              <th colspan="3">
-                <h4 class="total-title">Total</h4>
-              </th>
-              <th>[[ total ]]</th>
-            </tr>
-          </tfoot>
-        </table>
-        <div class="empty-contents" v-else="v-else">
-          <div class="draw">
-            <div class="cactus">
-              <div class="arm"></div>
-              <div class="arm"></div>
+                </table>
             </div>
-            <div class="cactus">
-              <div class="arm"></div>
-              <div class="arm"></div>
-            </div>
-            <div class="cactus">
-              <div class="arm"></div>
-              <div class="arm"></div>
-            </div>
-            <div class="sky">
-              <div class="montain"></div>
-              <div class="montain two"></div>
-              <div class="sun"></div>
-            </div>
-          </div>
-          <p class="no-items-text">Your cart is actually empty</p>
         </div>
-      </div>
+
+        <product v-for="product in info" :key="product.id" :product="product" @add-to-cart="updateCart">
+        </product>
+
     </div>
 
-  <product v-for="product in info"
-           :key="product.id"
-           :product="product"
-           @add-to-cart="updateCart"
-           >
-  </product>
+    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.6/umd/popper.min.js" integrity="sha384-wHAiFfRlMFy6i5SRaxvfOCifBUQy1xHdJ/yoi7FRNXMRBu5WHdZYu1hA6ZOblgut" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+    <script src="{% static 'js/bootstrap.min.js' %}"></script>
+    <script src="{% static 'js/js.cookie.js' %}"></script>
 
-</div>
-
-<script src="https://unpkg.com/axios/dist/axios.min.js"></script>
-<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.6/umd/popper.min.js" integrity="sha384-wHAiFfRlMFy6i5SRaxvfOCifBUQy1xHdJ/yoi7FRNXMRBu5WHdZYu1hA6ZOblgut" crossorigin="anonymous"></script>
-<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
-<script src="{% static 'js/bootstrap.min.js' %}"></script>
-
-
-<script>
-    Vue.component('product', {
-        delimiters: ['[[', ']]'],
-    props: {
-            product:null,
-    },
-    template: `
+    <script>
+        var csrftoken = Cookies.get('csrftoken');
+        Vue.component('product', {
+            delimiters: ['[[', ']]'],
+            props: {
+                product: null,
+            },
+            template: `
      <div class="product">
 
         <div class="product-image">
@@ -128,96 +107,121 @@
 
       </div>
      `,
-    data() {
-      return {
-      }
-    },
+            data() {
+                return {}
+            },
 
-      methods: {
-        addToCart: function() {
-            this.$emit('add-to-cart', this.product)
-        },
-      },
-      computed: {
-          image(){
-              return this.product.img_url
-          },
-          inStock(){
-              return this.product.quantity
-          }
-      }
-  })
-
-  var app = new Vue({
-      delimiters: ['[[', ']]'],
-      el: '#app',
-      data: {
-          info: null,
-        premium: true,
-        cart: [],
-          total: 0,
-      },
-      mounted () {
-    axios
-      .get('http://localhost:8000/api/products/')
-      .then(response => (this.info = response.data.products))
-  },
-      methods: {
-        updateCart(product) {
-            this.total += parseFloat(product.price);
-            let inCart = false;
-            for(let i = 0; i < this.cart.length; i++){
-                if(this.cart[i].id === product.id){
-                    inCart = true;
-                    this.cart[i].quantity+=1;
-                    break;
+            methods: {
+                addToCart: function() {
+                    this.$emit('add-to-cart', this.product)
+                },
+            },
+            computed: {
+                image() {
+                    return this.product.img_url
+                },
+                inStock() {
+                    return this.product.quantity
                 }
             }
-            if(! inCart){
-                this.cart.push({
-                    id: product.id,
-                    name: product.name,
-                    price: product.price,
-                    quantity: 1
-        });
-      }
-            for (var i=0; i<this.info.length; i++){
-                if(this.info[i].id === product.id){
-                    this.info[i].quantity -= 1;
+        })
+
+        var app = new Vue({
+            delimiters: ['[[', ']]'],
+            el: '#app',
+            data: {
+                info: null,
+                premium: true,
+                cart: [],
+                total: 0,
+            },
+            mounted() {
+                axios
+                    .get('http://localhost:8000/api/products/')
+                    .then(response => (this.info = response.data.products))
+            },
+            methods: {
+                updateCart(product) {
+                    this.total += parseFloat(product.price);
+                    let inCart = false;
+                    for (let i = 0; i < this.cart.length; i++) {
+                        if (this.cart[i].id === product.id) {
+                            inCart = true;
+                            this.cart[i].quantity += 1;
+                            this.cart[i].total = this.total;
+                            break;
+                        }
+                    }
+                    if (!inCart) {
+                        this.cart.push({
+                            id: product.id,
+                            name: product.name,
+                            price: product.price,
+                            quantity: 1,
+                            total: this.total
+                        });
+                    }
+                    for (var i = 0; i < this.info.length; i++) {
+                        if (this.info[i].id === product.id) {
+                            this.info[i].quantity -= 1;
+                        }
+                    }
+                },
+                add(item) {
+                    this.total += parseFloat(item.price);
+                    item.quantity++;
+                    for (var i = 0; i < this.info.length; i++) {
+                        if (this.info[i].id === item.id) {
+                            this.info[i].quantity -= 1;
+                        }
+                    }
+                    for (var i=0; i<this.cart.length; i++){
+                        this.cart[i].total = this.total;
+                    }
+                },
+                sub(item) {
+                    this.total -= item.price;
+                    if (item.quantity > 1) {
+                        item.quantity--;
+                        for (let i = 0; i < this.cart.length; i++) {
+                            if (this.cart[i].id === this.info[i].id) {
+                                this.info[i].quantity += 1;
+                            }
+                        }
+                        for (var i=0; i<this.cart.length; i++){
+                            this.cart[i].total = this.total;
+                        }
+                    } else {
+                        for (let i = 0; i < this.cart.length; i++) {
+                            if (this.cart[i].id === item.id) {
+                                this.cart.splice(i, 1);
+                                this.info[i].quantity += 1;
+                                break;
+                            }
+                        }
+                    }
+                },
+                submit(){
+                    console.log(this.cart)
+                    axios
+                        .post('http://localhost:8000/products/api/index/',
+                        this.cart,
+                        {headers: {'X-CSRFTOKEN' : csrftoken}}
+                        )
+                        .then(response => {
+                            console.log(response)
+                            this.success = true
+                            this.errorMSG = response.data
+                        })
+                        .catch(error => {
+                            console.log(error.response)
+                            this.errorMSG = ''
+                        })
                 }
             }
-        },
-          add(item){
-      this.total += parseFloat(item.price);
-      item.quantity++;
-      for (var i=0; i<this.info.length; i++){
-          if(this.info[i].id === item.id){
-              this.info[i].quantity -= 1;
-          }
-      }
-    },
-          sub(item){
-      this.total -= item.price;
-      if(item.quantity > 1){
-        item.quantity--;
-        for(let i=0; i<this.cart.length; i++) {
-            if(this.cart[i].id === this.info[i].id) {
-                this.info[i].quantity += 1;
-            }
-        }
-      } else{
-        for( let i = 0; i < this.cart.length; i++){
-          if(this.cart[i].id === item.id){
-            this.cart.splice(i, 1);
-            this.info[i].quantity += 1;
-            break;
-          }
-        }
-      }
-    }
-      }
-  })
-</script>
+        })
+    </script>
 
 </body>
+
 </html>

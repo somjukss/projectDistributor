@@ -1,6 +1,8 @@
+import datetime
+
 from django import forms
 
-from products.models import Customer, FeedBack, Product, Dealer
+from products.models import Customer, FeedBack, Product, Dealer, Order, OrderDetail
 
 
 class RegisterForm(forms.ModelForm):
@@ -36,3 +38,12 @@ class DealerForm(forms.ModelForm):
     class Meta:
         model = Dealer
         exclude = ['user', 'admin']
+
+class OrderForm(forms.ModelForm):
+    class Meta:
+        model = Order
+        exclude = ['admin', 'reason', 'cancel_date', 'customer']
+class OrderDetailForm(forms.ModelForm):
+    class Meta:
+        model = OrderDetail
+        fields = '__all__'

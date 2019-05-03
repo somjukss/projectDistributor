@@ -1,15 +1,21 @@
+import datetime
+import json
+
 from django.contrib.auth import authenticate, login, logout
+from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import User, Group
 from django.forms import formset_factory
+from django.http import JsonResponse
 from django.shortcuts import render, redirect
 
 
 # Create your views here.
+
 from rest_framework.generics import ListAPIView, RetrieveAPIView
 from rest_framework.permissions import AllowAny
 
-from products.forms import RegisterForm, FeedBackForm, ProductForm, DealerForm
-from products.models import Dealer, FeedBack, Product
+from products.forms import RegisterForm, FeedBackForm, ProductForm, DealerForm, OrderForm, OrderDetailForm
+from products.models import Dealer, FeedBack, Product, Customer, Order
 
 from rest_framework import status
 from rest_framework.decorators import api_view
@@ -19,27 +25,55 @@ from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from products.renderers import ProductJSONRenderer
 from .serializers import *
 
-
+@login_required
 def index(request):
-    data = []
-    products = Product.objects
-    for product in products.all():
-        data.append(
-            {
-                'name': product.name,
-                'describe': product.describe,
-                'minimum_stock': product.minimum_stock,
-                'quantity': product.quantity,
-                'price': product.price,
-                'manufactor_id': product.manufactor_id
-            }
-        )
-        # print(data)
-        ProductFormSet = formset_factory(ProductForm, max_num=len(data))
-        formset = ProductFormSet(initial=data)
-        context = {'formset': formset}
-    return  render(request, 'products/index.html', context)
+    context = {}
+    return render(request, 'products/index.html', context)
+def api_index(request):
+    if request.method == 'POST':
+        # customer object
+        customer = Customer.objects.get(pk=request.user.id)
+        #get data from api
+        product_list = json.loads(request.body)
+        error_list = []
 
+        total_price1 = int()
+        for product in product_list:
+            total_price1 = product['total']
+        #create object order
+        order = Order(
+            date=datetime.date.today(),
+            detail=customer.address,
+            total_price1=total_price1,
+            total_price2=customer.dealer.discount,
+            customer_id=request.user.id
+        )
+        order.save()
+        #add data to order detail
+        for my_product in product_list:
+            data = {
+                'detail': my_product['name'],
+                'price': float(my_product['price']),
+                'quantity': my_product['quantity'],
+                'amount': (float(my_product['price']) * float(my_product['quantity'])),
+                'order': order.id,
+                'product': my_product['id'],
+            }
+            form = OrderDetailForm(data)
+            # decrease-product
+            product = Product.objects.get(pk=my_product['id'])
+            product.quantity -= my_product['quantity']
+            product.save()
+            #save orderdetail
+            if form.is_valid():
+                form.save()
+            else:
+                error_list.append(form.errors.as_text())
+        if len(error_list) == 0:
+            return JsonResponse({'message': 'success'}, status=200)
+        else:
+            return  JsonResponse({'message': error_list}, status=400)
+    return JsonResponse({'message': 'This API does not accept GET request'}, status=405)
 def my_login(request):
     context = {}
     if request.method == "POST":
@@ -96,6 +130,7 @@ def register(request):
     context = {'form': form}
     return render(request, template_name="user/register.html", context=context)
 
+@login_required
 def create_feedback(request):
     if request.method == "POST":
         form = FeedBackForm(request.POST)
@@ -112,6 +147,7 @@ def create_feedback(request):
     context['surname'] = request.user.last_name
     return render(request, 'feedback/create-feedback.html', context)
 
+@login_required
 def feedback(request):
     data = []
     feedbacks = FeedBack.objects.filter(customer_id=request.user.id)
@@ -132,6 +168,7 @@ def feedback(request):
     context['name'] = name
     return render(request, 'feedback/feedback.html', context)
 
+@login_required
 def profile(request):
     dealer = Dealer.objects.filter(customer_ptr_id=request.user.id)
     data = {}
@@ -164,3 +201,4 @@ class ProductRetrieveApiView(RetrieveAPIView):
       product = Product.objects.get(id=product_id)
       serializer = self.serializer_class(product)
       return Response(serializer.data, status = status.HTTP_200_OK)
+

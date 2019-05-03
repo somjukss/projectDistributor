@@ -79,8 +79,8 @@ class Order(models.Model):
     total_price2 = models.DecimalField(max_digits=8, decimal_places=2)
     #fk
     admin = models.ForeignKey(Admin, on_delete=models.CASCADE, null=True, blank=True)
-    reason = models.CharField(max_length=255)
-    cancel_date = models.DateField()
+    reason = models.CharField(max_length=255, null=True, blank=True)
+    cancel_date = models.DateField(null=True, blank=True)
     customer = models.ForeignKey(Customer, on_delete=models.CASCADE)
 
 class OrderDetail(models.Model):
