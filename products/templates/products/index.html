@@ -13,10 +13,11 @@
 <body>
     <div class="nav-bar"></div>
     <div id="app">
-        [[info]]
+
         <div class="col-dx">
             <div class="cart">
                 <h2>Your Cart</h2>
+                <template v-if="cart.length">
                 <table class="cart-list">
                     <thead>
                         <tr>
@@ -61,18 +62,114 @@
                         <tr>
                             <th colspan="3">
                             </th>
-                            <th>
-                                <input type="submit" value="submit" @click.validate="submit">
-                            </th>
+
                         </tr>
                     </tfoot>
-
                 </table>
+                    <br>
+                    <div class="next-step">
+                        <div class="form-payment">
+
+                                <div class="form-row">
+                                    <div class="form-group col-md-6">
+                                        <label for="inputName">Name</label>
+                                        <input readonly required type="text" class="form-control" id="inputName"
+                                            placeholder="Name" v-model="name">
+                                    </div>
+                                    <div class="form-group col-md-6">
+                                        <label for="inputSurname">Surname</label>
+                                        <input readonly type="text" class="form-control" id="inputSurname" placeholder="Surname"
+                                            v-model="surname">
+                                    </div>
+                                </div>
+                                <div class="form-row">
+                                    <div class="form-group col-md-6">
+                                        <label for="inputEmail4">Email</label>
+                                        <input readonly required type="email" class="form-control" id="inputEmail4"
+                                            placeholder="Email" v-model="email">
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label for="inputAddress">Address</label>
+                                    <input readonly type="text" class="form-control" id="inputAddress"
+                                        placeholder="1234 Main St Bangkok, Thailand 10250" v-model="address">
+                                </div>
+                                <div class="form-row">
+                                    <div class="form-group col-md-5">
+                                        <label for="paymentType">Payment Type</label>
+                                        <select required id="paymentType" class="form-control"
+                                            v-model="user.paymentType">
+                                            <option selected disabled>Please Select</option>
+                                            <option value="creditCard">Credit Card</option>
+                                            <option value="promptPay">promptPay</option>
+                                        </select>
+                                    </div>
+                                    <template v-if="user.paymentType === 'creditCard'">
+                                        <div class="form-group">
+                                            <label for="inputCredit">Credit Card</label>
+                                            <input required type="text" class="form-control" id="inputCredit"
+                                                placeholder="xxxx xxxx xxxx" v-model="user.creditNumber">
+                                            <label for="namecard">Name</label>
+                                            <input required type="text" class="form-control" id="namecard"
+                                                placeholder="Card Holder">
+                                            <label for="ccv">CCV/CVV</label>
+                                            <input required type="password" class="form-control" id="ccv"
+                                                placeholder="xxx">
+                                            <label for="exp">Expires</label>
+                                            <input required type="text" class="form-control" id="exp"
+                                                placeholder="MM/YY">
+                                        </div>
+                                    </template>
+                <template v-if="user.paymentType === 'promptPay'">
+                                        <div class="form-group">
+                                            <!-- <label for="inputphoneNumber">Phone Number</label> -->
+                                            <!-- <input type="text" class="form-control" id="inputphoneNumber"
+                                                placeholder="+66 ....." v-model="user.phoneNumber"> -->
+                                            <br>
+                                            <img src="pic/promptpay-png-1.png" alt=""
+                                                style="background: rgb(255, 255, 255);">
+                                            <label>โปรดscan QR-CODE</label>
+                                        </div>
+                                    </template>
             </div>
         </div>
 
-        <product v-for="product in info" :key="product.id" :product="product" @add-to-cart="updateCart">
-        </product>
+    </div>
+    <input type="submit" value="submit" @click.validate="submit">
+    </template>
+    <template v-else>
+                    <div>
+                        <svg version="1.1" xmlns="http://www.w3.org/2000/svg" width="150.5px" height="150.5px" viewBox="-50.25 -50.25 250.5 250.5">
+  <defs>
+    <clipPath id="mask">
+      <circle id="bgClip" cx="64" cy="64" r="64"/>
+    </clipPath>
+  </defs>
+  <g clip-path="url(#mask)">
+    <circle id="bg" fill="#EA502F" cx="64" cy="64" r="64"/>
+    <g id="product">
+      <path id="productA" fill="#FFFFFF" d="M88.48,47.234V32.078c0-1.65-1.351-3-3-3h-40.29c-1.65,0-3,1.35-3,3v15.156H88.48z"/>
+      <path id="productB" fill="#FFFFFF" d="M88.48,47.234V32.078c0-1.65-1.351-3-3-3h-40.29c-1.65,0-3,1.35-3,3v15.156H88.48z"/>
+      <path id="productC" fill="#FFFFFF" d="M88.48,47.234V32.078c0-1.65-1.351-3-3-3h-40.29c-1.65,0-3,1.35-3,3v15.156H88.48z"/>
+    </g>
+    <path id="cart" fill="#633D50" d="M98.93,68.005v-21.05c0-1.65-1.351-3-3-3H29c-0.245,0-0.449,0.022-0.632,0.055h-4.103
+      c-1.657,0-3,1.343-3,3c0,1.657,1.343,3,3,3h5.155c0.866,0.091,3.482,2.727,4.621,7.426l5.954,24.561
+      c0.853,3.519,3.097,6.628,6.027,8.806c-0.875,1.135-1.401,2.553-1.401,4.098c0,3.713,3.01,6.722,6.722,6.722
+      c3.711,0,6.722-3.009,6.722-6.722c0-0.303-0.027-0.6-0.066-0.892h27.463c-0.038,0.292-0.065,0.589-0.065,0.892
+      c0,3.713,3.011,6.722,6.722,6.722c3.713,0,6.723-3.009,6.723-6.722c0-3.541-2.737-6.434-6.21-6.696
+      c-0.324-0.119-0.67-0.194-1.035-0.194H55.267c-3.344,0-6.805-2.219-8.528-5.191L96.01,71.675
+      C97.62,71.305,98.93,69.654,98.93,68.005z M55.96,71.175c0,1.66-1.35,3-3,3c-1.66,0-3-1.34-3-3v-17.65c0-1.65,1.34-3,3-3
+      c1.65,0,3,1.35,3,3V71.175z M71.779,67.016c0,1.649-1.34,3-3,3c-1.649,0-3-1.351-3-3V53.525c0-1.65,1.351-3,3-3c1.66,0,3,1.35,3,3
+      V67.016z M87.609,63.345c0,1.66-1.34,3-3,3c-1.649,0-3-1.34-3-3v-9.82c0-1.65,1.351-3,3-3c1.66,0,3,1.35,3,3V63.345z"/>
+  </g>
+</svg>
+                    </div>
+                </template>
+    </div>
+    </div>
+
+    <product v-for="product in info" :key="product.id" :product="product" @add-to-cart="updateCart">
+    </product>
 
     </div>
 
@@ -137,6 +234,10 @@
             delimiters: ['[[', ']]'],
             el: '#app',
             data: {
+                user: {
+                    paymentType: "",
+                    creditNumber: "",
+                },
                 info: null,
                 premium: true,
                 cart: [],
@@ -145,8 +246,20 @@
             },
 
             computed: {
+                name(){
+                    return "{{ dealer.user.first_name }}"
+                },
+                surname(){
+                    return "{{ dealer.user.last_name }}"
+                },
+                email(){
+                    return "{{ dealer.user.email }}"
+                },
+                address(){
+                    return  "{{ dealer.address }}"
+                },
                 total_discount() {
-                    return this.total - (this.total * {{ dealer.discount }})
+                    return this.total - (this.total * {{dealer.discount}})
                 }
             },
             mounted() {
@@ -189,7 +302,7 @@
                             this.info[i].quantity -= 1;
                         }
                     }
-                    for (var i=0; i<this.cart.length; i++){
+                    for (var i = 0; i < this.cart.length; i++) {
                         this.cart[i].total = this.total;
                     }
                 },
@@ -202,7 +315,7 @@
                                 this.info[i].quantity += 1;
                             }
                         }
-                        for (var i=0; i<this.cart.length; i++){
+                        for (var i = 0; i < this.cart.length; i++) {
                             this.cart[i].total = this.total;
                         }
                     } else {
@@ -215,12 +328,15 @@
                         }
                     }
                 },
-                submit(){
+                submit() {
                     console.log(this.cart)
                     axios
                         .post('http://localhost:8000/products/api/index/',
-                        this.cart,
-                        {headers: {'X-CSRFTOKEN' : csrftoken}}
+                            this.cart, {
+                                headers: {
+                                    'X-CSRFTOKEN': csrftoken
+                                }
+                            }
                         )
                         .then(response => {
                             console.log(response)
@@ -235,7 +351,6 @@
             }
         })
     </script>
-
 </body>
 
 </html>
