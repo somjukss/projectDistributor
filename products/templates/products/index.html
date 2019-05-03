@@ -8,14 +8,210 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Document</title>
     <link rel="stylesheet" href="{% static 'css/bootstrap.min.css' %}">
+    <style>
+        .product {
+  display: flex;
+}
+
+img {
+  border: 1px solid #d8d8d8;
+  width: 70%;
+  margin: 40px;
+  box-shadow: 0px .5px 1px #d8d8d8;
+}
+
+.product-image {
+  flex-basis: 700px;
+}
+
+.product-info {
+  margin-top: 10px;
+  flex-basis: 500px;
+}
+
+.color-box {
+  width: 40px;
+  height: 40px;
+  margin-top: 5px;
+}
+
+.cart {
+  margin-right: 25px;
+  float: right;
+  border: 1px solid #d8d8d8;
+  padding: 5px 20px;
+}
+
+button {
+  margin-top: 30px;
+  border: none;
+  background-color: #1E95EA;
+  color: white;
+  height: 40px;
+  width: 100px;
+  font-size: 14px;
+}
+
+.disabledButton {
+  background-color: #d8d8d8;
+}
+
+.review-form {
+  width: 30%;
+  padding: 20px;
+  border: 1px solid #d8d8d8;
+}
+
+input {
+  width: 100%;
+  height: 25px;
+  margin-bottom: 20px;
+}
+
+textarea {
+  width: 100%;
+  height: 60px;
+}
+    </style>
 </head>
 <body>
-<img src="{% static 'products/images/goldie.jpg' %}" alt=""><br>
-<h1>❤</h1>
-<br>
-<img src="{% static 'images/dog.jpg' %}" alt="">
+
 {{ manage }}
 {{ formset.as_p }}
+
+
+<div id="app">
+  <div class="cart">
+    <p>Cart[[ cart.length ]]</p>
+  </div>
+  <product :premium="premium" @add-to-cart="updateCart" @remove-from-cart="removeItem"></product>
+</div>
+
+<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.6/umd/popper.min.js" integrity="sha384-wHAiFfRlMFy6i5SRaxvfOCifBUQy1xHdJ/yoi7FRNXMRBu5WHdZYu1hA6ZOblgut" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
 <script src="{% static 'js/bootstrap.min.js' %}"></script>
+<script>
+    Vue.component('product', {
+        delimiters: ['[[', ']]'],
+    props: {
+      premium: {
+        type: Boolean,
+        required: true
+      }
+    },
+    template: `
+     <div class="product">
+        <div class="product-image">
+          <img :src="image" />
+        </div>
+        <div class="product-info">
+            <h1>[[ product ]]</h1>
+            <p v-if="inStock">In Stock</p>
+            <p v-else>Out of Stock</p>
+            <p>Shipping: [[ shipping ]]</p>
+
+            <ul>
+              <li v-for="detail in details">[[ detail ]]</li>
+            </ul>
+
+            <div class="color-box"
+                 v-for="(variant, index) in variants"
+                 :key="variant.variantId"
+                 :style="{ backgroundColor: variant.variantColor }"
+                 @mouseover="updateProduct(index)"
+                 >
+            </div>
+
+            <button v-on:click="addToCart"
+              :disabled="!inStock"
+              :class="{ disabledButton: !inStock }"
+              >
+            Add to cart
+            </button>
+
+            <button @click="removeFromCart"
+              >
+            Remove from cart
+            </button>
+
+         </div>
+
+      </div>
+     `,
+    data() {
+      return {
+          product: 'Socks',
+          brand: 'Vue Mastery',
+          selectedVariant: 0,
+          details: ['80% cotton', '20% polyester', 'Gender-neutral'],
+          variants: [
+            {
+              variantId: 2234,
+              variantColor: 'green',
+              variantImage: 'https://www.vuemastery.com/images/challenges/vmSocks-green-onWhite.jpg',
+              variantQuantity: 10
+            },
+            {
+              variantId: 2235,
+              variantColor: 'blue',
+              variantImage: 'https://www.vuemastery.com/images/challenges/vmSocks-blue-onWhite.jpg',
+              variantQuantity: 1
+            }
+          ]
+      }
+    },
+      methods: {
+        addToCart: function() {
+            this.$emit('add-to-cart', this.variants[this.selectedVariant].variantId)
+        },
+        updateProduct: function(index) {
+            this.selectedVariant = index
+        },
+        removeFromCart: function() {
+             this.$emit('remove-from-cart', this.variants[this.selectedVariant].variantId)
+        }
+      },
+      computed: {
+          title() {
+              return this.brand + ' ' + this.product
+          },
+          image(){
+              return this.variants[this.selectedVariant].variantImage
+          },
+          inStock(){
+              return this.variants[this.selectedVariant].variantQuantity
+          },
+          shipping() {
+            if (this.premium) {
+              return "Free"
+            }
+              return 2.99
+          }
+      }
+  })
+
+  var app = new Vue({
+      delimiters: ['[[', ']]'],
+      el: '#app',
+
+      data: {
+        premium: true,
+        cart: []
+      },
+      methods: {
+        updateCart(id) {
+          this.cart.push(id)
+        },
+        removeItem(id) {
+          for(var i = this.cart.length - 1; i >= 0; i--) {
+            if (this.cart[i] === id) {
+               this.cart.splice(i, 1);
+            }
+          }
+        }
+      }
+  })
+</script>
 </body>
 </html>
