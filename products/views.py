@@ -15,7 +15,7 @@ from rest_framework.generics import ListAPIView, RetrieveAPIView
 from rest_framework.permissions import AllowAny
 
 from products.forms import RegisterForm, FeedBackForm, ProductForm, DealerForm, OrderForm, OrderDetailForm
-from products.models import Dealer, FeedBack, Product, Customer, Order
+from products.models import Dealer, FeedBack, Product, Customer, Order, DealerStock
 
 from rest_framework import status
 from rest_framework.decorators import api_view
@@ -69,6 +69,8 @@ def api_index(request):
                 form.save()
             else:
                 error_list.append(form.errors.as_text())
+            #add stock to dealer stock
+            dealer_stock = DealerStock.objects.get(dea)
         if len(error_list) == 0:
             return JsonResponse({'message': 'success'}, status=200)
         else:
@@ -122,7 +124,11 @@ def register(request):
             )
             group = Group.objects.get(name='customer')
             u.groups.add(group)
+            dealerstock = DealerStock.objects.create(
+                dealer_id=dealer.customer_ptr_id
+            )
             dealer.save()
+            dealerstock.save()
             form.save()
             return redirect('login')
     else:
