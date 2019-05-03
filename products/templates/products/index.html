@@ -94,17 +94,21 @@ textarea {
 <div class="nav-bar"></div>
 
 <div id="app">
+    [[info]]
   <div class="cart">
     <p>Cart([[ cart.length ]])</p>
   </div>
-  <product v-for="product in info" :name="product.name"
+  <product v-for="product in info"
+           :name="product.name"
            :key="product.id"
            :product_id= "product.id"
            :price="product.price"
            :describe="product.describe"
            :quantity="product.quantity"
+           :img_url="product.img_url"
            @add-to-cart="updateCart"
-           @remove-from-cart="removeItem"></product>
+           @remove-from-cart="removeItem">
+  </product>
 </div>
 
 <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
@@ -123,6 +127,7 @@ textarea {
             describe: null,
             price: null,
             quantity: null,
+            img_url: null,
     },
     template: `
      <div class="product">
@@ -135,10 +140,7 @@ textarea {
             <h1>[[ name ]]</h1>
             <p v-if="inStock">In Stock</p>
             <p v-else>Out of Stock</p>
-            <p>Shipping: [[ shipping ]]</p>
-            <ul>
-              <li v-for="detail in details">[[ detail ]]</li>
-            </ul>
+            <p>[[describe]]</p>
 
             <button v-on:click="addToCart"
               :disabled="!inStock"
@@ -158,31 +160,12 @@ textarea {
      `,
     data() {
       return {
-          product: 'Socks',
-          brand: 'Vue Mastery',
-          selectedVariant: 0,
-          details: ['80% cotton', '20% polyester', 'Gender-neutral'],
-          variants: [
-            {
-              variantId: 2234,
-              variantColor: 'green',
-              variantImage: 'https://www.vuemastery.com/images/challenges/vmSocks-green-onWhite.jpg',
-              variantQuantity: 10
-            },
-            {
-              variantId: 2235,
-              variantColor: 'blue',
-              variantImage: 'https://www.vuemastery.com/images/challenges/vmSocks-blue-onWhite.jpg',
-              variantQuantity: 0
-            }
-          ]
       }
     },
 
       methods: {
         addToCart: function() {
             this.$emit('add-to-cart', this.product_id)
-            console.log(this.id)
         },
         updateProduct: function(index) {
             this.selectedVariant = index
@@ -192,20 +175,11 @@ textarea {
         }
       },
       computed: {
-          title() {
-              return this.brand + ' ' + this.product
-          },
           image(){
-              return this.variants[this.selectedVariant].variantImage
+              return this.img_url
           },
           inStock(){
-              return this.variants[this.selectedVariant].variantQuantity
-          },
-          shipping() {
-            if (this.premium) {
-              return "Free"
-            }
-              return 2.99
+              return this.quantity
           }
       }
   })
@@ -225,13 +199,25 @@ textarea {
   },
       methods: {
         updateCart(id) {
-          this.cart.push(id)
+          this.cart.push(id);
+          for (var i=0; i<this.info.length; i++){
+              if(this.info[i].id === id){
+                  this.info[i].quantity -= 1;
+              }
+          }
         },
         removeItem(id) {
+            var count = 0;
           for(var i = this.cart.length - 1; i >= 0; i--) {
             if (this.cart[i] === id) {
+                count += 1;
                this.cart.splice(i, 1);
             }
+          }
+          for(var i=0; i<this.info.length; i++){
+              if(this.info[i].id === id){
+                  this.info[i].quantity += count;
+              }
           }
         }
       }
