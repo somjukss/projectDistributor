@@ -5,8 +5,19 @@ from django.shortcuts import render, redirect
 
 
 # Create your views here.
+from rest_framework.generics import ListAPIView, RetrieveAPIView
+from rest_framework.permissions import AllowAny
+
 from products.forms import RegisterForm, FeedBackForm, ProductForm, DealerForm
-from products.models import Dealer, Customer, FeedBack, Product
+from products.models import Dealer, FeedBack, Product
+
+from rest_framework import status
+from rest_framework.decorators import api_view
+from rest_framework.response import Response
+from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
+
+from products.renderers import ProductJSONRenderer
+from .serializers import *
 
 
 def index(request):
@@ -23,7 +34,7 @@ def index(request):
                 'manufactor_id': product.manufactor_id
             }
         )
-        print(data)
+        # print(data)
         ProductFormSet = formset_factory(ProductForm, max_num=len(data))
         formset = ProductFormSet(initial=data)
         context = {'formset': formset}
@@ -137,3 +148,19 @@ def profile(request):
     form = DealerForm(initial=data)
     context = {'form': form}
     return render(request, 'customer/profile.html', context)
+
+class ProductListApiView(ListAPIView):
+    model = Product
+    queryset = Product.objects.all()
+    permissions_classes = (AllowAny, )
+    renderer_classes = (ProductJSONRenderer, )
+    serializer_class = ProductListSerializer
+
+class ProductRetrieveApiView(RetrieveAPIView):
+    permission_classes = (AllowAny, )
+    renderer_classes = (ProductJSONRenderer, )
+    serializer_class = ProductSerializer
+    def retrieve(self, request, product_id, *args, **kwargs):
+      product = Product.objects.get(id=product_id)
+      serializer = self.serializer_class(product)
+      return Response(serializer.data, status = status.HTTP_200_OK)
