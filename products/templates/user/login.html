@@ -12,11 +12,10 @@
     <link rel="stylesheet" href="{% static 'css/login-style.css' %}">
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.3.1/css/all.css"
         integrity="sha384-mzrmE5qonljUremFsqc01SB46JvROS7bZs3IO2EmfFsd15uHvIt+Y8vEf7N7fWAU" crossorigin="anonymous">
-        <link href="https://fonts.googleapis.com/css?family=Mali" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Mali" rel="stylesheet">
 </head>
 
 <body>
-    <!-- <img src="{% static 'products/images/goldie.jpg' %}" alt="My image"> -->
     <form action="{% url 'login' %}" method="POST">
         {% csrf_token %}
 
@@ -29,13 +28,13 @@
             <div class="collapse navbar-collapse" id="navbarNav">
                 <ul class="navbar-nav ml-3">
                     <li class="nav-item">
-                        <a class="nav-link text-white mr-md-2" href="#">Products</a>
+                        <a class="nav-link text-white mr-md-2" href="#product">Products</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link text-white mr-md-2" href="#">Shipment</a>
+                        <a class="nav-link text-white mr-md-2" href="#shipment">Shipment</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link text-white mr-md-2" href="#">About us</a>
+                        <a class="nav-link text-white mr-md-2" href="#about">About us</a>
                     </li>
                 </ul>
             </div>
@@ -84,17 +83,16 @@
         </div>
     </form>
 
+    <a name="product"></a>
     <div class="product-header">
         <div class="container">
-            <div class="p-t-20 p-b-20">
-                <h3 class="text-center">
-                    ลองดูสินค้าของ <span class="semi-bold text-landing"> SugerBunny</span> ก่อนสิ!
-                </h3>
-            </div>
+            <h3 class="text-center">
+                ลองดูสินค้าของ <span class="semi-bold text-landing"> SugarBunny</span> ก่อนสิ!
+            </h3>
         </div>
     </div>
 
-    <div class="row">
+    <div class="row pb-5">
         <div class="col-5">
             <div id="carouselExampleControls" class="carousel slide" data-ride="carousel">
                 <div class="carousel-inner">
@@ -122,12 +120,68 @@
         </div>
 
         <div class="col-7 product-detail">
-            <h1 class="m-b-20 bold text-center semi-bold product-text">สินค้าเกรดพรีเมียม เปี่ยมไปด้วยคุณภาพ</h1><br>
-            <h4 class="text-left product-text"> <span class="text-landing semi-bold">ศูนย์รวมสินค้า</span> จัดเก็บและบันทึกรายละเอียดสินค้ามากกว่า 100 รายการ</h4>
-            <h4 class="text-left product-text"> <span class="text-landing semi-bold">ระบบการสั่งซื้อ</span> เชื่อถือได้ พร้อมตรวจสอบการสั่งซื้อได้ตลอด 24 ชั่วโมง</h4>
-            <h4 class="text-left product-text"> <span class="text-landing semi-bold">จัดการสต็อกสินค้า</span> รวดเร็ว แม่นยำประมวลผลอัพเดตจำนวนสต็อคแบบ realtime</h4>
-            <h4 class="text-left product-text"> <span class="text-landing semi-bold">ระบบตัวแทนจำหน่าย</span> ที่ดีที่สุดสำหรับร้านออนไลน์ สะดวกทั้งตัวแทน
+            <h1 class="text-center semi-bold product-text">สินค้าเกรดพรีเมียม เปี่ยมไปด้วยคุณภาพ</h1><br>
+            <h4 class="text-left product-text"> <span class="text-landing semi-bold">ศูนย์รวมสินค้า</span>
+                จัดเก็บและบันทึกรายละเอียดสินค้ามากกว่า 100 รายการ</h4>
+            <h4 class="text-left product-text"> <span class="text-landing semi-bold">ระบบการสั่งซื้อ</span> เชื่อถือได้
+                พร้อมตรวจสอบการสั่งซื้อได้ตลอด 24 ชั่วโมง</h4>
+            <h4 class="text-left product-text"> <span class="text-landing semi-bold">จัดการสต็อกสินค้า</span> รวดเร็ว
+                แม่นยำประมวลผลอัพเดตจำนวนสต็อคแบบ realtime</h4>
+            <h4 class="text-left product-text"> <span class="text-landing semi-bold">ระบบตัวแทนจำหน่าย</span>
+                ที่ดีที่สุดสำหรับร้านออนไลน์ สะดวกทั้งตัวแทน
                 และเจ้าของร้าน</h4>
+        </div>
+    </div>
+
+    <a name="shipment"></a>
+    <div class="shipment-header">
+        <div class="container">
+            <h3 class="text-center">
+                การขนส่งที่ตรวจสอบได้ตลอด <span class="semi-bold text-landing"> 24 ชั่วโมง</span>
+            </h3>
+        </div>
+    </div>
+
+    <div class="row pb-5">
+        <div class="col-5 shipment-detail">
+            <h1 class="text-center semi-bold shipment-text">การขนส่งที่คุณเลือกเองได้</h1><br>
+            <h4 class="text-left shipment-text"> <span class="text-landing semi-bold">การขนส่งที่หลากหลาย</span>
+                พร้อมให้คุณเลือกใช้ตามความสะดวก</h4>
+            <h4 class="text-left shipment-text"> <span class="text-landing semi-bold">ระบบ Tracknumber</span>
+                เชื่อถือได้
+                พร้อมตรวจสอบสถานะการขนส่งตลอด 24 ชั่วโมง</h4>
+            <h4 class="text-left shipment-text"> <span class="text-landing semi-bold">จัดส่งได้ปลอดภัย</span> รวดเร็ว
+                และแม่นยำ โดยจัดส่งตามข้อมูลในฐานข้อมูลที่เชื่อถือได้</h4>
+        </div>
+
+        <div class="col-7 shipment-img">
+            <img src="{% static 'images/shipment.png' %}" alt="My image">
+        </div>
+    </div>
+
+    <a name="about"></a>
+    <div class="about-header">
+        <div class="row">
+            <div class="col-3">
+                <h1 class="about-text">SugarBunny</h1>
+            </div>
+            <div class="col-2"></div>
+            <div class="col-7">
+                <div class="row">
+                    <div class="col-3 member">
+                        <p>กัลยรัตน์ อินคา<br>60070004</p>
+                    </div>
+                    <div class="col-3 member">
+                        <p>นันทาศิริ ม่วงทอง<br>60070040</p>
+                    </div>
+                    <div class="col-3 member">
+                        <p>นิติ จิรการวุฒิไกร<br>60070041</p>
+                    </div>
+                    <div class="col-3 member">
+                        <p>สุภวัช กลิ่นขจร<br>60070106</p>
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
 
