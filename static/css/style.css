@@ -1,4 +1,5 @@
 @import url("https://fonts.googleapis.com/css?family=Open+Sans:300,400,700");
+@import url('https://fonts.googleapis.com/css?family=Mali');
 *, *::before, *::after {
     box-sizing: border-box;
 }
@@ -9,13 +10,37 @@ body {
     -moz-osx-font-smoothing: grayscale;
     font-size: 16px;
     padding: 3rem;
-    display: flex;
     justify-content: center;
 }
-
+.navbar-brand{
+    font-family: 'Mali', cursive;
+    font-size: 40px;
+}
+div#pdChoice{
+    margin: 3% 0 0 0;
+    float: left;
+    display: inline;
+    width: 150%;
+;
+}
+div#cart{
+    left: 85%;
+    top: 10%;
+    position: absolute;
+}
+div#cart-content{
+    position: absolute;
+    top: 0;
+    width: 200px;
+}
+div#cart-content.fixed {
+    position: fixed;
+    top: 0;
+}
 #app {
     width: 100%;
     max-width: 70rem;
+    font-family: 'Mali', cursive;
 }
 
 h1 {
@@ -108,7 +133,8 @@ h1 {
 }
 
 .cart {
-    padding: 0 0 0 1rem;
+    padding: 1rem 1rem 0 1rem;
+    background-color: #fcf8e3;
 }
 
 .cart h2 {
@@ -116,7 +142,7 @@ h1 {
     margin-bottom: 2rem;
     padding-bottom: 1rem;
     font-weight: 400;
-    text-align: right;
+    text-align: center;
     border-bottom: 1px solid #555;
 }
 
@@ -433,7 +459,6 @@ body {
 img {
     border: 1px solid #d8d8d8;
     width: 70%;
-    margin: 40px;
     box-shadow: 0px .5px 1px #d8d8d8;
 }
 
@@ -456,7 +481,7 @@ img {
     margin-right: 25px;
     float: right;
     border: 1px solid #d8d8d8;
-    padding: 5px 20px;
+
 }
 
 button {

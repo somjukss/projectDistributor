@@ -8,13 +8,43 @@
     <title>Document</title>
     <link rel="stylesheet" href="{% static 'css/bootstrap.min.css' %}">
     <link rel="stylesheet" href="{% static 'css/style.css' %}">
+    <link href="https://fonts.googleapis.com/css?family=Mali" rel="stylesheet">
 </head>
 
-<body>
-    <div class="nav-bar"></div>
+<body style="background-image: linear-gradient(to bottom, rgb(128, 94, 250),rgb(108, 158, 250));">
     <div id="app">
-
-        <div class="col-dx">
+        <nav class="navbar navbar-expand-lg text-white navbar-light">
+            <h1 class="navbar-brand text-warning">SugarBunny</h1>
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav"
+                aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ml-3">
+                    <li class="nav-item">
+                        <a class="nav-link text-white mr-md-2" href="#">Products</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link text-white mr-md-2" href="#">Shipment</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link text-white mr-md-2" href="#">About us</a>
+                    </li>
+                </ul>
+            </div>
+        </nav>
+        <div id="pdChoice">
+            <div class="container">
+                <div class="row">
+                    <div class="col-md-4" style="margin-bottom: 3%" v-for="product in info">
+                        <product :key="product.id" :product="product" @add-to-cart="updateCart"></product>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div id="cart">
+            <div id="cart-content" class="fixed">
+            <div class="col-dx">
             <div class="cart">
                 <h2>Your Cart</h2>
 
@@ -180,10 +210,8 @@
                 </template>
     </div>
     </div>
-
-    <product v-for="product in info" :key="product.id" :product="product" @add-to-cart="updateCart">
-    </product>
-
+            </div>
+        </div>
     </div>
 
     <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
@@ -201,28 +229,19 @@
                 product: null,
             },
             template: `
-     <div class="product">
+        <div class="product">
 
-        <div class="product-image">
-          <img :src="image" />
+            <div class="card" style="width: 25rem;">
+                    <img :src="image" class="card-img-top" alt="...">
+                    <div class="card-body">
+                        <h5 class="card-title">[[ product.name ]]</h5>
+                        <p v-if="inStock">In Stock</p>
+                        <p v-else>Out of Stock</p>
+                        <p class="card-text">[[product.describe]]</p>
+                        <button v-on:click="addToCart":disabled="!inStock":class="{ disabledButton: !inStock }">Add to cart</button>
+                    </div>
+            </div>
         </div>
-
-        <div class="product-info">
-            <h1>[[ product.name ]]</h1>
-            <p v-if="inStock">In Stock</p>
-            <p v-else>Out of Stock</p>
-            <p>[[product.describe]]</p>
-
-            <button v-on:click="addToCart"
-              :disabled="!inStock"
-              :class="{ disabledButton: !inStock }"
-              >
-            Add to cart
-            </button>
-
-         </div>
-
-      </div>
      `,
             data() {
                 return {}
