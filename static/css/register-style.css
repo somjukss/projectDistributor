@@ -1,0 +1,22 @@
+html, body {
+    background-image: linear-gradient(to bottom, rgb(128, 94, 250), rgb(108, 158, 250));
+    background-repeat: no-repeat;
+}
+
+.navbar-brand{
+    font-family: 'Mali', cursive;
+    font-size: 40px;
+}
+
+.input-group-text{
+    width: 120px;
+}
+
+.card{
+    width: 450px;
+    font-family: 'Mali', cursive;
+}
+
+form{
+    margin-bottom: 5%;
+}
