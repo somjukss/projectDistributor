@@ -1,24 +1,46 @@
 <!DOCTYPE html>
+{% load static %}
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
+    <title>Feedback</title>
+    <link rel="stylesheet" href="{% static 'css/bootstrap.min.css' %}">
+    <link rel="stylesheet" href="{% static 'css/create-feedback-style.css' %}">
+    <link href="https://fonts.googleapis.com/css?family=Mali" rel="stylesheet">
 </head>
-<body>
-FEEDBACK by {{ name }}
-{{ formset.management_form }}
-<table>
-    <tr>
-        <td style="width: 250px">detail</td>
-        <td style="width: 250px">status</td>
-    </tr>
 
-    {% for form in formset %}
+<body>
+    <nav class="navbar navbar-expand-lg text-white navbar-light">
+        <a href="{% url 'index' %}" class="navbar-brand text-warning">SugarBunny</a>
+    </nav>
+
+    <div class="create-feedback-header">
+        <div class="container">
+            <h2> ยินดีต้อนรับคุณ <span class="semi-bold text-landing"> {{ name }} {{ surname }}</span>
+            </h2>
+        </div>
+    </div>
+
+    {{ formset.management_form }}
+
+    <table class="table mt-5" style="font-family: 'Mali', cursive;">
+        <thead class="thead topic" style="background-color: rgb(129, 94, 253);">
+            <tr>
+                <th scope="col-9">รายละเอียด</td>
+                <th scope="col-2">สถานะ</td>
+            </tr>
+        </thead>
+
+        <tbody style="background-color: rgba(255, 255, 255, 0.404);">
+        {% for form in formset %}
         <tr>
             <td>{{ form.detail.value }}</td>
             <td>{{ form.status.value }}</td>
         </tr>
-    {% endfor %}
-</table>
+        {% endfor %}
+        </tbody>
+    </table>
 </body>
+
 </html>
