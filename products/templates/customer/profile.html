@@ -10,8 +10,54 @@
     <link rel="stylesheet" href="{% static 'css/bootstrap.min.css' %}">
 </head>
 <body>
-<h1>My Profile {{ form.first_name.value }} {{ form.last_name.value }}</h1>
-{{ form }}
+<h1>My Profile {{ dealer.user.first_name }} {{ dealer.user.last_name }}</h1>
+<table border="1">
+    <tr>
+        <th>address</th>
+        <th>phone</th>
+        <th>email</th>
+    </tr>
+    <tr>
+        <td>{{ dealer.address }}</td>
+        <td>{{ dealer.phone }}</td>
+        <td>{{ dealer.user.email }}</td>
+    </tr>
+</table>
+<table border="1">
+    <tr>
+        <th colspan="2">Stock</th>
+    </tr>
+    <tr>
+        <td>Product Id</td>
+        <td>Stock</td>
+    </tr>
+    {% for stock in dealer.dealerstock.product_dealerstock_set.all %}
+    <tr>
+        <td>{{ stock.product_id }}</td>
+        <td>{{ stock.quantity }}</td>
+    </tr>
+    {% endfor %}
+</table>
+
+<table>
+    <tr>
+        <th>Order ID</th>
+        <th>Date</th>
+        <th>Link</th>
+    </tr>
+    {% for order in orders %}
+    <tr>
+        <td>{{ order.id }}</td>
+        <td>{{ order.date }}</td>
+        <td><a href="{% url 'order-detail' order.id %}">กดสิจ้ะ</a></td>
+    </tr>
+    {% endfor %}
+</table>
+
+
+<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.6/umd/popper.min.js" integrity="sha384-wHAiFfRlMFy6i5SRaxvfOCifBUQy1xHdJ/yoi7FRNXMRBu5WHdZYu1hA6ZOblgut" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
 <script src="{% static 'js/bootstrap.min.js' %}"></script>
 </body>
 </html>

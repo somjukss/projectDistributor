@@ -215,22 +215,14 @@ def feedback(request):
 
 @login_required
 def profile(request):
-    dealer = Dealer.objects.filter(customer_ptr_id=request.user.id)
-    data = {}
-    for detail in dealer.all():
-        data['username'] = detail.user.username
-        data['first_name'] = detail.user.first_name
-        data['last_name'] = detail.user.last_name
-        data['e_mail'] = detail.user.email
-        data['address'] = detail.address
-        data['phone'] = detail.phone
-        data['discount'] = detail.discount
-        data['amount'] = detail.amount
-        data['blacklist'] = detail.blacklist
-    form = DealerForm(initial=data)
-    context = {'form': form}
+    dealer = Dealer.objects.filter(customer_ptr_id=request.user.id).all()[0]
+    orders = Order.objects.filter(customer_id=request.user.id).all()
+    context = {'dealer': dealer}
+    context['orders'] = orders
     return render(request, 'customer/profile.html', context)
-
+def orderDetail(request, order_id):
+    context = {}
+    return render(request, 'customer/order.html', context)
 class ProductListApiView(ListAPIView):
     model = Product
     queryset = Product.objects.all()
