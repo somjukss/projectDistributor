@@ -7,7 +7,7 @@ body {
 }
 
 .pt-3 {
-    padding: 150px !important;
+    padding: 150px;
   }
 
 .navbar-brand{
@@ -39,7 +39,7 @@ body {
     border: 7px solid rgb(255, 255, 255);
     margin-left: 20%;
     margin-right: 5%;
-    margin-top: 2.5%;
+    margin-top: 7.5%;
 }
 
 .product-detail{
@@ -49,4 +49,53 @@ body {
 
 .product-text{
     color: #e6e6e6;
+}
+
+.shipment-header{
+    height: 75px;
+    background: rgba(231, 50, 201, 0.767);
+    margin-top: 6.5%;
+}
+
+.shipment-header h3{
+    color: white;
+    font-family: 'Mali', cursive;
+    font-size: 2em;
+    padding-top: 25px;
+}
+
+.shipment-detail{
+    font-family: 'Mali', cursive;
+    margin-top: 5%;
+}
+
+.shipment-text{
+    color: #e6e6e6;
+    padding-left: 50px;
+}
+
+.shipment-img img{
+    min-width: 75%;
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+    margin-top: 7%;
+}
+
+.about-header{
+    height: 120px;
+    background: rgba(128, 50, 231, 0.767)
+}
+
+.about-text{
+    color: #f1e100;
+    font-family: 'Mali', cursive;
+    margin-left: 15%;
+    margin-top: 10%;
+}
+
+.member{
+    color: white;
+    font-family: 'Mali', cursive;
+    margin-top: 5%;
 }
