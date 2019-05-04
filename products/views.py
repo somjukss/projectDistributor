@@ -1,8 +1,5 @@
 import datetime
 import json
-import random
-import string
-from decimal import Decimal
 
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
@@ -18,7 +15,7 @@ from rest_framework.generics import ListAPIView, RetrieveAPIView
 from rest_framework.permissions import AllowAny
 
 from products.forms import RegisterForm, FeedBackForm, ProductForm, DealerForm, OrderForm, OrderDetailForm
-from products.models import Dealer, FeedBack, Product, Customer, Order, DealerStock, Product_DealerStock, Shipment
+from products.models import Dealer, FeedBack, Product, Customer, Order
 
 from rest_framework import status
 from rest_framework.decorators import api_view
@@ -27,45 +24,33 @@ from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 
 from products.renderers import ProductJSONRenderer
 from .serializers import *
-def randomString(stringLength=20):
-    """Generate a random string of fixed length """
-    letters = string.ascii_lowercase
-    return ''.join(random.choice(letters) for i in range(stringLength))
+
 @login_required
 def index(request):
-    dealer = Dealer.objects.filter(customer_ptr_id=request.user.id).all()[0]
-    context = {'dealer': dealer}
+    context = {}
     return render(request, 'products/index.html', context)
 def api_index(request):
     if request.method == 'POST':
         # customer object
         customer = Customer.objects.get(pk=request.user.id)
         #get data from api
-        group_list = json.loads(request.body)
+        product_list = json.loads(request.body)
         error_list = []
+
         total_price1 = int()
-        for product in group_list[1]:
+        for product in product_list:
             total_price1 = product['total']
-        total_price2 = total_price1 - (customer.dealer.discount*total_price1)
         #create object order
         order = Order(
             date=datetime.date.today(),
             detail=customer.address,
             total_price1=total_price1,
-            total_price2=total_price2,
+            total_price2=customer.dealer.discount,
             customer_id=request.user.id
         )
         order.save()
-        #shipment
-        shipment = Shipment(
-            track_number=randomString(),
-            name=group_list[0]['shipment'],
-            receive_date=datetime.date.today(),
-            order_id=order.id
-        )
-        shipment.save()
         #add data to order detail
-        for my_product in group_list[1]:
+        for my_product in product_list:
             data = {
                 'detail': my_product['name'],
                 'price': float(my_product['price']),
@@ -79,46 +64,19 @@ def api_index(request):
             product = Product.objects.get(pk=my_product['id'])
             product.quantity -= my_product['quantity']
             product.save()
-            #dealer-stock
-            dealerStock = DealerStock.objects.filter(dealer_id=request.user.id).all()
-            # update stock
-            product_dealerStock = Product_DealerStock.objects
-            if Product_DealerStock.objects.filter(dealer_stock=dealerStock[0]):
-                # have product
-                if Product_DealerStock.objects.filter(dealer_stock=dealerStock[0]).filter(product=product):
-                    product_dealerStock = Product_DealerStock.objects.filter(dealer_stock=dealerStock[0]).filter(product=product).all()[0]
-                    product_dealerStock.quantity += my_product['quantity']
-                else:
-                    product_dealerStock = Product_DealerStock.objects.create(
-                        quantity=my_product['quantity'],
-                        dealer_stock=dealerStock[0],
-                        product=product
-                    )
-            else:
-                product_dealerStock = Product_DealerStock.objects.create(
-                    quantity=my_product['quantity'],
-                    dealer_stock=dealerStock[0],
-                    product=product
-                )
-            product_dealerStock.save()
             #save orderdetail
             if form.is_valid():
                 form.save()
             else:
                 error_list.append(form.errors.as_text())
-        # increase amount of dealer
-        dealer = Dealer.objects.filter(customer_ptr_id=request.user.id).all()[0]
-        dealer.amount += total_price2
-        dealer.save()
         if len(error_list) == 0:
-            return redirect('profile')
-            # return JsonResponse({'message': 'success'}, status=200)
-
+            return JsonResponse({'message': 'success'}, status=200)
         else:
             return  JsonResponse({'message': error_list}, status=400)
     return JsonResponse({'message': 'This API does not accept GET request'}, status=405)
 def my_login(request):
     context = {}
+    product = Product.objects.all()
     if request.method == "POST":
         username = request.POST.get('username')
         password = request.POST.get('password')
@@ -138,6 +96,7 @@ def my_login(request):
     next_url = request.GET.get('next')
     if next_url:
         context['next_url'] = next_url
+    context['product'] = product
     return render(request, template_name="user/login.html", context=context)
 
 def my_logout(request):
@@ -165,11 +124,7 @@ def register(request):
             )
             group = Group.objects.get(name='customer')
             u.groups.add(group)
-            dealerstock = DealerStock.objects.create(
-                dealer_id=dealer.customer_ptr_id
-            )
             dealer.save()
-            dealerstock.save()
             form.save()
             return redirect('login')
     else:
@@ -217,25 +172,22 @@ def feedback(request):
 
 @login_required
 def profile(request):
-    dealer = Dealer.objects.filter(customer_ptr_id=request.user.id).all()[0]
-    orders = Order.objects.filter(customer_id=request.user.id).all()
-    products = Product.objects.all()
-    context = {'dealer': dealer}
-    context['orders'] = orders
-    context['products'] = products
+    dealer = Dealer.objects.filter(customer_ptr_id=request.user.id)
+    data = {}
+    for detail in dealer.all():
+        data['username'] = detail.user.username
+        data['first_name'] = detail.user.first_name
+        data['last_name'] = detail.user.last_name
+        data['e_mail'] = detail.user.email
+        data['address'] = detail.address
+        data['phone'] = detail.phone
+        data['discount'] = detail.discount
+        data['amount'] = detail.amount
+        data['blacklist'] = detail.blacklist
+    form = DealerForm(initial=data)
+    context = {'form': form}
     return render(request, 'customer/profile.html', context)
-def orderDetail(request, order_id):
-    dealer = Dealer.objects.filter(customer_ptr_id=request.user.id).all()[0]
-    order = Order.objects.get(pk=order_id)
-    orderdetail = order.orderdetail_set.all()
-    products = Product.objects.all()
-    shipment = Shipment.objects.filter(order_id=order_id).all()[0]
-    context = {'dealer': dealer}
-    context['order'] = order
-    context['orderdetail'] = orderdetail
-    context['products'] = products
-    context['shipment'] = shipment
-    return render(request, 'customer/order.html', context)
+
 class ProductListApiView(ListAPIView):
     model = Product
     queryset = Product.objects.all()
