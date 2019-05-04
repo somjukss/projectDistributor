@@ -51,12 +51,18 @@
         <th>Order ID</th>
         <th>Date</th>
         <th>Link</th>
+        <th>Cancel Status</th>
+        <th>Cancel Date</th>
+        <th>Cancel By</th>
     </tr>
     {% for order in orders %}
     <tr>
         <td>{{ order.id }}</td>
         <td>{{ order.date }}</td>
         <td><a href="{% url 'order-detail' order.id %}">กดสิจ้ะ</a></td>
+        <td>{{ order.cancel }}</td>
+        <td>{{ order.cancel_date }}</td>
+        <td>{{ order.admin }}</td>
     </tr>
     {% endfor %}
 </table>
