@@ -1,29 +1,79 @@
 <!doctype html>
 {% load static %}
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport"
-          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+        content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Create-FeedBack</title>
     <link rel="stylesheet" href="{% static 'css/bootstrap.min.css' %}">
+    <link rel="stylesheet" href="{% static 'css/create-feedback-style.css' %}">
+    <link href="https://fonts.googleapis.com/css?family=Mali" rel="stylesheet">
 </head>
-<body>
-<form action="{% url 'create-feedback' %}" method="POST">`
-    {% csrf_token %}
-    <h1>{{ name }}  {{ surname }}</h1>
-    <table>
-        <tr>
-            <td><label id="{{ form.detail.id_for_label }}">Detail : </label></td>
-            <td>{{ form.detail }}</td>
-        </tr>
-    </table>
-    <input type="submit" value="SAVE">
-</form>
-<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.6/umd/popper.min.js" integrity="sha384-wHAiFfRlMFy6i5SRaxvfOCifBUQy1xHdJ/yoi7FRNXMRBu5WHdZYu1hA6ZOblgut" crossorigin="anonymous"></script>
-<script src="{% static 'js/bootstrap.js' %}"></script>
-</body>
-</html>
 
+<body>
+    <form action="{% url 'create-feedback' %}" method="POST">
+        {% csrf_token %}
+        <nav class="navbar navbar-expand-lg text-white navbar-light">
+            <a href="{% url 'index' %}" class="navbar-brand text-warning">SugarBunny</a>
+        </nav>
+
+        <div class="create-feedback-header">
+            <div class="container">
+                <h2> ยินดีต้อนรับคุณ <span class="semi-bold text-landing"> {{ name }} {{ surname }}</span>
+                </h2>
+            </div>
+        </div>
+
+        <div class="container">
+                <div class="d-flex justify-content-center pt-3">
+                    <div class="card">
+                        <div class="card-header">
+                            <h3>Create Feedback</h3>
+                        </div>
+                        <div class="card-body">
+                            <form>
+                                <div class="input-group form-group">
+                                    <div class="input-group-prepend">
+                                        <span class="input-group-text">
+                                            <label id="{{ form.detail.id_for_label }}">รายละเอียด </label>
+                                        </span>
+                                    </div>
+                                    {{ form.detail }}
+                                </div>
+    
+                                <div class="form-group text-center">
+                                        <input type="submit" value="Send Feedback" class="btn bg-warning">
+                                </div>
+                            </form>
+                        </div>
+                        <div class="card-footer">
+                            <div class="d-flex justify-content-center links">
+                                กลับหน้าหลัก?
+                                <br>
+                                <a href="{% url 'index' %}">Go</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        <!-- <table>
+            <tr>
+                <td><label id="{{ form.detail.id_for_label }}">Detail : </label></td>
+                <td>{{ form.detail }}</td>
+            </tr>
+        </table>
+        <input type="submit" value="SAVE"> -->
+    </form>
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
+        integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
+        crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.6/umd/popper.min.js"
+        integrity="sha384-wHAiFfRlMFy6i5SRaxvfOCifBUQy1xHdJ/yoi7FRNXMRBu5WHdZYu1hA6ZOblgut"
+        crossorigin="anonymous"></script>
+    <script src="{% static 'js/bootstrap.js' %}"></script>
+</body>
+
+</html>
