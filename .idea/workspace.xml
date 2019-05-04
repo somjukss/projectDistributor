@@ -2,10 +2,8 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="df113355-1335-492e-bbe1-338e5cfae3f6" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/products/templates/customer/order.html" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/products/templates/customer/profile.html" beforeDir="false" afterPath="$PROJECT_DIR$/products/templates/customer/profile.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/products/urls.py" beforeDir="false" afterPath="$PROJECT_DIR$/products/urls.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/products/views.py" beforeDir="false" afterPath="$PROJECT_DIR$/products/views.py" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -31,8 +29,8 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/products/views.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="291">
-              <caret line="218" column="68" selection-start-line="218" selection-start-column="68" selection-end-line="218" selection-end-column="68" />
+            <state relative-caret-position="314">
+              <caret line="219" column="36" selection-start-line="219" selection-start-column="36" selection-end-line="219" selection-end-column="36" />
               <folding>
                 <element signature="e#0#15#0" expanded="true" />
                 <element signature="e#1218#4394#0" />
@@ -54,8 +52,8 @@
       <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/products/templates/customer/profile.html">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="61">
-              <caret line="40" lean-forward="true" selection-start-line="40" selection-end-line="40" />
+            <state relative-caret-position="544">
+              <caret line="46" selection-start-line="46" selection-end-line="46" />
             </state>
           </provider>
         </entry>
@@ -334,12 +332,12 @@
       <workItem from="1556782231570" duration="1268000" />
       <workItem from="1556790939620" duration="17039000" />
       <workItem from="1556853404226" duration="50445000" />
-      <workItem from="1556950397937" duration="5014000" />
+      <workItem from="1556950397937" duration="5757000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="117321000" />
+    <option name="totallyTimeSpent" value="118064000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="-7" y="-7" width="1550" height="838" extended-state="6" />
@@ -517,10 +515,17 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/products/templates/customer/order.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="92">
+          <caret line="4" column="26" lean-forward="true" selection-start-line="4" selection-start-column="26" selection-end-line="4" selection-end-column="26" />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/products/views.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="291">
-          <caret line="218" column="68" selection-start-line="218" selection-start-column="68" selection-end-line="218" selection-end-column="68" />
+        <state relative-caret-position="314">
+          <caret line="219" column="36" selection-start-line="219" selection-start-column="36" selection-end-line="219" selection-end-column="36" />
           <folding>
             <element signature="e#0#15#0" expanded="true" />
             <element signature="e#1218#4394#0" />
@@ -529,17 +534,10 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/products/templates/customer/order.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="92">
-          <caret line="4" column="26" lean-forward="true" selection-start-line="4" selection-start-column="26" selection-end-line="4" selection-end-column="26" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/products/templates/customer/profile.html">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="61">
-          <caret line="40" lean-forward="true" selection-start-line="40" selection-end-line="40" />
+        <state relative-caret-position="544">
+          <caret line="46" selection-start-line="46" selection-end-line="46" />
         </state>
       </provider>
     </entry>

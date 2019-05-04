@@ -29,15 +29,22 @@
     </tr>
     <tr>
         <td>Product Id</td>
+        <td>Product name</td>
         <td>Stock</td>
     </tr>
     {% for stock in dealer.dealerstock.product_dealerstock_set.all %}
     <tr>
         <td>{{ stock.product_id }}</td>
+        {% for product in products %}
+            {% if product.id == stock.product_id %}
+            <td>{{ product.name }}</td>
+            {% endif %}
+        {% endfor %}
         <td>{{ stock.quantity }}</td>
     </tr>
     {% endfor %}
 </table>
+
 
 <table>
     <tr>

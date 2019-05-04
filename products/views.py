@@ -217,8 +217,10 @@ def feedback(request):
 def profile(request):
     dealer = Dealer.objects.filter(customer_ptr_id=request.user.id).all()[0]
     orders = Order.objects.filter(customer_id=request.user.id).all()
+    products = Product.objects.all()
     context = {'dealer': dealer}
     context['orders'] = orders
+    context['products'] = products
     return render(request, 'customer/profile.html', context)
 def orderDetail(request, order_id):
     context = {}
