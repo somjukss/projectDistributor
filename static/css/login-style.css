@@ -1,0 +1,52 @@
+@import url('https://fonts.googleapis.com/css?family=Mali');
+
+body {
+    background-image: linear-gradient(to bottom, rgb(108, 158, 250), rgb(128, 94, 250));
+    background-repeat: no-repeat;
+    height: 100%;
+}
+
+.pt-3 {
+    padding: 150px !important;
+  }
+
+.navbar-brand{
+    font-family: 'Mali', cursive;
+    font-size: 40px;
+}
+
+.product-header{
+    height: 75px;
+    background: rgba(231, 50, 201, 0.767)
+}
+
+.product-header h3{
+    color: white;
+    font-family: 'Mali', cursive;
+    font-size: 2em;
+    padding-top: 25px;
+}
+
+.text-landing {
+    color: #f1e100;
+}
+
+.semi-bold {
+    font-weight: 600;
+}
+
+.carousel{
+    border: 7px solid rgb(255, 255, 255);
+    margin-left: 20%;
+    margin-right: 5%;
+    margin-top: 2.5%;
+}
+
+.product-detail{
+    font-family: 'Mali', cursive;
+    margin-top: 5%;
+}
+
+.product-text{
+    color: #e6e6e6;
+}
