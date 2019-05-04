@@ -3,14 +3,14 @@ from django.contrib import admin
 # Register your models here.
 from django.contrib.auth import get_user_model
 from django.contrib.auth.admin import UserAdmin
-from django.contrib.auth.models import User
+from django.contrib.auth.models import User, Group
 from django.forms import BaseInlineFormSet
 from django.urls import reverse
 from django.utils.html import format_html
 from django.utils.safestring import mark_safe
 
 from products.models import Dealer, Customer, FeedBack, Admin, Admin_Customer, ProductLot, Product, Manufactor, Order, \
-    OrderDetail, Shipment
+    OrderDetail, Shipment, Product_DealerStock
 
 
 class AdminInline(admin.StackedInline):
@@ -56,6 +56,16 @@ class DealerAdmin(admin.ModelAdmin):
     list_display = ['dealer', 'address', 'phone', 'blacklist', 'discount', 'amount']
     readonly_fields = ['address', 'phone', 'user']
     inlines = [Admin_CustomerInline]
+
+    def save_model(self, request, obj, form, change):
+        group = Group.objects.get(name='blacklist')
+        u = User.objects.get(pk=obj.customer_ptr_id)
+        print(u)
+        if obj.blacklist:
+            u.groups.add(group)
+        else:
+            group.user_set.remove(u)
+        super().save_model(request, obj, form, change)
 
     def save_formset(self, request, form, formset, change):
         instances = formset.save(commit=False)
@@ -117,9 +127,25 @@ class OrderAdmin(admin.ModelAdmin):
         ("Admin check", {'fields': ['admin', 'cancel', 'cancel_date', 'reason']})
     ]
     inlines = [OrderDetailInline, ShipmentInline]
+    def save_model(self, request, obj, form, change):
+        dealer = Dealer.objects.filter(customer_ptr_id=obj.customer_id).all()[0]
+        order_detail = OrderDetail.objects.filter(order_id=obj.id).all()
+        stocks = Product_DealerStock.objects
+        if not obj.admin:
+            obj.admin = request.user.admin
+        if obj.cancel == True:
+            #decrease amount in dealer
+            dealer.amount -= obj.total_price2
+            dealer.save()
+            #update stock of dealer
+            for detail in order_detail:
+                for stock in stocks.filter(dealer_stock=dealer.dealerstock).all():
+                    if stock.product == detail.product:
+                        stock.quantity -= detail.quantity
+                        stock.save()
+            obj.save()
     def get_status(self, obj):
         return Shipment.objects.filter(order=obj).all()[0].status
-
     get_status.short_description = 'Shipment-Status'
     def link_to_customer(self, obj):
         link = reverse("admin:products_dealer_change", args=[obj.customer.dealer.customer_ptr_id])
