@@ -11,6 +11,7 @@
 </head>
 <body>
 <h1>This is order #{{ order.id }}</h1>
+
 <table>
     <tr>
         <th>สินค้า</th>
@@ -40,6 +41,11 @@
         <td></td>
         <td colspan="2">ราคารวมส่วนลด</td>
         <td>{{ order.total_price2 }}</td>
+    </tr>
+    <tr>
+        <td></td>
+        <td colspan="2">{{ shipment.name }}</td>
+        <td>{{ shipment.status }}</td>
     </tr>
 
 

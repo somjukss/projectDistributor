@@ -113,11 +113,13 @@ class Shipment(models.Model):
     ARRIVEDATDESTINATIONSTATION = 'Arrivedatdestinationstation'
     ARRIVEATHUB = 'ArrivedatHub'
     SHIPMENTPICKUP = 'Shipmentpickedup'
+    WAITING = 'Waiting'
     choices = (
         (ARRIVEDATDESTINATIONSTATION, 'Arrived at destination station'),
         (ARRIVEATHUB,  'Arrived at Hub'),
-        (SHIPMENTPICKUP, 'Shipment picked up')
+        (SHIPMENTPICKUP, 'Shipment picked up'),
+        (WAITING, 'Waiting')
     )
-    status = models.CharField(max_length=30, choices=choices)
+    status = models.CharField(max_length=30, choices=choices, default='Waiting')
     #fk
     order = models.ForeignKey(Order, models.CASCADE)
