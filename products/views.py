@@ -1,5 +1,7 @@
 import datetime
 import json
+import random
+import string
 from decimal import Decimal
 
 from django.contrib.auth import authenticate, login, logout
@@ -16,7 +18,7 @@ from rest_framework.generics import ListAPIView, RetrieveAPIView
 from rest_framework.permissions import AllowAny
 
 from products.forms import RegisterForm, FeedBackForm, ProductForm, DealerForm, OrderForm, OrderDetailForm
-from products.models import Dealer, FeedBack, Product, Customer, Order, DealerStock, Product_DealerStock
+from products.models import Dealer, FeedBack, Product, Customer, Order, DealerStock, Product_DealerStock, Shipment
 
 from rest_framework import status
 from rest_framework.decorators import api_view
@@ -25,7 +27,10 @@ from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 
 from products.renderers import ProductJSONRenderer
 from .serializers import *
-
+def randomString(stringLength=20):
+    """Generate a random string of fixed length """
+    letters = string.ascii_lowercase
+    return ''.join(random.choice(letters) for i in range(stringLength))
 @login_required
 def index(request):
     dealer = Dealer.objects.filter(customer_ptr_id=request.user.id).all()[0]
@@ -36,11 +41,10 @@ def api_index(request):
         # customer object
         customer = Customer.objects.get(pk=request.user.id)
         #get data from api
-        product_list = json.loads(request.body)
+        group_list = json.loads(request.body)
         error_list = []
-
         total_price1 = int()
-        for product in product_list:
+        for product in group_list[1]:
             total_price1 = product['total']
         total_price2 = total_price1 - (customer.dealer.discount*total_price1)
         #create object order
@@ -52,8 +56,16 @@ def api_index(request):
             customer_id=request.user.id
         )
         order.save()
+        #shipment
+        shipment = Shipment(
+            track_number=randomString(),
+            name=group_list[0]['shipment'],
+            receive_date=datetime.date.today(),
+            order_id=order.id
+        )
+        shipment.save()
         #add data to order detail
-        for my_product in product_list:
+        for my_product in group_list[1]:
             data = {
                 'detail': my_product['name'],
                 'price': float(my_product['price']),

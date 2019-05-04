@@ -18,6 +18,7 @@
             <div class="cart">
                 <h2>Your Cart</h2>
                 <template v-if="cart.length">
+                    <form onsubmit="return false">
                 <table class="cart-list">
                     <thead>
                         <tr>
@@ -69,7 +70,17 @@
                     <br>
                     <div class="next-step">
                         <div class="form-payment">
-
+                            <div class="form-row">
+                                <div class="form-group col-md-5">
+                                        <label for="shipmentType">Shipment Type</label>
+                                        <select required id="shipmentType" class="form-control"
+                                            v-model="user.shipmentType">
+                                            <option selected disabled>Please Select</option>
+                                            <option value="Thailand Post">Thailand Post</option>
+                                            <option value="Kerry Express Thailand">Kerry Express Thailand</option>
+                                        </select>
+                                    </div>
+                            </div>
                                 <div class="form-row">
                                     <div class="form-group col-md-6">
                                         <label for="inputName">Name</label>
@@ -136,6 +147,7 @@
 
     </div>
     <input type="submit" value="submit" @click.validate="submit">
+                        </form>
     </template>
     <template v-else>
                     <div>
@@ -235,12 +247,14 @@
             el: '#app',
             data: {
                 user: {
+                    shipmentType: "",
                     paymentType: "",
                     creditNumber: "",
                 },
                 info: null,
                 premium: true,
                 cart: [],
+                mygroup: [],
                 total: 0,
 
             },
@@ -330,9 +344,13 @@
                 },
                 submit() {
                     console.log(this.cart)
+                    this.mygroup.push({
+                        shipment:this.user.shipmentType
+                    })
+                    this.mygroup.push(this.cart)
                     axios
                         .post('http://localhost:8000/products/api/index/',
-                            this.cart, {
+                            this.mygroup, {
                                 headers: {
                                     'X-CSRFTOKEN': csrftoken
                                 }
