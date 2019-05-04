@@ -1,10 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="df113355-1335-492e-bbe1-338e5cfae3f6" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/products/templates/customer/order.html" beforeDir="false" afterPath="$PROJECT_DIR$/products/templates/customer/order.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/products/views.py" beforeDir="false" afterPath="$PROJECT_DIR$/products/views.py" afterDir="false" />
-    </list>
+    <list default="true" id="df113355-1335-492e-bbe1-338e5cfae3f6" name="Default Changelist" comment="" />
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -172,7 +169,7 @@
       </list>
     </option>
   </component>
-  <component name="ProjectFrameBounds" extendedState="6">
+  <component name="ProjectFrameBounds" extendedState="7">
     <option name="x" value="945" />
     <option name="y" value="170" />
     <option name="width" value="1750" />
@@ -331,15 +328,15 @@
       <workItem from="1556782231570" duration="1268000" />
       <workItem from="1556790939620" duration="17039000" />
       <workItem from="1556853404226" duration="50445000" />
-      <workItem from="1556950397937" duration="6535000" />
+      <workItem from="1556950397937" duration="7134000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="118842000" />
+    <option name="totallyTimeSpent" value="119441000" />
   </component>
   <component name="ToolWindowManager">
-    <frame x="-7" y="-7" width="1550" height="838" extended-state="6" />
+    <frame x="-7" y="-7" width="1550" height="838" extended-state="7" />
     <editor active="true" />
     <layout>
       <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.15147454" />
