@@ -237,17 +237,25 @@
                         <h5 class="card-title">[[ product.name ]]</h5>
                         <p v-if="inStock">In Stock</p>
                         <p v-else>Out of Stock</p>
-                        <p class="card-text">[[product.describe]]</p>
+                        <p v-show="dspl">[[product.describe]]</p>
+                        <a @click="revert" value="show" style="color:blue;">CLICK TO SHOW DETAIL!</a>
+                        <p class="card-text"></p>
+                        <h5 style="color:red;"> [[product.price]] BATH</h5>
                         <button v-on:click="addToCart":disabled="!inStock":class="{ disabledButton: !inStock }">Add to cart</button>
                     </div>
             </div>
         </div>
      `,
             data() {
-                return {}
+                return {
+                    dspl: false
+                }
             },
 
             methods: {
+                revert: function(){
+                    this.dspl = !this.dspl;
+                },
                 addToCart: function() {
                     this.$emit('add-to-cart', this.product)
                 },
