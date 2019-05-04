@@ -119,6 +119,7 @@ def api_index(request):
     return JsonResponse({'message': 'This API does not accept GET request'}, status=405)
 def my_login(request):
     context = {}
+    product = Product.objects.all()
     if request.method == "POST":
         username = request.POST.get('username')
         password = request.POST.get('password')
@@ -138,6 +139,7 @@ def my_login(request):
     next_url = request.GET.get('next')
     if next_url:
         context['next_url'] = next_url
+    context['product'] = product
     return render(request, template_name="user/login.html", context=context)
 
 def my_logout(request):
