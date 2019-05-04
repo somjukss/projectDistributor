@@ -1,9 +1,8 @@
 @import url('https://fonts.googleapis.com/css?family=Mali');
 
-body {
+html, body {
     background-image: linear-gradient(to bottom, rgb(108, 158, 250), rgb(128, 94, 250));
     background-repeat: no-repeat;
-    height: 100%;
 }
 
 .pt-3 {
