@@ -229,10 +229,12 @@ def orderDetail(request, order_id):
     order = Order.objects.get(pk=order_id)
     orderdetail = order.orderdetail_set.all()
     products = Product.objects.all()
+    shipment = Shipment.objects.filter(order_id=order_id).all()[0]
     context = {'dealer': dealer}
     context['order'] = order
     context['orderdetail'] = orderdetail
     context['products'] = products
+    context['shipment'] = shipment
     return render(request, 'customer/order.html', context)
 class ProductListApiView(ListAPIView):
     model = Product

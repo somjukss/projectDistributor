@@ -17,8 +17,9 @@
         <div class="col-dx">
             <div class="cart">
                 <h2>Your Cart</h2>
+
                 <template v-if="cart.length">
-                    <form onsubmit="return false">
+                <form onsubmit="return false">
                 <table class="cart-list">
                     <thead>
                         <tr>
@@ -147,7 +148,7 @@
 
     </div>
     <input type="submit" value="submit" @click="submit">
-                        </form>
+    </form>
     </template>
     <template v-else>
                     <div>
@@ -365,6 +366,7 @@
                             console.log(error.response)
                             this.errorMSG = ''
                         })
+                    window.location.href = 'http://localhost:8000/products/profile'
                 }
             }
         })
