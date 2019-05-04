@@ -27,7 +27,7 @@ CREATE TABLE `auth_group` (
   `name` varchar(80) COLLATE utf8mb4_unicode_ci NOT NULL,
   PRIMARY KEY (`id`),
   UNIQUE KEY `name` (`name`)
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -36,7 +36,7 @@ CREATE TABLE `auth_group` (
 
 LOCK TABLES `auth_group` WRITE;
 /*!40000 ALTER TABLE `auth_group` DISABLE KEYS */;
-INSERT INTO `auth_group` VALUES (1,'customer');
+INSERT INTO `auth_group` VALUES (2,'blacklist'),(1,'customer');
 /*!40000 ALTER TABLE `auth_group` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -126,7 +126,7 @@ CREATE TABLE `auth_user` (
 
 LOCK TABLES `auth_user` WRITE;
 /*!40000 ALTER TABLE `auth_user` DISABLE KEYS */;
-INSERT INTO `auth_user` VALUES (1,'pbkdf2_sha256$120000$N3bN67EPnAIf$wUFbOs11pLRDsfcSDKQqKK5yWJHS0k7Z1ciLP8my8XU=','2019-05-04 10:51:10.000000',1,'admin','Niti','Jirakarnwuttikrai','momo_niti@hotmail.com',1,1,'2019-05-04 10:51:02.000000');
+INSERT INTO `auth_user` VALUES (1,'pbkdf2_sha256$120000$ikudl8c6hLS0$oRH+Bu2TkThaaaZyMvnioAkM1hbZnCvNVz3U6XwSGnE=','2019-05-04 22:25:59.346052',1,'admin','','','momo_niti@hotmail.com',1,1,'2019-05-04 22:25:38.472533');
 /*!40000 ALTER TABLE `auth_user` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -216,7 +216,7 @@ CREATE TABLE `django_admin_log` (
 
 LOCK TABLES `django_admin_log` WRITE;
 /*!40000 ALTER TABLE `django_admin_log` DISABLE KEYS */;
-INSERT INTO `django_admin_log` VALUES (1,'2019-05-04 10:52:10.480516','1','admin',2,'[{\"changed\": {\"fields\": [\"first_name\", \"last_name\"]}}, {\"added\": {\"name\": \"admin\", \"object\": \"admin\"}}]',4,1),(2,'2019-05-04 10:52:22.996021','1','customer',1,'[{\"added\": {}}]',3,1);
+INSERT INTO `django_admin_log` VALUES (1,'2019-05-04 22:26:14.709870','1','customer',1,'[{\"added\": {}}]',3,1),(2,'2019-05-04 22:26:21.758818','2','blacklist',1,'[{\"added\": {}}]',3,1);
 /*!40000 ALTER TABLE `django_admin_log` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -268,7 +268,7 @@ CREATE TABLE `django_migrations` (
 
 LOCK TABLES `django_migrations` WRITE;
 /*!40000 ALTER TABLE `django_migrations` DISABLE KEYS */;
-INSERT INTO `django_migrations` VALUES (1,'contenttypes','0001_initial','2019-05-04 10:49:23.426207'),(2,'auth','0001_initial','2019-05-04 10:49:27.910089'),(3,'admin','0001_initial','2019-05-04 10:49:29.149106'),(4,'admin','0002_logentry_remove_auto_add','2019-05-04 10:49:29.185199'),(5,'admin','0003_logentry_add_action_flag_choices','2019-05-04 10:49:29.218959'),(6,'contenttypes','0002_remove_content_type_name','2019-05-04 10:49:30.148124'),(7,'auth','0002_alter_permission_name_max_length','2019-05-04 10:49:30.532689'),(8,'auth','0003_alter_user_email_max_length','2019-05-04 10:49:30.630268'),(9,'auth','0004_alter_user_username_opts','2019-05-04 10:49:30.698489'),(10,'auth','0005_alter_user_last_login_null','2019-05-04 10:49:31.187974'),(11,'auth','0006_require_contenttypes_0002','2019-05-04 10:49:31.204267'),(12,'auth','0007_alter_validators_add_error_messages','2019-05-04 10:49:31.269010'),(13,'auth','0008_alter_user_username_max_length','2019-05-04 10:49:31.695678'),(14,'auth','0009_alter_user_last_name_max_length','2019-05-04 10:49:32.031719'),(15,'products','0001_initial','2019-05-04 10:49:41.426047'),(16,'sessions','0001_initial','2019-05-04 10:49:41.659946');
+INSERT INTO `django_migrations` VALUES (1,'contenttypes','0001_initial','2019-05-04 22:20:15.692536'),(2,'auth','0001_initial','2019-05-04 22:20:20.121189'),(3,'admin','0001_initial','2019-05-04 22:20:21.023033'),(4,'admin','0002_logentry_remove_auto_add','2019-05-04 22:20:21.058745'),(5,'admin','0003_logentry_add_action_flag_choices','2019-05-04 22:20:21.094455'),(6,'contenttypes','0002_remove_content_type_name','2019-05-04 22:20:22.001810'),(7,'auth','0002_alter_permission_name_max_length','2019-05-04 22:20:22.585187'),(8,'auth','0003_alter_user_email_max_length','2019-05-04 22:20:22.690309'),(9,'auth','0004_alter_user_username_opts','2019-05-04 22:20:22.726021'),(10,'auth','0005_alter_user_last_login_null','2019-05-04 22:20:23.056535'),(11,'auth','0006_require_contenttypes_0002','2019-05-04 22:20:23.071922'),(12,'auth','0007_alter_validators_add_error_messages','2019-05-04 22:20:23.110103'),(13,'auth','0008_alter_user_username_max_length','2019-05-04 22:20:23.521676'),(14,'auth','0009_alter_user_last_name_max_length','2019-05-04 22:20:23.917696'),(15,'products','0001_initial','2019-05-04 22:20:34.059790'),(16,'sessions','0001_initial','2019-05-04 22:20:34.266751');
 /*!40000 ALTER TABLE `django_migrations` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -294,7 +294,7 @@ CREATE TABLE `django_session` (
 
 LOCK TABLES `django_session` WRITE;
 /*!40000 ALTER TABLE `django_session` DISABLE KEYS */;
-INSERT INTO `django_session` VALUES ('7vzkhtzxcoh1cqvbnyps7me9y2x3lj8o','YzdlNTBjYzYyZWI4Zjk4YjBjMjNhMjRhYTYyMzU4YzA1NDcwZTAxMjp7Il9hdXRoX3VzZXJfaWQiOiIxIiwiX2F1dGhfdXNlcl9iYWNrZW5kIjoiZGphbmdvLmNvbnRyaWIuYXV0aC5iYWNrZW5kcy5Nb2RlbEJhY2tlbmQiLCJfYXV0aF91c2VyX2hhc2giOiI0ZGJhNDRjNGJjZWViZWRmM2ZkMjEzYjk4MzMwYzMxZDY1NWE2MTEyIn0=','2019-05-18 10:51:10.924859');
+INSERT INTO `django_session` VALUES ('8aqf5sjh2n0idcoso6bc4umi8hvmq910','YmUzZjA1ZjM5YWVkMTQ1YzJkOGFiZjU4ZTdjNDA5ODM1Nzk2YTVhMzp7Il9hdXRoX3VzZXJfaWQiOiIxIiwiX2F1dGhfdXNlcl9iYWNrZW5kIjoiZGphbmdvLmNvbnRyaWIuYXV0aC5iYWNrZW5kcy5Nb2RlbEJhY2tlbmQiLCJfYXV0aF91c2VyX2hhc2giOiJiYTBkMDFiNzE3NGY4MGI5MjRhYmEwNDc5MmVjNDNkZjRhMzM3ZjIxIn0=','2019-05-18 22:25:59.358453');
 /*!40000 ALTER TABLE `django_session` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -319,7 +319,6 @@ CREATE TABLE `products_admin` (
 
 LOCK TABLES `products_admin` WRITE;
 /*!40000 ALTER TABLE `products_admin` DISABLE KEYS */;
-INSERT INTO `products_admin` VALUES ('0617689874',1);
 /*!40000 ALTER TABLE `products_admin` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -499,6 +498,7 @@ CREATE TABLE `products_order` (
   `detail` longtext COLLATE utf8mb4_unicode_ci NOT NULL,
   `total_price1` decimal(8,2) NOT NULL,
   `total_price2` decimal(8,2) NOT NULL,
+  `cancel` tinyint(1) NOT NULL,
   `reason` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `cancel_date` date DEFAULT NULL,
   `admin_id` int(11) DEFAULT NULL,
@@ -571,7 +571,7 @@ CREATE TABLE `products_product` (
   PRIMARY KEY (`id`),
   KEY `products_product_manufactor_id_4b28e972_fk_products_` (`manufactor_id`),
   CONSTRAINT `products_product_manufactor_id_4b28e972_fk_products_` FOREIGN KEY (`manufactor_id`) REFERENCES `products_manufactor` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=11 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=13 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -580,7 +580,7 @@ CREATE TABLE `products_product` (
 
 LOCK TABLES `products_product` WRITE;
 /*!40000 ALTER TABLE `products_product` DISABLE KEYS */;
-INSERT INTO `products_product` VALUES (1,'GRACE','ครีมบำรุงผิวหน้าสูตรเข้มข้น เนื้อบางเบา ช่วยเพิ่มความชุ่มชื่นให้แก่ผิว ทำให้ผิวเนียนนุ่ม แลดูอ่อนเยาว์',1500,500,1000.00,1,'https://sv1.picz.in.th/images/2019/05/04/wcVtCf.jpg'),(2,'Artiscent','ครีมหน้าสดอาทิเซ้นท์ ครีมตัวช่วยที่ให้คุณโชว์หน้าสดได้ เผยผิวหน้าสด ไร้ฝ้า กระ จุดด่างดำ',1500,500,1500.00,1,'https://sv1.picz.in.th/images/2019/05/04/wcVwFa.jpg'),(3,'SKII','ปลุกพลังให้ผิวสวยดูอ่อนเยาว์ของคุณด้วยมอยส์เจอไรเซอร์เนื้อครีมเจ้าของรางวัล1ผลิตภัณฑ์ที่อุดมด้วยส่วนผสมเพื่อการฟื้นบำรุง',1500,100,1700.00,2,'https://sv1.picz.in.th/images/2019/05/04/wcVKtq.jpg'),(4,'ROJUKISS','ครีม 30X ที่ทาได้ทั้งกลางวันและกลางคืน เพื่อการปกป้อง และบำรุงผิวรอบดวงตา  แก้ปัญหารูขุมขนกว้างที่เกิดจากสิว',1500,200,790.00,2,'https://sv1.picz.in.th/images/2019/05/04/wcVZoz.jpg'),(5,'ORIFLAME','ครีมบำรุงผิวหน้าก่อนนอน สำหรับผิวแห้ง ด้วยคุณค่าจากน้ำนมและน้ำผึ้ง',1500,300,790.00,2,'https://sv1.picz.in.th/images/2019/05/04/wcVcG8.jpg'),(6,'Johnson\'s','บำรุงผิวให้เนียนนุ่ม ดูกระจ่างใส ด้วยคุณค่าจากน้ำนม และวิตามินเอ และอี ผ่านการทดสอบไม่ก่อให้เกิดอาการแพ้หรือระคายเคือง',1500,400,107.00,3,'https://sv1.picz.in.th/images/2019/05/04/wcVifR.jpg'),(7,'อภัยภูเบศร์','มอยเจอไรเซอร์ที่ช่วยคืนความชุ่่มชื้นให้กับผิวที่แห้งมาก จนหลุดลอกเป็นขุย มีปัญหาริ้วรอย เนื้อครีมซึมซาบเร็ว ไม่เหนียวเหนอะหนะ',1500,0,250.00,4,'https://sv1.picz.in.th/images/2019/05/04/wcVR50.jpg'),(8,'Jasmine rice','ครีมรวงข้าว ผลงานวิจัย ม.แม่ฟ้าหลวง สลัดจากดอกข้าวมะลิ ปลอดภัยไร้สารเคมี',1500,0,250.00,4,'https://sv1.picz.in.th/images/2019/05/04/wcVxHu.jpg'),(9,'La Chule','นาโน มอยส์เจอไรเซอร์ จีพีโฟร์จี ครีม Nano Moisturizer GP4G Cream สเต็มเซลล์สด…ลดฝ้า หน้าเด็ก',1500,0,2500.00,5,'https://sv1.picz.in.th/images/2019/05/04/wcVUSZ.jpg'),(10,'PUERARIA','ครีมบำรุงผิวอันบอบบางรอบดวงตา ปราศจากน้ำหอม ช่วยคืนความกระชับครีมบำรุงผิวอันบอบบางรอบดวงตา',1500,50,520.00,5,'https://sv1.picz.in.th/images/2019/05/04/wcVqgI.jpg');
+INSERT INTO `products_product` VALUES (1,'Sweets Cafe Mist Spray กลิ่น Strawberry Cream','Sweets Cafe Mist Spray by Sugarbunny Skincare น้ำหอมกลิ่นขนมสูตรปราศจากแอลกฮอลล์และสารกันเสีย อ่อนโยน ใช้ได้แม้ผิวแพ้ง่าย กลิ่นไม่ฉุน มาในกลิ่นหอมธีมขนมหวานน่ารักไม่ซ้ำใคร ขนาด10ml. บรรจุ 12 ขวด',1500,500,3200.00,1,'https://sv1.picz.in.th/images/2019/05/05/wgqbZb.jpg'),(2,'Sweets Cafe Mist Spray กลิ่น Peach Blossom','Sweets Cafe Mist Spray by Sugarbunny Skincare น้ำหอมกลิ่นขนมสูตรปราศจากแอลกฮอลล์และสารกันเสีย อ่อนโยน ใช้ได้แม้ผิวแพ้ง่าย กลิ่นไม่ฉุน มาในกลิ่นหอมธีมขนมหวานน่ารักไม่ซ้ำใคร ขนาด10ml. บรรจุ 12 ขวด',1500,500,3200.00,1,'https://sv1.picz.in.th/images/2019/05/05/wgqOdJ.jpg'),(3,'Sweets Cafe Mist Spray กลิ่น CocoMango','Sweets Cafe Mist Spray by Sugarbunny Skincare น้ำหอมกลิ่นขนมสูตรปราศจากแอลกฮอลล์และสารกันเสีย อ่อนโยน ใช้ได้แม้ผิวแพ้ง่าย กลิ่นไม่ฉุน มาในกลิ่นหอมธีมขนมหวานน่ารักไม่ซ้ำใคร ขนาด10ml. บรรจุ 12 ขวด',1500,100,3200.00,1,'https://sv1.picz.in.th/images/2019/05/05/wgqjsf.jpg'),(4,'Sweets Cafe Mist Spray กลิ่น Orange Caramel','Sweets Cafe Mist Spray by Sugarbunny Skincare น้ำหอมกลิ่นขนมสูตรปราศจากแอลกฮอลล์และสารกันเสีย อ่อนโยน ใช้ได้แม้ผิวแพ้ง่าย กลิ่นไม่ฉุน มาในกลิ่นหอมธีมขนมหวานน่ารักไม่ซ้ำใคร ขนาด10ml. บรรจุ 12 ขวด',1500,200,3200.00,1,'https://sv1.picz.in.th/images/2019/05/05/wgqlma.jpg'),(5,'Sweets Cafe Mist Spray กลิ่น Milk Candy','Sweets Cafe Mist Spray by Sugarbunny Skincare น้ำหอมกลิ่นขนมสูตรปราศจากแอลกฮอลล์และสารกันเสีย อ่อนโยน ใช้ได้แม้ผิวแพ้ง่าย กลิ่นไม่ฉุน มาในกลิ่นหอมธีมขนมหวานน่ารักไม่ซ้ำใคร ขนาด10ml. บรรจุ 12 ขวด',1500,300,3200.00,1,'https://sv1.picz.in.th/images/2019/05/05/wgqD9q.jpg'),(6,'Sweets Cafe Mist Spray กลิ่น Parfait Melon','Sweets Cafe Mist Spray by Sugarbunny Skincare น้ำหอมกลิ่นขนมสูตรปราศจากแอลกฮอลล์และสารกันเสีย อ่อนโยน ใช้ได้แม้ผิวแพ้ง่าย กลิ่นไม่ฉุน มาในกลิ่นหอมธีมขนมหวานน่ารักไม่ซ้ำใคร ขนาด10ml. บรรจุ 12 ขวด',1500,400,3200.00,1,'https://sv1.picz.in.th/images/2019/05/05/wgqAjz.jpg'),(7,'Sweets Cafe Mist Spray กลิ่น BlueBerry Cupcake','Sweets Cafe Mist Spray by Sugarbunny Skincare น้ำหอมกลิ่นขนมสูตรปราศจากแอลกฮอลล์และสารกันเสีย อ่อนโยน ใช้ได้แม้ผิวแพ้ง่าย กลิ่นไม่ฉุน มาในกลิ่นหอมธีมขนมหวานน่ารักไม่ซ้ำใคร ขนาด10ml. บรรจุ 12 ขวด',1500,0,3200.00,1,'https://sv1.picz.in.th/images/2019/05/05/wgqPp8.jpg'),(8,'เซรั่มสายไหม CandyFloss Serum','เซรั่มไฮยาลูรอนนำเข้าจากญี่ปุ่น เนื้ออ่อนโยนบางเบา เหมาะกับผิวแพ้ง่าย ทาได้ทั่วหน้าแม้แต่ใต้ตาหรือริมฝีปาก ช่วยเรื่องความชุ่มชื้น รูขุมขน ริ้วรอย รอยสิว <3 ใช้ขวดเดียวจบปึ๊งไม่ยุ่งยาก อยากให้ลองรับน้องไปโดนกันซักขวดจ้า >w< ขนาด10ml. บรรจุ 10 ขวด',1500,0,1800.00,4,'https://sv1.picz.in.th/images/2019/05/05/wgq2NR.jpg'),(9,'สเปรย์ย่านางชูก้าร์บันนี่','ช่วยลดสิวผดผื่นแพ้ อาการอักเสบบวมแดง ที่เกิดจากสิวหรือผิวแพ้เหงื่อ เติมความชุ่มชื้นให้ผิวฉ่ำน้ำ หน้าไม่มัน อ่อนโยนแม้สัมผัสกับดวงตาหรือเข้าปาก สกัดเย็นจากสมุนไพร100% ขนาด 100ml. บรรจุ 6 ขวด',1500,0,750.00,5,'https://sv1.picz.in.th/images/2019/05/05/wgqCU0.jpg'),(10,'สบู่น้ำมะลิสูตรเย็นสดชื่นผิว','ใช้แล้วเย็นผิว เติมความชุ่มชื้น ลดผิวอักเสบจากแดดเผา ลดสิวผด ผิวนุ่มเด้ง ใช้ได้ทั้งหน้าและตัวขนาด 35-40 กรัม บรรจุ 12 ก้อน',1500,50,800.00,2,'https://sv1.picz.in.th/images/2019/05/05/wgquru.jpg'),(11,'Mermaid Pink Contact Lens','คอนแทคเลนส์(รายปี)สีรุ้งรุ่นใหม่!คอนแทคเลนส์ผลิตในประเทศจีนจากร้านขายยาที่มีใบอนุญาตถูกต้อง Diameter : 14.00 mm. ค่าอมน้ำ : 38%  บรรจุ 12 คู่',1500,12,2500.00,3,'https://sv1.picz.in.th/images/2019/05/05/wgqycQ.jpg'),(12,'Rainbow Contact Lens','คอนแทคเลนส์(รายปี)สีรุ้งรุ่นใหม่!คอนแทคเลนส์ผลิตในประเทศจีนจากร้านขายยาที่มีใบอนุญาตถูกต้อง Diameter : 14.00 mm. ค่าอมน้ำ : 38%  บรรจุ 12 คู่',1500,19,2500.00,3,'https://sv1.picz.in.th/images/2019/05/05/wgqm0V.jpg');
 /*!40000 ALTER TABLE `products_product` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -678,4 +678,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2019-05-04 17:59:58
+-- Dump completed on 2019-05-05  5:28:12
