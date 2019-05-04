@@ -223,7 +223,14 @@ def profile(request):
     context['products'] = products
     return render(request, 'customer/profile.html', context)
 def orderDetail(request, order_id):
-    context = {}
+    dealer = Dealer.objects.filter(customer_ptr_id=request.user.id).all()[0]
+    order = Order.objects.get(pk=order_id)
+    orderdetail = order.orderdetail_set.all()
+    products = Product.objects.all()
+    context = {'dealer': dealer}
+    context['order'] = order
+    context['orderdetail'] = orderdetail
+    context['products'] = products
     return render(request, 'customer/order.html', context)
 class ProductListApiView(ListAPIView):
     model = Product
