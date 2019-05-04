@@ -33,11 +33,12 @@ class Admin_Customer(models.Model):
     result = models.CharField(max_length=7, choices=choices, default='uncheck')
     date = models.DateField()
     evidence = models.TextField()
+
 class Dealer(Customer):
     discount = models.DecimalField(max_digits=8, decimal_places=2)
     amount = models.DecimalField(max_digits=8, decimal_places=2)
     def __str__(self):
-        return self.user.first_name + " " + self.user.last_name
+        return self.user.username + "  :" + self.user.first_name + " " + self.user.last_name
 class Manufactor(models.Model):
     name = models.CharField(max_length=255)
     location = models.CharField(max_length=255)
@@ -77,11 +78,14 @@ class Order(models.Model):
     detail = models.TextField()
     total_price1 = models.DecimalField(max_digits=8, decimal_places=2)
     total_price2 = models.DecimalField(max_digits=8, decimal_places=2)
+    cancel = models.BooleanField(default=False)
     #fk
     admin = models.ForeignKey(Admin, on_delete=models.CASCADE, null=True, blank=True)
     reason = models.CharField(max_length=255, null=True, blank=True)
     cancel_date = models.DateField(null=True, blank=True)
     customer = models.ForeignKey(Customer, on_delete=models.CASCADE)
+    def __str__(self):
+        return str(self.customer.user.username) +" : "+ str(self.date)
 
 class OrderDetail(models.Model):
     detail = models.TextField()
@@ -91,8 +95,8 @@ class OrderDetail(models.Model):
     #fk
     order = models.ForeignKey(Order, on_delete=models.CASCADE)
     product = models.ForeignKey(Product, on_delete=models.PROTECT)
-
-
+    def __str__(self):
+        return ""
 class FeedBack(models.Model):
     READ = 'read'
     UNREAD = 'unread'
@@ -123,3 +127,5 @@ class Shipment(models.Model):
     status = models.CharField(max_length=30, choices=choices, default='Waiting')
     #fk
     order = models.ForeignKey(Order, models.CASCADE)
+    def __str__(self):
+        return self.name

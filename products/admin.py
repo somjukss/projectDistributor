@@ -9,7 +9,8 @@ from django.urls import reverse
 from django.utils.html import format_html
 from django.utils.safestring import mark_safe
 
-from products.models import Dealer, Customer, FeedBack, Admin, Admin_Customer, ProductLot, Product, Manufactor, Order
+from products.models import Dealer, Customer, FeedBack, Admin, Admin_Customer, ProductLot, Product, Manufactor, Order, \
+    OrderDetail, Shipment
 
 
 class AdminInline(admin.StackedInline):
@@ -28,7 +29,7 @@ admin.site.unregister(User)
 admin.site.register(User, CustomUserAdmin)
 
 class FeedBackAdmin(admin.ModelAdmin):
-    list_display = ['detail', 'status', 'customer_id']
+    list_display = ['detail', 'status', 'link_to_customer']
     # fields = ['detail', 'status']
     readonly_fields = ['detail', 'admin', 'customer']
     def save_model(self, request, obj, form, change):
@@ -37,13 +38,20 @@ class FeedBackAdmin(admin.ModelAdmin):
         if obj.status == 'read':
             obj.save()
 
+    def link_to_customer(self, obj):
+        link = reverse("admin:products_dealer_change", args=[obj.customer.user_id])
+        return format_html('<a href="{}">{}</a>', link, obj.customer.user)
+    link_to_customer.allow_tags = True
+    link_to_customer.short_description = 'Customer Detail'
+
 admin.site.register(FeedBack, FeedBackAdmin)
 
 class Admin_CustomerInline(admin.StackedInline):
     model = Admin_Customer
     extra = 1
-    readonly_fields = ['admin']
-    fields = ['date', 'evidence']
+    readonly_fields = ['admin', 'result']
+    fields = ['date', 'evidence', 'admin', 'result']
+    verbose_name_plural = "อ่าน FeedBack แล้วมา Check เป็น blacklist"
 class DealerAdmin(admin.ModelAdmin):
     list_display = ['dealer', 'address', 'phone', 'blacklist', 'discount', 'amount']
     readonly_fields = ['address', 'phone', 'user']
@@ -57,14 +65,17 @@ class DealerAdmin(admin.ModelAdmin):
             instance.save()
         formset.save_m2m()
 admin.site.register(Dealer, DealerAdmin)
+# class CustomerAdmin(admin.ModelAdmin):
+#     fields = ['user', 'address', 'phone']
+# admin.site.register(Customer, CustomerAdmin)
 
 class ProductLotInline(admin.StackedInline):
     model = ProductLot
     extra = 1
 class ProductAdmin(admin.ModelAdmin):
     list_display = ['name', 'link_to_manufactor']
-    readonly_fields = ['manufactor', 'name', 'describe', 'quantity']
     inlines = [ProductLotInline]
+    fields = ['name', 'describe', 'minimum_stock', 'quantity', 'price', 'img_url', 'manufactor']
     def save_related(self, request, form, formsets, change):
         super(ProductAdmin, self).save_related(request, form, formsets, change)
         product = form.instance
@@ -86,7 +97,33 @@ class ProductAdmin(admin.ModelAdmin):
 
 admin.site.register(Product, ProductAdmin)
 class ManufactorAdmin(admin.ModelAdmin):
-    readonly_fields = ['name', 'location', 'phone']
+    fields = ['name', 'location', 'phone']
 admin.site.register(Manufactor, ManufactorAdmin)
 
-admin.site.register(Order)
+class OrderDetailInline(admin.StackedInline):
+    model = OrderDetail
+    readonly_fields = ['detail', 'price', 'quantity', 'amount', 'product']
+    extra = 0
+class ShipmentInline(admin.StackedInline):
+    model = Shipment
+    readonly_fields = ['name', 'receive_date']
+    fields = ['name', 'track_number', 'receive_date', 'status']
+    extra = 0
+class OrderAdmin(admin.ModelAdmin):
+    list_display = ['id', 'date', 'cancel', 'link_to_customer', 'get_status']
+    readonly_fields = ['date', 'detail', 'total_price1', 'total_price2', 'customer', 'admin']
+    fieldsets = [  # แบ่งกลุ่มหน้า UI
+        ("Order", {'fields': ['detail', 'date', 'total_price1', 'total_price2', 'customer']}),
+        ("Admin check", {'fields': ['admin', 'cancel', 'cancel_date', 'reason']})
+    ]
+    inlines = [OrderDetailInline, ShipmentInline]
+    def get_status(self, obj):
+        return Shipment.objects.filter(order=obj).all()[0].status
+
+    get_status.short_description = 'Shipment-Status'
+    def link_to_customer(self, obj):
+        link = reverse("admin:products_dealer_change", args=[obj.customer.dealer.customer_ptr_id])
+        return format_html('<a href="{}">{}</a>', link, obj.customer.user)
+    link_to_customer.allow_tags = True
+    link_to_customer.short_description = 'Customer Detail'
+admin.site.register(Order, OrderAdmin)
