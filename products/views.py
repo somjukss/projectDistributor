@@ -111,7 +111,9 @@ def api_index(request):
         dealer.amount += total_price2
         dealer.save()
         if len(error_list) == 0:
-            return JsonResponse({'message': 'success'}, status=200)
+            return redirect('profile')
+            # return JsonResponse({'message': 'success'}, status=200)
+
         else:
             return  JsonResponse({'message': error_list}, status=400)
     return JsonResponse({'message': 'This API does not accept GET request'}, status=405)

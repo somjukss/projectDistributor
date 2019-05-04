@@ -9,7 +9,7 @@ from django.urls import reverse
 from django.utils.html import format_html
 from django.utils.safestring import mark_safe
 
-from products.models import Dealer, Customer, FeedBack, Admin, Admin_Customer, ProductLot, Product, Manufactor
+from products.models import Dealer, Customer, FeedBack, Admin, Admin_Customer, ProductLot, Product, Manufactor, Order
 
 
 class AdminInline(admin.StackedInline):
@@ -88,3 +88,5 @@ admin.site.register(Product, ProductAdmin)
 class ManufactorAdmin(admin.ModelAdmin):
     readonly_fields = ['name', 'location', 'phone']
 admin.site.register(Manufactor, ManufactorAdmin)
+
+admin.site.register(Order)
