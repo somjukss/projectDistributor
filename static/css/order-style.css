@@ -3,10 +3,12 @@
 html, body {
     background-image: linear-gradient(to bottom, rgb(94, 188, 250), rgb(248, 174, 244));
     background-repeat: no-repeat;
-    min-height: 100%;
+    height: 100%;
     font-family: 'Mali', cursive;
 }
+.table{
 
+}
 .navbar-brand{
     font-family: 'Mali', cursive;
     font-size: 40px;

@@ -16,8 +16,22 @@
 <body>
 
     <nav class="navbar navbar-expand-lg text-white navbar-light">
-        <a href="{% url 'index' %}" class="navbar-brand text-warning">SugarBunny</a>
-    </nav>
+        <a href="{% url 'index' %}"><h1 class="navbar-brand text-warning"><img width="256px" src="https://sv1.picz.in.th/images/2019/05/06/wiizRb.png"></h1></a>
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav"
+                aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ml-3">
+                    <li class="nav-item">
+                        <a class="nav-link text-white mr-md-2" href="{% url 'profile' %}">Profile</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link text-white mr-md-2" href="{% url 'feedback' %}">Feedback</a>
+                    </li>
+                </ul>
+            </div>
+        </nav>
 
     <div class="profile-header">
         <div class="container">
@@ -29,8 +43,9 @@
     </div>
 
     <div class="order-list">
-        <table class="table mt-5 borderless" style="font-family: 'Mali', cursive;">
-            <h3><span class="semi-bold text-landing">ใบสั่งซื้อที่ {{ order.id }}</span></h3>
+        <table class="table mt-5 borderless" style="border-radius: 1em;overflow: hidden;width: 70%;margin-left: auto;margin-right: auto;">
+            <h3 style="text-align: center"><span class="semi-bold text-landing">
+                ใบสั่งซื้อที่ {{ order.id }}</span><img src="https://sv1.picz.in.th/images/2019/05/06/wiZTEV.png"></h3>
             <thead class="thead topic" style="background-color: rgba(25, 60, 175, 0.377);  text-align: center;">
                 <tr>
                     <th scope="col-6">สินค้า</td>
@@ -56,7 +71,7 @@
                     <th scope="col-6"></td>
                     <th scope="col-2"></td>
                     <th scope="col-2">ราคาทั้งหมด</td>
-                    <th scope="col-2">{{ order.total_price1 }}</td>
+                    <th scope="col-2"> {{ order.total_price1 }} </td>
                 </tr>
                 <tr>
                     <th scope="col-6"></td>
