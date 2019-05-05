@@ -1,76 +1,115 @@
 <!doctype html>
 {% load static %}
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport"
-          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+        content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Profile</title>
     <link rel="stylesheet" href="{% static 'css/bootstrap.min.css' %}">
+    <link rel="stylesheet" href="{% static 'css/profile-style.css' %}">
+    <link href="https://fonts.googleapis.com/css?family=Mali" rel="stylesheet">
 </head>
+
 <body>
-<h1>My Profile {{ dealer.user.first_name }} {{ dealer.user.last_name }}</h1>
-<table border="1">
-    <tr>
-        <th>address</th>
-        <th>phone</th>
-        <th>email</th>
-    </tr>
-    <tr>
-        <td>{{ dealer.address }}</td>
-        <td>{{ dealer.phone }}</td>
-        <td>{{ dealer.user.email }}</td>
-    </tr>
-</table>
-<table border="1">
-    <tr>
-        <th colspan="2">Stock</th>
-    </tr>
-    <tr>
-        <td>Product Id</td>
-        <td>Product name</td>
-        <td>Stock</td>
-    </tr>
-    {% for stock in dealer.dealerstock.product_dealerstock_set.all %}
-    <tr>
-        <td>{{ stock.product_id }}</td>
-        {% for product in products %}
-            {% if product.id == stock.product_id %}
-            <td>{{ product.name }}</td>
-            {% endif %}
-        {% endfor %}
-        <td>{{ stock.quantity }}</td>
-    </tr>
-    {% endfor %}
-</table>
 
+    <nav class="navbar navbar-expand-lg text-white navbar-light">
+        <a href="{% url 'index' %}" class="navbar-brand text-warning">SugarBunny</a>
+    </nav>
 
-<table>
-    <tr>
-        <th>Order ID</th>
-        <th>Date</th>
-        <th>Link</th>
-        <th>Cancel Status</th>
-        <th>Cancel Date</th>
-        <th>Cancel By</th>
-    </tr>
-    {% for order in orders %}
-    <tr>
-        <td>{{ order.id }}</td>
-        <td>{{ order.date }}</td>
-        <td><a href="{% url 'order-detail' order.id %}">กดสิจ้ะ</a></td>
-        <td>{{ order.cancel }}</td>
-        <td>{{ order.cancel_date }}</td>
-        <td>{{ order.admin }}</td>
-    </tr>
-    {% endfor %}
-</table>
+    <div class="profile-header">
+        <div class="container">
+            <h2> ยินดีต้อนรับคุณ <span class="semi-bold text-landing"> {{ dealer.user.first_name }}
+                    {{ dealer.user.last_name }}</span>
+            </h2>
+            <br>
+            <h3>ที่อยู่ของคุณ : {{ dealer.address }}</h3>
+            <h3>เบอร์โทรศัพท์ของคุณ : {{ dealer.phone }}</h3>
+            <h3>Email ของคุณ : {{ dealer.user.email }}</h3>
+        </div>
+    </div>
+    <div class="stock">
+        <table class="table mt-5" style="font-family: 'Mali', cursive;">
+            <h3><span class="semi-bold text-landing">Stock ของคุณ</span></h3>
+            <thead class="thead topic" style="background-color: rgb(129, 94, 253);  text-align: center;">
+                <tr>
+                    <th scope="col-2">รหัสสินค้า</td>
+                    <th scope="col-8">สินค้า</td>
+                    <th scope="col-2">จำนวนสินค้าใน Stock</td>
+                </tr>
+            </thead>
 
+            <tbody style="background-color: rgba(255, 255, 255, 0.404); text-align: center;">
+                {% for stock in dealer.dealerstock.product_dealerstock_set.all %}
+                <tr>
+                    <td>{{ stock.product_id }}</td>
+                    {% for product in products %}
+                    {% if product.id == stock.product_id %}
+                    <td>{{ product.name }}</td>
+                    {% endif %}
+                    {% endfor %}
+                    <td>{{ stock.quantity }}</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
 
-<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.6/umd/popper.min.js" integrity="sha384-wHAiFfRlMFy6i5SRaxvfOCifBUQy1xHdJ/yoi7FRNXMRBu5WHdZYu1hA6ZOblgut" crossorigin="anonymous"></script>
-<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
-<script src="{% static 'js/bootstrap.min.js' %}"></script>
+    <div class="order">
+        <table class="table mt-5" style="font-family: 'Mali', cursive;">
+            <h3><span class="semi-bold text-landing">Stock ของคุณ</span></h3>
+            <thead class="thead topic" style="background-color: rgb(129, 94, 253);  text-align: center;">
+                <tr>
+                    <th scope="col-1">รหัสคำสั่งซื้อ</td>
+                    <th scope="col-2">วันที่สั่งซื้อ</td>
+                    <th scope="col-2">สถานะการยกเลิก</td>
+                    <th scope="col-2">วันที่ยกเลิก</td>
+                    <th scope="col-2">ถูกยกเลิกโดย</td>
+                    <th scope="col-2">รายละเอียด</td>
+                </tr>
+            </thead>
+
+            <tbody style="background-color: rgba(255, 255, 255, 0.404); text-align: center;">
+                {% for order in orders %}
+                <tr>
+                    <td>{{ order.id }}</td>
+                    <td>{{ order.date }}</td>
+
+                    {% if order.cancel == False %}
+                    <td class="text-danger">-</td>
+                    {% else %}
+                    <td>ถูกยกเลิก</td>
+                    {% endif %}
+
+                    {% if order.cancel_date%}
+                    <td class="text-danger"> {{ order.cancel_date }} </td>
+                    {% else %}
+                    <td>-</td>
+                    {% endif %}
+
+                    {% if order.admin%}
+                    <td class="text-danger"> {{ order.admin }} </td>
+                    {% else %}
+                    <td>-</td>
+                    {% endif %}
+
+                    <td><a href="{% url 'order-detail' order.id %}">คลิกที่นี่</a></td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
+        integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
+        crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.6/umd/popper.min.js"
+        integrity="sha384-wHAiFfRlMFy6i5SRaxvfOCifBUQy1xHdJ/yoi7FRNXMRBu5WHdZYu1hA6ZOblgut"
+        crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+    <script src="{% static 'js/bootstrap.min.js' %}"></script>
 </body>
+
 </html>
