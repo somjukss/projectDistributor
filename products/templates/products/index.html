@@ -46,7 +46,7 @@
                 <h2>Your Cart</h2>
 
                 <template v-if="cart.length">
-                <form onsubmit="return false">
+                <form v-on:submit.prevent="submit()">
                 <table class="cart-list">
                     <thead>
                         <tr>
@@ -174,7 +174,7 @@
         </div>
 
     </div>
-    <input type="submit" value="submit" @click="submit">
+    <input type="submit" value="submit">
     </form>
     </template>
     <template v-else>
@@ -372,6 +372,7 @@
                         shipment:this.user.shipmentType
                     })
                     this.mygroup.push(this.cart)
+
                     axios
                         .post('http://localhost:8000/products/api/index/',
                             this.mygroup, {
@@ -384,12 +385,12 @@
                             console.log(response)
                             this.success = true
                             this.errorMSG = response.data
+                            window.location.href = 'http://localhost:8000/products/profile'
                         })
                         .catch(error => {
                             console.log(error.response)
                             this.errorMSG = ''
                         })
-                    window.location.href = 'http://localhost:8000/products/profile'
                 }
             }
         })
