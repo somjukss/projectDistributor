@@ -12,8 +12,22 @@
 
 <body>
     <nav class="navbar navbar-expand-lg text-white navbar-light">
-        <a href="{% url 'index' %}" class="navbar-brand text-warning">SugarBunny</a>
-    </nav>
+            <a href="{% url 'index' %}"><h1 class="navbar-brand text-warning">SugarBunny</h1></a>
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav"
+                aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ml-3">
+                    <li class="nav-item">
+                        <a class="nav-link text-white mr-md-2" href="{% url 'profile' %}">Profile</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link text-white mr-md-2" href="{% url 'feedback' %}">Feedback</a>
+                    </li>
+                </ul>
+            </div>
+        </nav>
 
     <div class="create-feedback-header">
         <div class="container">
@@ -36,11 +50,13 @@
         {% for form in formset %}
         <tr>
             <td>{{ form.detail.value }}</td>
-            <td>{{ form.status.value }}</td>
+            <td v-show = "{{ form.status.valur }} === 'unread'"><button  class="btn btn-danger">{{ form.status.value }}</button></td>
+            <td v-show = "{{ form.status.valur }} === 'read'"><button  class="btn btn-success">{{ form.status.value }}</button></td>
         </tr>
         {% endfor %}
         </tbody>
     </table>
+    <a href="{% url 'create-feedback' %}"><button type="button" class="btn btn-warning">CREATE</button></a>
 </body>
 
 </html>
