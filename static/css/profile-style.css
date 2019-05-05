@@ -1,12 +1,17 @@
 @import url('https://fonts.googleapis.com/css?family=Mali');
 
 html, body {
-    background-image: linear-gradient(to bottom, rgb(94, 188, 250), rgb(248, 174, 244));
+    background: linear-gradient(150deg,#53a9b8,#4cade0, #843ae4,#ba70dd, #e55cc4, #e7707a);
+    background-size: 400% 400%;
     background-repeat: no-repeat;
+    animation: raed 5s infinite ease-in-out;
     font-family: 'Mali', cursive;
-    min-height: 100%;
 }
-
+@keyframes raed{
+    0%{background-position: 0% 50%}
+    50%{background-position: 100% 50%}
+    100%{background-position: 0% 50%}
+}
 .navbar-brand{
     font-family: 'Mali', cursive;
     font-size: 40px;
@@ -19,7 +24,9 @@ html, body {
 .semi-bold {
     font-weight: 600;
 }
-
+h3{
+    text-align: center;
+}
 .stock{
     margin-top: 5%;
 }
@@ -36,4 +43,12 @@ html, body {
 .order h3{
     margin-bottom: -2%;
     padding-left: 1%;
+}
+.table {
+  border-collapse: collapse;
+  border-radius: 1em;
+  overflow: hidden;
+  width: 70%;
+    margin-left: auto;
+    margin-right: auto;
 }

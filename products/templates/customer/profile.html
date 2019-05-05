@@ -16,8 +16,22 @@
 <body>
 
     <nav class="navbar navbar-expand-lg text-white navbar-light">
-        <a href="{% url 'index' %}" class="navbar-brand text-warning">SugarBunny</a>
-    </nav>
+            <a href="{% url 'index' %}"><h1 class="navbar-brand text-warning">SugarBunny</h1></a>
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav"
+                aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ml-3">
+                    <li class="nav-item">
+                        <a class="nav-link text-white mr-md-2" href="{% url 'profile' %}">Profile</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link text-white mr-md-2" href="{% url 'feedback' %}">Feedback</a>
+                    </li>
+                </ul>
+            </div>
+        </nav>
 
     <div class="profile-header">
         <div class="container">
@@ -25,15 +39,16 @@
                     {{ dealer.user.last_name }}</span>
             </h2>
             <br>
-            <h3>ที่อยู่ของคุณ : {{ dealer.address }}</h3>
-            <h3>เบอร์โทรศัพท์ของคุณ : {{ dealer.phone }}</h3>
-            <h3>Email ของคุณ : {{ dealer.user.email }}</h3>
+            <h4><img src="https://sv1.picz.in.th/images/2019/05/06/wi1P0q.png">ที่อยู่ของคุณ : {{ dealer.address }}</h4>
+            <h4><img src="https://sv1.picz.in.th/images/2019/05/06/wiKS22.png">เบอร์โทรศัพท์ของคุณ : {{ dealer.phone }}</h4>
+            <h4><img src="https://sv1.picz.in.th/images/2019/05/06/wiKco0.png">Email ของคุณ : {{ dealer.user.email }}</h4>
         </div>
     </div>
     <div class="stock">
         <table class="table mt-5" style="font-family: 'Mali', cursive;">
-            <h3><span class="semi-bold text-landing">Stock ของคุณ</span></h3>
-            <thead class="thead topic" style="background-color: rgb(129, 94, 253);  text-align: center;">
+            
+            <h3><span class="semi-bold text-landing">Stock ของคุณ</span><img src="https://sv1.picz.in.th/images/2019/05/06/wi1qmy.png"></h3>
+            <thead class="thead topic" style="background-color: rgb(248,253,115);  text-align: center;">
                 <tr>
                     <th scope="col-2">รหัสสินค้า</td>
                     <th scope="col-8">สินค้า</td>
@@ -59,8 +74,8 @@
 
     <div class="order">
         <table class="table mt-5" style="font-family: 'Mali', cursive;">
-            <h3><span class="semi-bold text-landing">คำสั่งซื้อของคุณ</span></h3>
-            <thead class="thead topic" style="background-color: rgb(129, 94, 253);  text-align: center;">
+            <h3><span class="semi-bold text-landing">คำสั่งซื้อของคุณ</span><img src="https://sv1.picz.in.th/images/2019/05/06/wi1bpJ.png"></h3>
+            <thead class="thead topic" style="background-color: rgb(248,253,115);  text-align: center;">
                 <tr>
                     <th scope="col-1">รหัสคำสั่งซื้อ</td>
                     <th scope="col-2">วันที่สั่งซื้อ</td>
