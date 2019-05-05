@@ -4,6 +4,7 @@ html, body {
     background-image: linear-gradient(to bottom, rgb(94, 188, 250), rgb(248, 174, 244));
     background-repeat: no-repeat;
     font-family: 'Mali', cursive;
+    min-height: 100%;
 }
 
 .navbar-brand{
