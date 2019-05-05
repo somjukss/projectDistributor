@@ -18,7 +18,8 @@ from rest_framework.generics import ListAPIView, RetrieveAPIView
 from rest_framework.permissions import AllowAny
 
 from products.forms import RegisterForm, FeedBackForm, ProductForm, DealerForm, OrderForm, OrderDetailForm
-from products.models import Dealer, FeedBack, Product, Customer, Order, DealerStock, Product_DealerStock, Shipment
+from products.models import Dealer, FeedBack, Product, Customer, Order, DealerStock, Product_DealerStock, Shipment, \
+    Admin
 
 from rest_framework import status
 from rest_framework.decorators import api_view
@@ -144,7 +145,10 @@ def my_login(request):
             if next_url:
                 return redirect(next_url)
             else:
-                return redirect('index')
+                if request.user.is_superuser:
+                    return redirect('/admin/')
+                else:
+                    return redirect('index')
         else:
             context['username'] = username
             context['password'] = password
