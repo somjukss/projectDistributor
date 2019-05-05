@@ -50,8 +50,13 @@
         {% for form in formset %}
         <tr>
             <td>{{ form.detail.value }}</td>
-            <td v-show = "{{ form.status.valur }} === 'unread'"><button  class="btn btn-danger">{{ form.status.value }}</button></td>
-            <td v-show = "{{ form.status.valur }} === 'read'"><button  class="btn btn-success">{{ form.status.value }}</button></td>
+            <td>
+                {% if form.status.value == 'unread' %}
+                <button  class="btn btn-danger">{{ form.status.value }}</button>
+                {% else %}
+                <button  class="btn btn-success">{{ form.status.value }}</button>
+                {% endif %}
+            </td>
         </tr>
         {% endfor %}
         </tbody>
