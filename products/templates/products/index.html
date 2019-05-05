@@ -174,7 +174,12 @@
         </div>
 
     </div>
-    <input type="submit" value="submit">
+                    {% if dealer.blacklist %}
+                        <input type="submit" value="submit" disabled>
+                        <p style="color: red">You have been blacklist</p>
+                    {% else %}
+                        <input type="submit" value="submit">
+                    {% endif %}
     </form>
     </template>
     <template v-else>

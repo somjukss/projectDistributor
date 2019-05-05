@@ -38,6 +38,9 @@
             <h2> ยินดีต้อนรับคุณ <span class="semi-bold text-landing"> {{ dealer.user.first_name }}
                     {{ dealer.user.last_name }}</span>
             </h2>
+            {% if dealer.blacklist %}
+                <span style="font-size: 3em; color: red">You have been blacklist</span>  <span style="font-size: 1.5em">pleasse contact <button class="btn btn-dark"><a href="{% url 'logout' %}#about" style="color:red">admin</a></button></span>
+            {% endif %}
             <br>
             <h4><img src="https://sv1.picz.in.th/images/2019/05/06/wi1P0q.png">ที่อยู่ของคุณ : {{ dealer.address }}</h4>
             <h4><img src="https://sv1.picz.in.th/images/2019/05/06/wiKS22.png">เบอร์โทรศัพท์ของคุณ : {{ dealer.phone }}</h4>
