@@ -42,7 +42,7 @@ div#cart-content{
     width: 200px;
 }
 div#cart-content.fixed {
-    position: fixed;
+    /*position: fixed;*/
     top: 0;
 }
 #app {
