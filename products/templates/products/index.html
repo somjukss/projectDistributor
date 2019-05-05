@@ -289,21 +289,7 @@
             },
 
             computed: {
-                name(){
-                    return "{{ dealer.user.first_name }}"
-                },
-                surname(){
-                    return "{{ dealer.user.last_name }}"
-                },
-                email(){
-                    return "{{ dealer.user.email }}"
-                },
-                address(){
-                    return  "{{ dealer.address }}"
-                },
-                total_discount() {
-                    return this.total - (this.total * {{dealer.discount}})
-                }
+
             },
             mounted() {
                 axios
