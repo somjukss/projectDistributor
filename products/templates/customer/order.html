@@ -1,59 +1,95 @@
 <!doctype html>
 {% load static %}
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport"
-          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+        content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Order</title>
     <link rel="stylesheet" href="{% static 'css/bootstrap.min.css' %}">
+    <link rel="stylesheet" href="{% static 'css/order-style.css' %}">
+    <link href="https://fonts.googleapis.com/css?family=Mali" rel="stylesheet">
 </head>
+
 <body>
-<h1>This is order #{{ order.id }}</h1>
 
-<table>
-    <tr>
-        <th>สินค้า</th>
-        <th>จำนวน</th>
-        <th>ราคาต่อชิ้น</th>
-        <th>ราคา</th>
-    </tr>
-    {% for item in orderdetail %}
-        <tr>
-            <td>{{ item.detail }}</td>
-            <td>{{ item.quantity }}</td>
-            <td>{{ item.price }}</td>
-            <td>{{ item.amount }}</td>
-        </tr>
-    {% endfor %}
-    <tr>
-        <td></td>
-        <td colspan="2">รวมราคา</td>
-        <td>{{ order.total_price1 }}</td>
-    </tr>
-    <tr>
-        <td></td>
-        <td colspan="2">ส่วนลด</td>
-        <td>{{ dealer.discount }}%</td>
-    </tr>
-    <tr>
-        <td></td>
-        <td colspan="2">ราคารวมส่วนลด</td>
-        <td>{{ order.total_price2 }}</td>
-    </tr>
-    <tr>
-        <td></td>
-        <td colspan="2">{{ shipment.name }}</td>
-        <td>{{ shipment.status }}</td>
-    </tr>
+    <nav class="navbar navbar-expand-lg text-white navbar-light">
+        <a href="{% url 'index' %}" class="navbar-brand text-warning">SugarBunny</a>
+    </nav>
 
+    <div class="profile-header">
+        <div class="container">
+            <h2> ยินดีต้อนรับคุณ <span class="semi-bold text-landing"> {{ dealer.user.first_name }}
+                    {{ dealer.user.last_name }}</span>
+            </h2>
 
-</table>
+        </div>
+    </div>
 
-<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.6/umd/popper.min.js" integrity="sha384-wHAiFfRlMFy6i5SRaxvfOCifBUQy1xHdJ/yoi7FRNXMRBu5WHdZYu1hA6ZOblgut" crossorigin="anonymous"></script>
-<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
-<script src="{% static 'js/bootstrap.min.js' %}"></script>
+    <div class="order-list">
+        <table class="table mt-5 borderless" style="font-family: 'Mali', cursive;">
+            <h3><span class="semi-bold text-landing">ใบสั่งซื้อที่ {{ order.id }}</span></h3>
+            <thead class="thead topic" style="background-color: rgba(25, 60, 175, 0.377);  text-align: center;">
+                <tr>
+                    <th scope="col-6">สินค้า</td>
+                    <th scope="col-2">จำนวน</td>
+                    <th scope="col-2">ราคาต่อชิ้น</td>
+                    <th scope="col-2">ราคา</td>
+                </tr>
+            </thead>
+
+            <tbody style="background-color: rgba(255, 255, 255, 0.404); text-align: center;">
+                {% for item in orderdetail %}
+                <tr>
+                    <td>{{ item.detail }}</td>
+                    <td>{{ item.quantity }}</td>
+                    <td>{{ item.price }}</td>
+                    <td>{{ item.amount }}</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+
+            <thead class="thead topic summary" style="background-color: rgba(25, 60, 175, 0.377);  text-align: center;">
+                <tr>
+                    <th scope="col-6"></td>
+                    <th scope="col-2"></td>
+                    <th scope="col-2">ราคาทั้งหมด</td>
+                    <th scope="col-2">{{ order.total_price1 }}</td>
+                </tr>
+                <tr>
+                    <th scope="col-6"></td>
+                    <th scope="col-2"></td>
+                    <th scope="col-2">ส่วนลด</td>
+                    <th scope="col-2">{{ dealer.discount }}%</td>
+                </tr>
+                <tr>
+                    <th scope="col-6"></td>
+                    <th scope="col-2"></td>
+                    <th scope="col-2">จำนวนเงินที่ต้องชำระ</td>
+                    <th scope="col-2">{{ order.total_price2 }}</td>
+                </tr>
+                <tr>
+                    <th scope="col-6"></td>
+                    <th scope="col-2"></td>
+                    <th scope="col-2">{{ shipment.name }}</td>
+                    <th scope="col-2">{{ shipment.status }}</td>
+                </tr>
+            </thead>
+
+        </table>
+        <a href="{% url 'profile' %}" class="btn btn-warning mr-5 float-right"> ย้อนกลับ </a>
+    </div>
+
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
+        integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
+        crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.6/umd/popper.min.js"
+        integrity="sha384-wHAiFfRlMFy6i5SRaxvfOCifBUQy1xHdJ/yoi7FRNXMRBu5WHdZYu1hA6ZOblgut"
+        crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+    <script src="{% static 'js/bootstrap.min.js' %}"></script>
 </body>
+
 </html>
