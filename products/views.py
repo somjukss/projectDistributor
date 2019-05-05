@@ -10,6 +10,7 @@ from django.contrib.auth.models import User, Group
 from django.forms import formset_factory
 from django.http import JsonResponse
 from django.shortcuts import render, redirect
+from django.db import connection
 
 
 # Create your views here.
