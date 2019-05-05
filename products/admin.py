@@ -1,17 +1,13 @@
 from django.contrib import admin
 
 # Register your models here.
-from django.contrib.auth import get_user_model
 from django.contrib.auth.admin import UserAdmin
 from django.contrib.auth.models import User, Group
-from django.forms import BaseInlineFormSet
 from django.urls import reverse
 from django.utils.html import format_html
-from django.utils.safestring import mark_safe
 
-from products.models import Dealer, Customer, FeedBack, Admin, Admin_Customer, ProductLot, Product, Manufactor, Order, \
+from products.models import Dealer, FeedBack, Admin, Admin_Customer, ProductLot, Product, Manufactor, Order, \
     OrderDetail, Shipment, Product_DealerStock
-
 
 class AdminInline(admin.StackedInline):
     model = Admin
@@ -20,8 +16,6 @@ class AdminInline(admin.StackedInline):
 class CustomUserAdmin(UserAdmin):
     inlines = (AdminInline, )
     def get_inline_instances(self, request, obj=None):
-        # if obj.customer.user.groups.filter(name='customer').exists():
-
         if not obj:
             return list()
         return super(CustomUserAdmin, self).get_inline_instances(request, obj)
@@ -30,7 +24,6 @@ admin.site.register(User, CustomUserAdmin)
 
 class FeedBackAdmin(admin.ModelAdmin):
     list_display = ['detail', 'status', 'link_to_customer']
-    # fields = ['detail', 'status']
     readonly_fields = ['detail', 'admin', 'customer']
     search_fields = ['customer__user__username', 'detail']
     list_filter = ['status', 'customer__user__username']
@@ -79,9 +72,6 @@ class DealerAdmin(admin.ModelAdmin):
             instance.save()
         formset.save_m2m()
 admin.site.register(Dealer, DealerAdmin)
-# class CustomerAdmin(admin.ModelAdmin):
-#     fields = ['user', 'address', 'phone']
-# admin.site.register(Customer, CustomerAdmin)
 
 class ProductLotInline(admin.StackedInline):
     model = ProductLot

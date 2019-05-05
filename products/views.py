@@ -2,7 +2,6 @@ import datetime
 import json
 import random
 import string
-from decimal import Decimal
 
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required, user_passes_test
@@ -10,7 +9,6 @@ from django.contrib.auth.models import User, Group
 from django.forms import formset_factory
 from django.http import JsonResponse
 from django.shortcuts import render, redirect
-from django.db import connection
 
 
 # Create your views here.
@@ -18,14 +16,11 @@ from django.db import connection
 from rest_framework.generics import ListAPIView, RetrieveAPIView
 from rest_framework.permissions import AllowAny
 
-from products.forms import RegisterForm, FeedBackForm, ProductForm, DealerForm, OrderForm, OrderDetailForm
-from products.models import Dealer, FeedBack, Product, Customer, Order, DealerStock, Product_DealerStock, Shipment, \
-    Admin
+from products.forms import RegisterForm, FeedBackForm, OrderDetailForm
+from products.models import Dealer, FeedBack, Customer, Order, DealerStock, Product_DealerStock, Shipment
 
 from rest_framework import status
-from rest_framework.decorators import api_view
 from rest_framework.response import Response
-from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 
 from products.renderers import ProductJSONRenderer
 from .serializers import *
