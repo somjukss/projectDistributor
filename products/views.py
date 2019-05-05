@@ -5,7 +5,7 @@ import string
 from decimal import Decimal
 
 from django.contrib.auth import authenticate, login, logout
-from django.contrib.auth.decorators import login_required
+from django.contrib.auth.decorators import login_required, user_passes_test
 from django.contrib.auth.models import User, Group
 from django.forms import formset_factory
 from django.http import JsonResponse
@@ -27,15 +27,28 @@ from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 
 from products.renderers import ProductJSONRenderer
 from .serializers import *
+#my decorate Function
 def randomString(stringLength=20):
-    """Generate a random string of fixed length """
+    """Generate String length = 20"""
     letters = string.ascii_lowercase
     return ''.join(random.choice(letters) for i in range(stringLength))
+def group_required(*group_names):
+    """Requires user membership in at least one of the groups passed in."""
+    def in_groups(u):
+        if u.is_authenticated:
+            if bool(u.groups.filter(name__in=group_names)) | u.is_superuser:
+                return True
+        return False
+    return user_passes_test(in_groups, login_url='403')
+
 @login_required
+@group_required('customer')
 def index(request):
     dealer = Dealer.objects.filter(customer_ptr_id=request.user.id).all()[0]
     context = {'dealer': dealer}
     return render(request, 'products/index.html', context)
+@login_required
+@group_required('customer')
 def api_index(request):
     if request.method == 'POST':
         # customer object
@@ -180,6 +193,7 @@ def register(request):
     return render(request, template_name="user/register.html", context=context)
 
 @login_required
+@group_required('customer')
 def create_feedback(request):
     if request.method == "POST":
         form = FeedBackForm(request.POST)
@@ -197,6 +211,7 @@ def create_feedback(request):
     return render(request, 'feedback/create-feedback.html', context)
 
 @login_required
+@group_required('customer')
 def feedback(request):
     data = []
     feedbacks = FeedBack.objects.filter(customer_id=request.user.id)
@@ -218,6 +233,7 @@ def feedback(request):
     return render(request, 'feedback/feedback.html', context)
 
 @login_required
+@group_required('customer')
 def profile(request):
     dealer = Dealer.objects.filter(customer_ptr_id=request.user.id).all()[0]
     orders = Order.objects.filter(customer_id=request.user.id).all()
@@ -226,6 +242,8 @@ def profile(request):
     context['orders'] = orders
     context['products'] = products
     return render(request, 'customer/profile.html', context)
+@login_required
+@group_required('customer')
 def orderDetail(request, order_id):
     dealer = Dealer.objects.filter(customer_ptr_id=request.user.id).all()[0]
     order = Order.objects.get(pk=order_id)
