@@ -86,10 +86,10 @@
                     <th scope="col-2">{{ order.total_price2 }}</td>
                 </tr>
                 <tr>
-                    <th scope="col-6"></td>
-                    <th scope="col-2"></td>
                     <th scope="col-2">{{ shipment.name }}</td>
-                    <th scope="col-2">{{ shipment.status }}</td>
+                    <th scope="col-6" colspan="2">Tracking number : {{ shipment.track_number }}</td>
+
+                    <th scope="col-2">Status : {{ shipment.status }}</td>
                 </tr>
             </thead>
 
