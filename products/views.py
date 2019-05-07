@@ -43,6 +43,14 @@ def group_required(*group_names):
 def index(request):
     dealer = Dealer.objects.filter(customer_ptr_id=request.user.id).all()[0]
     context = {'dealer': dealer}
+    # เมฆแก้ไฟล์ view ตรงนี้นะ!
+    #
+    #
+    product = Product.objects.all()
+    context['product'] = product
+    #
+    #
+    #  เมฆแก้ไฟล์ view ตรงนี้นะ
     return render(request, 'products/index.html', context)
 @login_required
 @group_required('customer')
