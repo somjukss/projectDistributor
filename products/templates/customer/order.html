@@ -16,7 +16,7 @@
 <body>
 
     <nav class="navbar navbar-expand-lg text-white navbar-light">
-        <a href="{% url 'index' %}"><h1 class="navbar-brand text-warning"><img width="256px" src="https://sv1.picz.in.th/images/2019/05/06/wiizRb.png"></h1></a>
+        <a href="{% url 'index' %}"><h1 class="navbar-brand text-warning"><img width="256px" src="https://sv1.picz.in.th/images/2019/05/08/wQ0g9q.png"></h1></a>
             <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav"
                 aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
@@ -28,6 +28,9 @@
                     </li>
                     <li class="nav-item">
                         <a class="nav-link text-white mr-md-2" href="{% url 'feedback' %}">Feedback</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link text-white mr-md-2" href="{% url 'aboutus' %}">AboutUs</a>
                     </li>
                 </ul>
             </div>
@@ -46,7 +49,7 @@
         <table class="table mt-5 borderless" style="border-radius: 1em;overflow: hidden;width: 70%;margin-left: auto;margin-right: auto;">
             <h3 style="text-align: center"><span class="semi-bold text-landing">
                 ใบสั่งซื้อที่ {{ order.id }} </span><img src="https://sv1.picz.in.th/images/2019/05/06/wiZTEV.png"></h3>
-            <thead class="thead topic" style="background-color: rgba(44, 104, 196, 0.377);  text-align: center;">
+            <thead class="thead topic" style="background-color: rgb(248,253,115);  text-align: center;">
                 <tr>
                     <th scope="col-6">สินค้า</td>
                     <th scope="col-2">จำนวน</td>
@@ -55,7 +58,7 @@
                 </tr>
             </thead>
 
-            <tbody style="background-color: rgba(255, 255, 255, 0.404); text-align: center;">
+            <tbody style="background-color: rgb(253,245,197); text-align: center;">
                 {% for item in orderdetail %}
                 <tr>
                     <td>{{ item.detail }}</td>
@@ -66,7 +69,7 @@
                 {% endfor %}
             </tbody>
 
-            <thead class="thead topic summary" style="background-color: rgba(25, 60, 175, 0.377);  text-align: center;">
+            <thead class="thead topic summary" style="background-color: rgb(248,253,115);  text-align: center;">
                 <tr>
                     <th scope="col-6"></td>
                     <th scope="col-2"></td>
