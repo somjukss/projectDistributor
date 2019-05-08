@@ -5,7 +5,8 @@
 }
 
 body {
-    padding: 3rem;
+    /*padding: 3rem;*/
+    padding: 0;
     justify-content: center;
     background-color: rgb(253, 255, 253);
 }
