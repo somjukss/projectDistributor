@@ -36,12 +36,15 @@ def group_required(*group_names):
             if bool(u.groups.filter(name__in=group_names)) | u.is_superuser:
                 return True
         return False
-    return user_passes_test(in_groups, login_url='403')
+    return user_passes_test(in_groups, login_url='login')
 
 @login_required
 @group_required('customer')
 def index(request):
-    dealer = Dealer.objects.filter(customer_ptr_id=request.user.id).all()[0]
+    try:
+        dealer = Dealer.objects.filter(customer_ptr_id=request.user.id).all()[0]
+    except IndexError:
+        dealer = Dealer.objects.filter(customer_ptr_id=request.user.id).all()
     context = {'dealer': dealer}
     product = Product.objects.all()
     context['product'] = product
@@ -119,7 +122,10 @@ def api_index(request):
             else:
                 error_list.append(form.errors.as_text())
         # increase amount of dealer
-        dealer = Dealer.objects.filter(customer_ptr_id=request.user.id).all()[0]
+        try:
+            dealer = Dealer.objects.filter(customer_ptr_id=request.user.id).all()[0]
+        except IndexError:
+            dealer = Dealer.objects.filter(customer_ptr_id=request.user.id).all()[0]
         dealer.amount += total_price2
         dealer.save()
         if len(error_list) == 0:
@@ -143,8 +149,9 @@ def my_login(request):
             if next_url:
                 return redirect(next_url)
             else:
-                if request.user.is_superuser:
+                if group_required(request.user):
                     return redirect('/admin/')
+
                 else:
                     return redirect('index')
         else:
@@ -244,7 +251,10 @@ def feedback(request):
 @login_required
 @group_required('customer')
 def profile(request):
-    dealer = Dealer.objects.filter(customer_ptr_id=request.user.id).all()[0]
+    try:
+        dealer = Dealer.objects.filter(customer_ptr_id=request.user.id).all()[0]
+    except IndexError:
+        dealer = Dealer.objects.filter(customer_ptr_id=request.user.id).all()
     orders = Order.objects.filter(customer_id=request.user.id).all()
     products = Product.objects.all()
     context = {'dealer': dealer}
