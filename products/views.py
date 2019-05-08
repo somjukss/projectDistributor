@@ -41,10 +41,10 @@ def group_required(*group_names):
 @login_required
 @group_required('customer')
 def index(request):
-    # try:
-    dealer = Dealer.objects.filter(customer_ptr_id=request.user.id).all()[0]
-    # except IndexError:
-        # dealer = Dealer.objects.filter(customer_ptr_id=request.user.id).all()
+    try:
+        dealer = Dealer.objects.filter(customer_ptr_id=request.user.id).all()[0]
+    except IndexError:
+        dealer = Dealer.objects.filter(customer_ptr_id=request.user.id).all()
     context = {'dealer': dealer}
     product = Product.objects.all()
     context['product'] = product
@@ -122,10 +122,10 @@ def api_index(request):
             else:
                 error_list.append(form.errors.as_text())
         # increase amount of dealer
-        # try:
-        dealer = Dealer.objects.filter(customer_ptr_id=request.user.id).all()[0]
-        # except IndexError:
-        #     dealer = Dealer.objects.filter(customer_ptr_id=request.user.id).all()
+        try:
+            dealer = Dealer.objects.filter(customer_ptr_id=request.user.id).all()[0]
+        except IndexError:
+            dealer = Dealer.objects.filter(customer_ptr_id=request.user.id).all()
         dealer.amount += total_price2
         dealer.save()
         if len(error_list) == 0:

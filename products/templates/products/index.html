@@ -357,6 +357,7 @@
                     return  "{{ dealer.address }}"
                 },
                 total_discount() {
+
                     return this.total - (this.total * {{dealer.discount}})
                 }
             },
