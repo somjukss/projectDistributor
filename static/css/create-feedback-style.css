@@ -11,7 +11,7 @@ html, body {
 }
 
 .text-landing {
-    color: #007df1;
+    color:#f1e100;
 }
 
 .semi-bold {
@@ -29,4 +29,12 @@ html, body {
 
 .container{
   padding-top:3%;
+}
+.card-header:first-child {
+    border-radius: calc(.25rem - 1px) calc(.25rem - 1px) 0 0;
+    background-color: #c8e2fe;
+}
+.card-footer:last-child {
+    border-radius: 0 0 calc(.25rem - 1px) calc(.25rem - 1px);
+    background-color: #c8e2fe;
 }
