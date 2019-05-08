@@ -19,12 +19,11 @@ body {
     max-width: 100%;
 }
 
-div#pdChoice{
-    margin: 3% 0 0 0;
+div#pdChoice {
+    margin: 6% 0 0 0;
     float: left;
     display: inline;
     width: 80%;
-;
 }
 div#cart{
     left: 85%;
@@ -445,12 +444,6 @@ h1 {
     }
 }
 
-body {
-    font-family: tahoma;
-    color: #282828;
-    margin: 0px;
-}
-
 .nav-bar {
     background: linear-gradient(-90deg, #84CF6A, #16C0B0);
     height: 60px;
@@ -536,4 +529,7 @@ h5{
 }
 button {
     background-color: #d9606c;
+}
+a h1 img{
+    margin-bottom: 5%;
 }
