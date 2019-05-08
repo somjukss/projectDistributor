@@ -29,6 +29,9 @@
                     <li class="nav-item">
                         <a class="nav-link text-white mr-md-2" href="{% url 'feedback' %}">Feedback</a>
                     </li>
+                    <li class="nav-item">
+                        <a class="nav-link text-white mr-md-2" href="{% url 'aboutus' %}">AboutUs</a>
+                    </li>
                 </ul>
             </div>
         </nav>
@@ -39,7 +42,7 @@
                     {{ dealer.user.last_name }}</span>
             </h2>
             {% if dealer.blacklist %}
-                <span style="font-size: 3em; color: red">You have been blacklist</span>  <span style="font-size: 1.5em">pleasse contact <button class="btn btn-dark"><a href="{% url 'logout' %}#about" style="color:red">admin</a></button></span>
+                <span style="font-size: 3em; color: red">You have been blacklist</span>  <span style="font-size: 1.5em">pleasse contact <button class="btn btn-dark"><a href="{% url 'aboutus' %}" style="color:red">admin</a></button></span>
             {% endif %}
             <br>
             <h4><img src="https://sv1.picz.in.th/images/2019/05/06/wi1P0q.png">ที่อยู่ของคุณ : {{ dealer.address }}</h4>
