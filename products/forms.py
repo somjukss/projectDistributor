@@ -43,6 +43,7 @@ class RegisterForm(forms.ModelForm):
 
 class FeedBackForm(forms.ModelForm):
     status = forms.CharField(widget=forms.HiddenInput, required=False)
+    customer = forms.CharField(disabled=True)
     class Meta:
         model = FeedBack
         fields = '__all__'

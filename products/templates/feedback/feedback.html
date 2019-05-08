@@ -39,6 +39,7 @@
         <div class="container">
             <h2> ยินดีต้อนรับคุณ <span class="semi-bold text-landing"> {{ name }} {{ surname }}</span>
             </h2>
+            <h3>นี่คือ FeedBack ทั้งหมด</h3>
         </div>
         <div style="text-align: center">
             <img src="https://sv1.picz.in.th/images/2019/05/06/wiKoJN.png">
@@ -46,12 +47,12 @@
         </div>
     </div>
     {{ formset.management_form }}
-
     <table class="table mt-5" style="font-family: 'Mali', cursive;">
         <thead class="thead topic" style="background-color: rgb(248,253,115);">
             <tr>
-                <th scope="col-9">รายละเอียด</td>
-                <th scope="col-2">สถานะ</td>
+                <th scope="col-9">รายละเอียด</th>
+                <th scope="col-2">สถานะ</th>
+                <th scope="col-3">create by</th>
             </tr>
         </thead>
 
@@ -66,6 +67,7 @@
                 <button  class="btn btn-success">{{ form.status.value }}</button>
                 {% endif %}
             </td>
+            <td>{{ form.customer }}</td>
         </tr>
         {% endfor %}
         </tbody>

@@ -230,17 +230,16 @@ def create_feedback(request):
 @group_required('customer')
 def feedback(request):
     data = []
-    feedbacks = FeedBack.objects.filter(customer_id=request.user.id)
+    feedbacks = FeedBack.objects
     for detail in feedbacks.all():
         print(detail.status)
         data.append(
             {
-                'customer_id': detail.customer.user.id,
+                'customer': detail.customer,
                 'detail': detail.detail,
                 'status': detail.status
             }
         )
-
     FeedBackFormSet = formset_factory(FeedBackForm, max_num=len(data))
     formset = FeedBackFormSet(initial=data)
     context = {'formset': formset}
@@ -257,7 +256,22 @@ def profile(request):
         dealer = Dealer.objects.filter(customer_ptr_id=request.user.id).all()
     orders = Order.objects.filter(customer_id=request.user.id).all()
     products = Product.objects.all()
+    data = []
+    feedbacks = FeedBack.objects.filter(customer_id=request.user.id)
+    for detail in feedbacks.all():
+        print(detail.status)
+        data.append(
+            {
+                'customer_id': detail.customer.user.id,
+                'detail': detail.detail,
+                'status': detail.status
+            }
+        )
+
+    FeedBackFormSet = formset_factory(FeedBackForm, max_num=len(data))
+    formset = FeedBackFormSet(initial=data)
     context = {'dealer': dealer}
+    context['formset'] = formset
     context['orders'] = orders
     context['products'] = products
     return render(request, 'customer/profile.html', context)
