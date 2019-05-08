@@ -50,6 +50,8 @@
                     <div class="card-body">
                         <form>
                             {% csrf_token %}
+                            <p style="color: red;">{{ usererror }}</p>
+
                             {% if form.non_field_errors %}
                                 <p>
                                     {{ form.non_field_errors }}
