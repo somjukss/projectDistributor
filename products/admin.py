@@ -1,17 +1,13 @@
 from django.contrib import admin
 
 # Register your models here.
-from django.contrib.auth import get_user_model
 from django.contrib.auth.admin import UserAdmin
 from django.contrib.auth.models import User, Group
-from django.forms import BaseInlineFormSet
 from django.urls import reverse
 from django.utils.html import format_html
-from django.utils.safestring import mark_safe
 
-from products.models import Dealer, Customer, FeedBack, Admin, Admin_Customer, ProductLot, Product, Manufactor, Order, \
+from products.models import Dealer, FeedBack, Admin, Admin_Customer, ProductLot, Product, Manufactor, Order, \
     OrderDetail, Shipment, Product_DealerStock
-
 
 class AdminInline(admin.StackedInline):
     model = Admin
@@ -20,8 +16,6 @@ class AdminInline(admin.StackedInline):
 class CustomUserAdmin(UserAdmin):
     inlines = (AdminInline, )
     def get_inline_instances(self, request, obj=None):
-        # if obj.customer.user.groups.filter(name='customer').exists():
-
         if not obj:
             return list()
         return super(CustomUserAdmin, self).get_inline_instances(request, obj)
@@ -30,8 +24,9 @@ admin.site.register(User, CustomUserAdmin)
 
 class FeedBackAdmin(admin.ModelAdmin):
     list_display = ['detail', 'status', 'link_to_customer']
-    # fields = ['detail', 'status']
     readonly_fields = ['detail', 'admin', 'customer']
+    search_fields = ['customer__user__username', 'detail']
+    list_filter = ['status', 'customer__user__username']
     def save_model(self, request, obj, form, change):
         if not obj.admin:
             obj.admin = request.user.admin
@@ -56,6 +51,8 @@ class DealerAdmin(admin.ModelAdmin):
     list_display = ['dealer', 'address', 'phone', 'blacklist', 'discount', 'amount']
     readonly_fields = ['address', 'phone', 'user']
     inlines = [Admin_CustomerInline]
+    list_filter = ['blacklist']
+    search_fields = ['user__first_name', 'user__last_name','user__username','address', 'phone']
 
     def save_model(self, request, obj, form, change):
         group = Group.objects.get(name='blacklist')
@@ -75,9 +72,6 @@ class DealerAdmin(admin.ModelAdmin):
             instance.save()
         formset.save_m2m()
 admin.site.register(Dealer, DealerAdmin)
-# class CustomerAdmin(admin.ModelAdmin):
-#     fields = ['user', 'address', 'phone']
-# admin.site.register(Customer, CustomerAdmin)
 
 class ProductLotInline(admin.StackedInline):
     model = ProductLot
@@ -86,6 +80,8 @@ class ProductAdmin(admin.ModelAdmin):
     list_display = ['name', 'link_to_manufactor']
     inlines = [ProductLotInline]
     fields = ['name', 'describe', 'minimum_stock', 'quantity', 'price', 'img_url', 'manufactor']
+    search_fields = ['name', 'describe', 'manufactor__name']
+    list_filter = ['manufactor']
     def save_related(self, request, form, formsets, change):
         super(ProductAdmin, self).save_related(request, form, formsets, change)
         product = form.instance
@@ -108,6 +104,8 @@ class ProductAdmin(admin.ModelAdmin):
 admin.site.register(Product, ProductAdmin)
 class ManufactorAdmin(admin.ModelAdmin):
     fields = ['name', 'location', 'phone']
+    list_display = ['name', 'phone']
+    search_fields = ['name', 'location', 'phone']
 admin.site.register(Manufactor, ManufactorAdmin)
 
 class OrderDetailInline(admin.StackedInline):
@@ -126,6 +124,8 @@ class OrderAdmin(admin.ModelAdmin):
         ("Order", {'fields': ['detail', 'date', 'total_price1', 'total_price2', 'customer']}),
         ("Admin check", {'fields': ['admin', 'cancel', 'cancel_date', 'reason']})
     ]
+    search_fields = []
+    list_filter = ['cancel', 'shipment__status', 'customer__user__username']
     inlines = [OrderDetailInline, ShipmentInline]
     def save_model(self, request, obj, form, change):
         dealer = Dealer.objects.filter(customer_ptr_id=obj.customer_id).all()[0]

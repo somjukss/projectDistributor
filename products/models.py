@@ -11,11 +11,6 @@ class Customer(models.Model):
     address = models.TextField()
     phone = models.CharField(max_length=10)
     blacklist = models.BooleanField(default=False)
-    # DEALER = 'dealer'
-    # choice = (
-    #     (DEALER, 'dealer')
-    # )
-    # type = models.CharField(max_length=6, choices=choice)
     #fk
     user = models.OneToOneField('auth.User', on_delete=models.CASCADE, primary_key=True)
     admin = models.ManyToManyField(Admin, through='Admin_Customer')

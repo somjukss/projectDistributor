@@ -6,8 +6,8 @@
 
 body {
     padding: 3rem;
-    background-image: linear-gradient(to bottom, rgb(94, 188, 250), rgb(248, 174, 244));
     justify-content: center;
+    background-color: rgb(253, 255, 253);
 }
 .container {
     width: 100%;
@@ -17,10 +17,7 @@ body {
     margin-left: 3%;
     max-width: 100%;
 }
-.navbar-brand{
-    font-family: 'Mali', cursive;
-    font-size: 40px;
-}
+
 div#pdChoice{
     margin: 3% 0 0 0;
     float: left;
@@ -138,6 +135,8 @@ h1 {
 }
 
 .cart {
+    margin-right: 4vw;
+    margin-top: 5vh;
     padding: 1rem 1rem 0 1rem;
     background-color: #fcf8e3;
 }
@@ -209,8 +208,8 @@ h1 {
 .cart .cart-list td .quantity .qty-handler {
     position: absolute;
     top: 0;
-    left: 1rem;
-    right: 1rem;
+    left: 0vw;
+    right: 0vw;
     bottom: 0;
     display: flex;
     justify-content: space-between;
@@ -516,4 +515,18 @@ textarea {
 h5{
     font-size: 1rem;
     font-style: inherit;
+}
+
+.navbar.navbar-expand-lg.text-white.navbar-light{
+    top: 0;
+    left: 0;
+    right: 0;
+    position: fixed;
+    z-index: 1;
+    height: 13vh;
+    background-color: rgba(43, 151, 223, 0.637)
+}
+
+.navbar-brand{
+    margin-bottom: -3%;
 }

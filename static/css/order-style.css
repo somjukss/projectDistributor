@@ -3,7 +3,7 @@
 html, body {
     background-image: linear-gradient(to bottom, rgb(94, 188, 250), rgb(248, 174, 244));
     background-repeat: no-repeat;
-    height: 100%;
+    background-size: cover;
     font-family: 'Mali', cursive;
 }
 .table{

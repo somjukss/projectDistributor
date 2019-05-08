@@ -9,10 +9,15 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Register</title>
     <link rel="stylesheet" href="{% static 'css/bootstrap.min.css' %}">
-    <link rel="stylesheet" href="{% static 'css/register-style.css' %}">
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.3.1/css/all.css"
         integrity="sha384-mzrmE5qonljUremFsqc01SB46JvROS7bZs3IO2EmfFsd15uHvIt+Y8vEf7N7fWAU" crossorigin="anonymous">
     <link href="https://fonts.googleapis.com/css?family=Mali" rel="stylesheet">
+    <link rel="stylesheet" href="{% static 'css/register-style.css' %}">
+    <style>
+        .errorlist{
+            color: red;
+        }
+    </style>
 </head>
 
 <body>
@@ -30,13 +35,19 @@
                     </div>
                     <div class="card-body">
                         <form>
+                            {% csrf_token %}
+                            {% if form.non_field_errors %}
+                                <p>
+                                    {{ form.non_field_errors }}
+                                </p>
+                            {% endif %}
                             <div class="input-group form-group">
                                 <div class="input-group-prepend">
                                     <span class="input-group-text">
                                         <label id="{{ form.username.id_for_label }}"> Username</label>
                                     </span>
                                 </div>
-                                {{ form.username }}
+                                {{ form.username.errors }}{{ form.username }}
                             </div>
 
                             <div class="input-group form-group">
@@ -45,7 +56,7 @@
                                         <label id="{{ form.password.id_for_label }}"> Password</label>
                                     </span>
                                 </div>
-                                {{ form.password }}
+                                {{ form.password.errors }}{{ form.password }}
                             </div>
 
                             <div class="input-group form-group">
@@ -54,7 +65,7 @@
                                         <label id="{{ form.re_password.id_for_label }}"> Re-password</label>
                                     </span>
                                 </div>
-                                {{ form.re_password }}
+                                {{ form.re_password.errors }}{{ form.re_password }}
                             </div>
 
                             <div class="input-group form-group">
@@ -63,7 +74,7 @@
                                         <label id="{{ form.name.id_for_label }}"> Realname</label>
                                     </span>
                                 </div>
-                                {{ form.name }}
+                                {{ form.name.errors }}{{ form.name }}
                             </div>
 
                             <div class="input-group form-group">
@@ -72,7 +83,7 @@
                                         <label id="{{ form.surname.id_for_label }}"> Surname</label>
                                     </span>
                                 </div>
-                                {{ form.surname }}
+                                {{ form.surname.errors }}{{ form.surname }}
                             </div>
 
                             <div class="input-group form-group">
@@ -81,7 +92,7 @@
                                         <label id="{{ form.email.id_for_label }}"> E-mail</label>
                                     </span>
                                 </div>
-                                {{ form.email }}
+                                {{ form.email.errors }}{{ form.email }}
                             </div>
 
                             <div class="input-group form-group">
@@ -90,7 +101,7 @@
                                         <label id="{{ form.address.id_for_label }}"> Address</label>
                                     </span>
                                 </div>
-                                {{ form.address }}
+                                {{ form.address.errors }}{{ form.address }}
                             </div>
 
                             <div class="input-group form-group">
@@ -99,7 +110,7 @@
                                         <label id="{{ form.phone.id_for_label }}"> Tel-number</label>
                                     </span>
                                 </div>
-                                {{ form.phone }}
+                                {{ form.phone.errors }}{{ form.phone }}
                             </div>
 
                             <div class="form-group text-center">

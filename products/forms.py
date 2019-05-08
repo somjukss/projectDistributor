@@ -12,10 +12,34 @@ class RegisterForm(forms.ModelForm):
     email = forms.EmailField()
     name = forms.CharField(max_length=255)
     surname = forms.CharField(max_length=255)
+    address =forms.CharField(widget=forms.Textarea)
     class Meta:
         model = Customer
         # fields = '__all__'
         exclude = ['admin', 'blacklist', 'user']
+    def clean_address(self):
+        data = self.cleaned_data['address']
+        if "\n" in data:
+            data = data.replace('\n', ' ')
+        return  data
+    def clean_password(self):
+        data = self.cleaned_data['password']
+        if len(data) > 8:
+            pass
+        else:
+            raise forms.ValidationError("รหัสผ่านต้องมีตัวอักษรมากกว่า 8 ตัวอักษร")
+        return data
+    def clean_phone(self):
+        data = self.cleaned_data['phone']
+        if len(data) != 10:
+            raise forms.ValidationError("เบอร์โทรศัพท์ไม่ถูกต้อง")
+        return data
+    def clean(self):
+        cleaned_data = super().clean()
+        new = cleaned_data.get('password')
+        re = cleaned_data.get('re_password')
+        if new != re:
+            raise forms.ValidationError('"รหัสผ่าน" และ "ยืนยันรหัสผ่าน" ต้องเหมือนกัน')
 
 class FeedBackForm(forms.ModelForm):
     status = forms.CharField(widget=forms.HiddenInput, required=False)

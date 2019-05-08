@@ -2,7 +2,6 @@ import datetime
 import json
 import random
 import string
-from decimal import Decimal
 
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required, user_passes_test
@@ -17,14 +16,11 @@ from django.shortcuts import render, redirect
 from rest_framework.generics import ListAPIView, RetrieveAPIView
 from rest_framework.permissions import AllowAny
 
-from products.forms import RegisterForm, FeedBackForm, ProductForm, DealerForm, OrderForm, OrderDetailForm
-from products.models import Dealer, FeedBack, Product, Customer, Order, DealerStock, Product_DealerStock, Shipment, \
-    Admin
+from products.forms import RegisterForm, FeedBackForm, OrderDetailForm
+from products.models import Dealer, FeedBack, Customer, Order, DealerStock, Product_DealerStock, Shipment
 
 from rest_framework import status
-from rest_framework.decorators import api_view
 from rest_framework.response import Response
-from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 
 from products.renderers import ProductJSONRenderer
 from .serializers import *
@@ -47,6 +43,14 @@ def group_required(*group_names):
 def index(request):
     dealer = Dealer.objects.filter(customer_ptr_id=request.user.id).all()[0]
     context = {'dealer': dealer}
+    # เมฆแก้ไฟล์ view ตรงนี้นะ!
+    #
+    #
+    product = Product.objects.all()
+    context['product'] = product
+    #
+    #
+    #  เมฆแก้ไฟล์ view ตรงนี้นะ
     return render(request, 'products/index.html', context)
 @login_required
 @group_required('customer')

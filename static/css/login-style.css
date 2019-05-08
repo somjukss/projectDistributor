@@ -4,6 +4,7 @@ html, body {
     background-repeat: no-repeat;
     min-height: 100%;
     font-family: 'Mali', cursive !important;
+    background-size: cover;
 }
 
 .pt-3 {

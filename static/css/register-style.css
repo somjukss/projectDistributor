@@ -1,7 +1,7 @@
 html, body {
     background-image: linear-gradient(to bottom, rgb(128, 94, 250), rgb(108, 158, 250));
     background-repeat: no-repeat;
-    min-height: 100%;
+    background-size: cover;
 }
 
 .navbar-brand{
