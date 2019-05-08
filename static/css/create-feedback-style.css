@@ -1,9 +1,7 @@
 @import url('https://fonts.googleapis.com/css?family=Mali');
 
 html, body {
-    background-image: linear-gradient(to bottom, rgb(94, 188, 250), rgb(248, 174, 244));
-    background-repeat: no-repeat;
-    background-size: cover;
+    background-color: aliceblue;
     font-family: 'Mali', cursive;
 }
 
@@ -13,9 +11,22 @@ html, body {
 }
 
 .text-landing {
-    color: #f1e100;
+    color: #007df1;
 }
 
 .semi-bold {
     font-weight: 600;
+}
+
+.navbar.navbar-expand-lg.text-white.navbar-light{
+    height: 13vh;
+    background-color: rgba(43, 151, 223, 0.637)
+}
+
+.navbar-brand{
+    padding: 3vh;
+}
+
+.container{
+  padding-top:3%;
 }
