@@ -29,9 +29,6 @@
                     <li class="nav-item">
                         <a class="nav-link text-white mr-md-2" href="{% url 'feedback' %}">Feedback</a>
                     </li>
-                    <li class="nav-item">
-                        <a class="nav-link text-white mr-md-2" href="{% url 'aboutus' %}">AboutUs</a>
-                    </li>
                 </ul>
             </div>
         </nav>
@@ -48,8 +45,8 @@
     <div class="order-list">
         <table class="table mt-5 borderless" style="border-radius: 1em;overflow: hidden;width: 70%;margin-left: auto;margin-right: auto;">
             <h3 style="text-align: center"><span class="semi-bold text-landing">
-                ใบสั่งซื้อที่ {{ order.id }}</span><img src="https://sv1.picz.in.th/images/2019/05/06/wiZTEV.png"></h3>
-            <thead class="thead topic" style="background-color: rgba(25, 60, 175, 0.377);  text-align: center;">
+                ใบสั่งซื้อที่ {{ order.id }} </span><img src="https://sv1.picz.in.th/images/2019/05/06/wiZTEV.png"></h3>
+            <thead class="thead topic" style="background-color: rgba(44, 104, 196, 0.377);  text-align: center;">
                 <tr>
                     <th scope="col-6">สินค้า</td>
                     <th scope="col-2">จำนวน</td>
@@ -97,7 +94,7 @@
             </thead>
 
         </table>
-        <a href="{% url 'profile' %}" class="btn btn-warning mr-5 float-right"> ย้อนกลับ </a>
+        <a href="{% url 'profile' %}" class="btn btn-warning mr-5"> ย้อนกลับ </a>
     </div>
 
     <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
