@@ -21,7 +21,23 @@
 </head>
 
 <body>
-
+    <nav class="fixed-top">
+                <div class="nav-actions">
+                <ul>
+                     <li>copyright ©</li>
+                </ul>
+                <div class="clear"></div>
+                </div>
+                 <div class="nav-main">
+                     <div class="logo"><img src="https://sv1.picz.in.th/images/2019/05/08/wQ0g9q.png"></div>
+                     <ul>
+                         <li><a class="nav-link text-white mr-md-2" href="#product">Products</a></li>
+                         <li><a class="nav-link text-white mr-md-2" href="#shipment">Shipment</a></li>
+                         <li><a class="nav-link text-white mr-md-2" href="{% url 'aboutus' %}">About us</a></li>
+                     </ul>
+                     <div class="clear"></div>
+                 </div>
+        </nav>
     <form action="{% url 'register' %}" method="POST">`
         {% csrf_token %}
         <div class="container">
