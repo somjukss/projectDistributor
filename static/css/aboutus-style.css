@@ -1,8 +1,13 @@
-* { box-sizing: border-box; font-family: Avenir; }
+@import url('https://fonts.googleapis.com/css?family=Mali');
+
+* { box-sizing: border-box; font-family: 'Mali', cursive }
 div#profile-container { display: flex; justify-content: space-between; }
 div#profile-container figure {
   display: inline-block;
   }
+body{
+    font-family: 'Mali', cursive !important;
+}
 div#profile-container figure div {
   border-radius: 50%;
   overflow: hidden;
