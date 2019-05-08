@@ -1,9 +1,9 @@
 @import url('https://fonts.googleapis.com/css?family=Mali');
 
 html, body {
-    background-image: linear-gradient(to bottom, rgb(108, 158, 250), rgb(128, 94, 250));
     background-repeat: no-repeat;
     min-height: 100%;
+    font-family: 'Mali', cursive !important;
 }
 
 .pt-3 {
@@ -17,7 +17,6 @@ html, body {
 
 .product-header{
     height: 75px;
-    background: rgba(231, 50, 201, 0.767)
 }
 
 .product-header h3{
@@ -37,7 +36,7 @@ html, body {
 
 .carousel{
     border: 7px solid rgb(255, 255, 255);
-    margin-left: 20%;
+    margin-left: 3%;
     margin-right: 5%;
     margin-top: 7.5%;
 }
@@ -48,15 +47,15 @@ html, body {
 }
 
 .product-text{
-    color: #e6e6e6;
+    color: #ffffff;
 }
 
 .shipment-header{
     height: 75px;
-    background: rgba(231, 50, 201, 0.767);
-    margin-top: 6.5%;
 }
-
+h4{
+    font-size: 1.3vw;
+}
 .shipment-header h3{
     color: white;
     font-family: 'Mali', cursive;
@@ -98,4 +97,71 @@ html, body {
     color: white;
     font-family: 'Mali', cursive;
     margin-top: 5%;
+}
+.card{
+        margin-top: -40%;
+    margin-right: 55%;
+}
+.clear {
+  clear: both;
+}
+
+nav {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  background-color: rgba(97, 171, 222, 0.75);
+}
+
+nav .nav-main {
+  padding: 10px 20px;
+}
+
+nav .nav-actions {
+  padding: 10px 20px;
+  background-color: #000000;
+}
+
+nav .logo {
+  float: left;
+  line-height: 50px;
+  font-size: 1.5em;
+  font-weight: bold;
+  text-transform: uppercase;
+}
+
+nav ul {
+  float: right;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+nav ul li {
+  display: inline-block;
+  line-height: 50px;
+  padding: 0 10px;
+}
+
+nav .nav-actions li {
+  font-size: 12px;
+  color: #ffffff;
+  line-height: 20px;
+}
+.card-header {
+    padding: .75rem 1.25rem;
+    margin-bottom: 0;
+    color: inherit;
+    background-color: #c8e2fe;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.125);
+}
+.card-footer {
+    padding: .75rem 1.25rem;
+    background-color: #b3d7ff;
+    border-top: 1px solid rgba(0, 0, 0, 0.125);
+}
+.input-group-text {
+    background-color: #b3d7ff;
+    border: 1px solid #b3d7ff;
 }

@@ -16,30 +16,28 @@
 </head>
 
 <body>
-    <form action="{% url 'login' %}" method="POST">
-        {% csrf_token %}
-
-        <nav class="navbar navbar-expand-lg text-white navbar-light">
-            <h1 class="navbar-brand text-warning"><img width="256px" src="https://sv1.picz.in.th/images/2019/05/06/wiizRb.png"></h1>
-            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav"
-                aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-                <span class="navbar-toggler-icon"></span>
-            </button>
-            <div class="collapse navbar-collapse" id="navbarNav">
-                <ul class="navbar-nav ml-3">
-                    <li class="nav-item">
-                        <a class="nav-link text-white mr-md-2" href="#product">Products</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link text-white mr-md-2" href="#shipment">Shipment</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link text-white mr-md-2" href="#about">About us</a>
-                    </li>
+<div class="detail">
+        <nav class="fixed-top">
+                <div class="nav-actions">
+                <ul>
+                     <li>copyright ©</li>
                 </ul>
-            </div>
+                <div class="clear"></div>
+                </div>
+                 <div class="nav-main">
+                     <div class="logo"><img src="https://sv1.picz.in.th/images/2019/05/08/wQ0g9q.png"></div>
+                     <ul>
+                         <li><a class="nav-link text-white mr-md-2" href="#product">Products</a></li>
+                         <li><a class="nav-link text-white mr-md-2" href="#shipment">Shipment</a></li>
+{#                         <li><a class="nav-link text-white mr-md-2" href="#about">About us</a></li>#}
+                     </ul>
+                     <div class="clear"></div>
+                 </div>
         </nav>
 
+        <img src="https://sv1.picz.in.th/images/2019/05/08/wxMsND.jpg" alt="" srcset="" width="100%">
+        <form action="{% url 'login' %}" method="POST">
+        {% csrf_token %}
 
         <div class="container">
             <div class="d-flex justify-content-center pt-3">
@@ -84,11 +82,13 @@
     </form>
 
     <a name="product"></a>
+    <div style="background-color: rgba(97,171,222,0.66); height: 115px;width: 90%;" ></div>
+    <div style="background-color: rgba(97,171,222,0.66); width: 90%;" >
     <div class="product-header">
         <div class="container">
-            <h3 class="text-center">
+            <h1 class="text-center" >
                 ลองดูสินค้าของ <span class="semi-bold text-landing"> SugarBunny</span> ก่อนสิ!
-            </h3>
+            </h1>
         </div>
     </div>
 
@@ -120,7 +120,7 @@
         </div>
 
         <div class="col-7 product-detail">
-            <h1 class="text-center semi-bold product-text">
+            <h1 class="text-center semi-bold product-text" style="font-size: 2vw;">
                 <img src="https://sv1.picz.in.th/images/2019/05/06/wicS3y.png">สินค้าเกรดพรีเมียม เปี่ยมไปด้วยคุณภาพ</h1><br>
             <h4 class="text-left product-text">
                 <img src="https://sv1.picz.in.th/images/2019/05/06/wicN4J.png">
@@ -141,64 +141,64 @@
                 และเจ้าของร้าน</h4>
         </div>
     </div>
-
+    </div>
     <a name="shipment"></a>
     <div class="shipment-header">
+        <div style="background-color: rgba(0,100,222,0.66); width: 90%; height:80px;margin-left: 10%"></div>
+        <div style="background-color: rgba(0,100,222,0.66); width: 90%; margin-left: 10%">
         <div class="container">
-            <h3 class="text-center">
+            <h1 class="text-center">
                 การขนส่งที่ตรวจสอบได้ตลอด <span class="semi-bold text-landing"> 24 ชั่วโมง</span>
-            </h3>
-        </div>
-    </div>
-
-    <div class="row pb-5">
-        <div class="col-6 shipment-detail">
-            <h1 class="text-center semi-bold shipment-text">
-                <img src="https://sv1.picz.in.th/images/2019/05/06/wicrvD.png">การขนส่งที่คุณเลือกเองได้</h1><br>
-            <h4 class="text-left shipment-text">
-                <img src="https://sv1.picz.in.th/images/2019/05/06/wiggGy.png">
-                <span class="text-landing semi-bold">การขนส่งที่หลากหลาย</span>
-                พร้อมให้คุณเลือกใช้ตามความสะดวก</h4>
-            <h4 class="text-left shipment-text"> 
-                <img src="https://sv1.picz.in.th/images/2019/05/06/wig8wl.png">
-                <span class="text-landing semi-bold">ระบบ Tracknumber</span>
-                เชื่อถือได้ ร้อมตรวจสอบสถานะการขนส่งตลอด 24 ชั่วโมง</h4>
-            <h4 class="text-left shipment-text">
-                <img src="https://sv1.picz.in.th/images/2019/05/06/wigpEN.png">
-                <span class="text-landing semi-bold">จัดส่งได้ปลอดภัย</span> รวดเร็ว
-                และแม่นยำ โดยจัดส่งตามข้อมูลในฐานข้อมูลที่เชื่อถือได้</h4>
-        </div>
-
-        <div class="col-6 shipment-img">
-            <img src="{% static 'images/shipment.png' %}" alt="My image">
-        </div>
-    </div>
-
-    <a name="about"></a>
-    <div class="about-header">
-        <div class="row">
-            <div class="col-3">
-                <h1 class="about-text">SugarBunny</h1>
-            </div>
-            <div class="col-2"></div>
-            <div class="col-7">
-                <div class="row">
-                    <div class="col-3 member">
-                        <p>กัลยรัตน์ อินคา<br>60070004</p>
-                    </div>
-                    <div class="col-3 member">
-                        <p>นันทาศิริ ม่วงทอง<br>60070040</p>
-                    </div>
-                    <div class="col-3 member">
-                        <p>นิติ จิรการวุฒิไกร<br>60070041</p>
-                    </div>
-                    <div class="col-3 member">
-                        <p>สุภวัช กลิ่นขจร<br>60070106</p>
-                    </div>
+            </h1>
+            <div class="row pb-5">
+                <div class="col-7 shipment-detail">
+                    <h1 class="text-center semi-bold shipment-text"  style="font-size: 2vw;">
+                    <img src="https://sv1.picz.in.th/images/2019/05/06/wicrvD.png">การขนส่งที่คุณเลือกเองได้</h1><br>
+                    <h4 class="text-left shipment-text">
+                    <img src="https://sv1.picz.in.th/images/2019/05/06/wiggGy.png">
+                    <span class="text-landing semi-bold">การขนส่งที่หลากหลาย</span>
+                    พร้อมให้คุณเลือกใช้ตามความสะดวก</h4>
+                    <h4 class="text-left shipment-text">
+                    <img src="https://sv1.picz.in.th/images/2019/05/06/wig8wl.png">
+                    <span class="text-landing semi-bold">ระบบ Tracknumber</span>
+                    เชื่อถือได้ ร้อมตรวจสอบสถานะการขนส่งตลอด 24 ชั่วโมง</h4>
+                    <h4 class="text-left shipment-text">
+                    <img src="https://sv1.picz.in.th/images/2019/05/06/wigpEN.png">
+                    <span class="text-landing semi-bold">จัดส่งได้ปลอดภัย</span> รวดเร็ว
+                    และแม่นยำ โดยจัดส่งตามข้อมูลในฐานข้อมูลที่เชื่อถือได้</h4>
+                </div>
+                <div class="col-5 shipment-img">
+                    <img src="{% static 'images/shipment.png' %}" alt="My image">
                 </div>
             </div>
         </div>
     </div>
+    </div>
+</div>
+{#    <div class="about-header">#}
+{#        <div class="row">#}
+{#            <div class="col-3">#}
+{#                <h1 class="about-text">SugarBunny</h1>#}
+{#            </div>#}
+{#            <div class="col-2"></div>#}
+{#            <div class="col-7">#}
+{#                <div class="row">#}
+{#                    <div class="col-3 member">#}
+{#                        <p>กัลยรัตน์ อินคา<br>60070004</p>#}
+{#                    </div>#}
+{#                    <div class="col-3 member">#}
+{#                        <p>นันทาศิริ ม่วงทอง<br>60070040</p>#}
+{#                    </div>#}
+{#                    <div class="col-3 member">#}
+{#                        <p>นิติ จิรการวุฒิไกร<br>60070041</p>#}
+{#                    </div>#}
+{#                    <div class="col-3 member">#}
+{#                        <p>สุภวัช กลิ่นขจร<br>60070106</p>#}
+{#                    </div>#}
+{#                </div>#}
+{#            </div>#}
+{#        </div>#}
+{#    </div>#}
 
 
     <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
@@ -208,6 +208,9 @@
         integrity="sha384-wHAiFfRlMFy6i5SRaxvfOCifBUQy1xHdJ/yoi7FRNXMRBu5WHdZYu1hA6ZOblgut"
         crossorigin="anonymous"></script>
     <script src="{% static 'js/bootstrap.js' %}"></script>
+    <script type="text/javascript" src="{% static 'nav.js' %}"></script>
+    <script src='http://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js'></script>
+    <script  src="{% static 'js/index.js' %}"></script>
 </body>
 
 </html>

@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+{% load static %}
+<html lang="en">
+    <meta charset="UTF-8">
+    <meta name="viewport"
+        content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Login</title>
+    <link rel="stylesheet" href="{% static 'css/bootstrap.min.css' %}">
+    <link rel="stylesheet" href="{% static 'css/aboutus-style.css' %}">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.3.1/css/all.css"
+        integrity="sha384-mzrmE5qonljUremFsqc01SB46JvROS7bZs3IO2EmfFsd15uHvIt+Y8vEf7N7fWAU" crossorigin="anonymous">
+    <link href="https://fonts.googleapis.com/css?family=Mali" rel="stylesheet">
+<head>
+    <meta charset="UTF-8">
+    <title>About Us</title>
+</head>
+<body>
+<div class="cotext">
+    <nav class="navbar navbar-expand-lg text-white navbar-light">
+        <a href="{% url 'index' %}"><h1 class="navbar-brand text-warning"><img width="256px" src="https://sv1.picz.in.th/images/2019/05/08/wQ0g9q.png"></h1></a>
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav"
+                aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ml-3">
+                    <li class="nav-item">
+                        <a class="nav-link text-white mr-md-2" href="{% url 'profile' %}">Profile</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link text-white mr-md-2" href="{% url 'feedback' %}">Feedback</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link text-white mr-md-2" href="{% url 'aboutus' %}">AboutUs</a>
+                    </li>
+                </ul>
+            </div>
+        </nav>
+{#    <div style="background-color: rgba(0,100,222,0.66); width: 100%; height:80px;"></div>#}
+    <div style="background-color: white; width: 90%; height:80px;"></div>
+    <div style="background-color: rgba(0,100,222,0.66); width: 90%; height:80px;margin-left: 10%"></div>
+    <div id="profile-container">
+        <figure>
+            <div class="mint"></div>
+            <figcaption><img src="https://sv1.picz.in.th/images/2019/05/08/wQYbsJ.png"> กัลยรัตน์ อินคา</figcaption>
+            <figcaption><img src="https://sv1.picz.in.th/images/2019/05/08/wQYjyb.png">
+                <a href="https://www.facebook.com/Mmint.Kkunyarat">Mint Kunyarat</a></figcaption>
+         </figure>
+
+        <figure>
+            <div class="somjuk"></div>
+            <figcaption><img src="https://sv1.picz.in.th/images/2019/05/08/wQYbsJ.png"> นันทาศิริ ม่วงทอง</figcaption>
+            <figcaption><img src="https://sv1.picz.in.th/images/2019/05/08/wQYjyb.png">
+                <a href="https://www.facebook.com/somjuk.ss">Nantasiri Somjuk</a></figcaption>
+         </figure>
+
+        <figure>
+             <div class="mo"></div>
+            <figcaption><img src="https://sv1.picz.in.th/images/2019/05/08/wQYbsJ.png"> นิติ จิรการวุฒิไกร</figcaption>
+            <figcaption><img src="https://sv1.picz.in.th/images/2019/05/08/wQYjyb.png">
+                <a href="https://www.facebook.com/niti.jira">Niti Jira</a></figcaption>
+        </figure>
+
+        <figure>
+            <div class="meak"></div>
+            <figcaption><img src="https://sv1.picz.in.th/images/2019/05/08/wQYbsJ.png"> สุภวัช กลิ่นขจร</figcaption>
+            <figcaption><img src="https://sv1.picz.in.th/images/2019/05/08/wQYjyb.png">
+                <a href="https://www.facebook.com/supawachmeak">Supawach Klinkajohn</a></figcaption>
+        </figure>
+        </div>
+    <div style="background-color: rgba(97,171,222,0.66); height: 115px;width: 90%;" ></div>
+
+    </div>
+ <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
+        integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
+        crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.6/umd/popper.min.js"
+        integrity="sha384-wHAiFfRlMFy6i5SRaxvfOCifBUQy1xHdJ/yoi7FRNXMRBu5WHdZYu1hA6ZOblgut"
+        crossorigin="anonymous"></script>
+    <script src="{% static 'js/bootstrap.js' %}"></script>
+</body>
+</html>

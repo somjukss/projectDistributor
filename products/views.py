@@ -275,3 +275,5 @@ class ProductRetrieveApiView(RetrieveAPIView):
       product = Product.objects.get(id=product_id)
       serializer = self.serializer_class(product)
       return Response(serializer.data, status = status.HTTP_200_OK)
+def aboutus(request):
+    return render(request,'products/aboutus.html')
