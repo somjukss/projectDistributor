@@ -43,14 +43,8 @@ def group_required(*group_names):
 def index(request):
     dealer = Dealer.objects.filter(customer_ptr_id=request.user.id).all()[0]
     context = {'dealer': dealer}
-    # เมฆแก้ไฟล์ view ตรงนี้นะ!
-    #
-    #
     product = Product.objects.all()
     context['product'] = product
-    #
-    #
-    #  เมฆแก้ไฟล์ view ตรงนี้นะ
     return render(request, 'products/index.html', context)
 @login_required
 @group_required('customer')
@@ -171,30 +165,37 @@ def register(request):
     if request.method == "POST":
         form = RegisterForm(request.POST)
         if form.is_valid():
-            u = User.objects.create_user(
-                username = form.cleaned_data.get('username'),
-                email = form.cleaned_data.get('email'),
-                password = form.cleaned_data.get('password'),
-                first_name = form.cleaned_data.get('name'),
-                last_name = form.cleaned_data.get('surname')
-            )
-            u.save()
-            check = form.save(commit=False)
-            check.user_id = u.id
-            dealer = Dealer.objects.create(
-                customer_ptr_id = u.id,
-                discount = 0,
-                amount = 0
-            )
-            group = Group.objects.get(name='customer')
-            u.groups.add(group)
-            dealerstock = DealerStock.objects.create(
-                dealer_id=dealer.customer_ptr_id
-            )
-            dealer.save()
-            dealerstock.save()
-            form.save()
-            return redirect('login')
+            uservalue = form.cleaned_data.get('username')
+            try:
+                user = User.objects.get(username=uservalue)
+                context = {'form': form, 'usererror': 'The username you entered has already been taken. Please try another username.'}
+                return render(request, 'user/register.html', context)
+            except User.DoesNotExist:
+
+                u = User.objects.create_user(
+                    username = form.cleaned_data.get('username'),
+                    email = form.cleaned_data.get('email'),
+                    password = form.cleaned_data.get('password'),
+                    first_name = form.cleaned_data.get('name'),
+                    last_name = form.cleaned_data.get('surname')
+                )
+                u.save()
+                check = form.save(commit=False)
+                check.user_id = u.id
+                dealer = Dealer.objects.create(
+                    customer_ptr_id = u.id,
+                    discount = 0,
+                    amount = 0
+                )
+                group = Group.objects.get(name='customer')
+                u.groups.add(group)
+                dealerstock = DealerStock.objects.create(
+                    dealer_id=dealer.customer_ptr_id
+                )
+                dealer.save()
+                dealerstock.save()
+                form.save()
+                return redirect('login')
     else:
         form = RegisterForm()
     context = {'form': form}
