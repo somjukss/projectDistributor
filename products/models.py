@@ -124,3 +124,9 @@ class Shipment(models.Model):
     order = models.ForeignKey(Order, models.CASCADE)
     def __str__(self):
         return self.name
+
+class SaleSummary(OrderDetail):
+    class Meta:
+        proxy = True
+        verbose_name = 'Sale Summary'
+        verbose_name_plural = "Sale Summary"

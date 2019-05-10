@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+{% extends 'admin/change_list.html' %}
+{% block content_title %}
+    <h1> Sales Summary </h1>
+{% endblock %}
+{% block result_list %}
+        <style>
+table {
+    border-collapse: collapse;
+    width: 100%;
+    margin-bottom: 100px;
+}
+
+td, th {
+    border: 1px solid #43768F;
+    text-align: left;
+    padding: 8px;
+}
+
+tr:nth-child(even) {
+    background-color: #D7ECFA;
+}
+</style>
+<p>TABULAR VISUALIZATION</p>
+<table>
+  <tr style="color: red">
+    <th>OrderID</th>
+    <th>Product</th>
+    <th>Quantity</th>
+      <th>amount</th>
+  </tr>
+ {% for data in data %}
+      <tr>
+      <td>{{ data.order_id }}</td>
+    <td> {{ data.detail }}</td>
+          <td>{{ data.quantity }}</td>
+    <td>{{ data.amount }}</td>
+  </tr>
+{% endfor %}
+
+</table>
+    <p>VISUALIZATION</p>
+<div class="chart" style="height: 500px;width: 500px;overflow: scroll;float: left;">
+  <canvas id="bargraph" width="500" height="400"></canvas>
+
+</div>
+
+
+
+
+        <script type="text/javascript" src="http://code.jquery.com/jquery-1.10.0.min.js"></script>
+        <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.8.0/Chart.min.js"></script>
+
+
+
+        <script>
+      var ctx = document.getElementById("bargraph").getContext('2d');
+
+var bargraph = new Chart(ctx, {
+    type: 'bar',
+    data: {{ cl.data|safe }},
+    options: {
+        scales: {
+            yAxes: [{
+                ticks: {
+                    beginAtZero:true
+                }
+            }]
+        }
+    }
+});
+
+        </script>
+{% endblock %}
+{% block pagination %}{% endblock %}
+</body>
+</html>

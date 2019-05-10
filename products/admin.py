@@ -1,13 +1,16 @@
 from django.contrib import admin
 
 # Register your models here.
+from django.contrib.admin.views.main import ChangeList
 from django.contrib.auth.admin import UserAdmin
 from django.contrib.auth.models import User, Group
+from django.db.models import Sum
 from django.urls import reverse
 from django.utils.html import format_html
 
 from products.models import Dealer, FeedBack, Admin, Admin_Customer, ProductLot, Product, Manufactor, Order, \
-    OrderDetail, Shipment, Product_DealerStock
+    OrderDetail, Shipment, Product_DealerStock, SaleSummary
+from random import  randint
 
 class AdminInline(admin.StackedInline):
     model = Admin
@@ -153,3 +156,54 @@ class OrderAdmin(admin.ModelAdmin):
     link_to_customer.allow_tags = True
     link_to_customer.short_description = 'Customer Detail'
 admin.site.register(Order, OrderAdmin)
+
+def getRanColor():
+    return (randint(0, 255), randint(0, 255), randint(0, 255))
+class SaleSummaryChangeList(ChangeList):
+    def get_results(self, request):
+        super(SaleSummaryChangeList,self).get_results(request)
+        # create dict
+        od = OrderDetail.objects.values('detail').annotate(sumquantity=Sum('quantity'))
+        label = []
+        data = []
+        colors = []
+        border_colors = []
+        for item in od:
+            color = str(getRanColor()).strip(')')
+            border = color
+            color = 'rgba'+color+", 0.2)"
+            border = 'rgba'+border+", 1)"
+            colors.append(color)
+            border_colors.append(border)
+            label.append(item['detail'])
+            data.append(item['sumquantity'])
+        response = {}
+        response['data'] = {}
+        response['data']['labels'] = label
+        response['data']['datasets'] = [{
+            'label': "Sale Summary",
+            'data': data,
+            'backgroundColor': colors,
+            'borderColor': border_colors,
+            'borderWidth': 1
+        }]
+        self.data=response['data']
+@admin.register(SaleSummary)
+class SaleSummaryAdmin(admin.ModelAdmin):
+    change_list_template = 'admin/sale_summary_change_list.html'
+
+    def get_changelist(self, request, **kwargs):
+        return SaleSummaryChangeList
+    def changelist_view(self, request, extra_context=None):
+        try:
+            response = super().changelist_view(request, extra_context=extra_context)
+            queryset = response.context_data['cl'].queryset
+            response.context_data['data'] = list(
+                queryset
+                    .values('order_id', 'detail', 'quantity', 'amount')
+                    .order_by('id')
+            )
+            print(response)
+            return response
+        except Exception as e:
+            return response
