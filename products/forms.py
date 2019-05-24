@@ -43,11 +43,10 @@ class RegisterForm(forms.ModelForm):
 
 class FeedBackForm(forms.ModelForm):
     status = forms.CharField(widget=forms.HiddenInput, required=False)
-    customer = forms.CharField(disabled=True)
     class Meta:
         model = FeedBack
-        fields = '__all__'
-        # exclude = ['customer']
+        # fields = '__all__'
+        exclude = ['customer']
 
 class ProductForm(forms.ModelForm):
     class Meta:
