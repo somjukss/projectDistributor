@@ -19,9 +19,9 @@ class RegisterForm(forms.ModelForm):
         exclude = ['admin', 'blacklist', 'user']
     def clean_address(self):
         data = self.cleaned_data['address']
-        if "\n" in data:
-            data = data.replace('\n', ' ')
-        return  data
+        data = data.replace('\n', ' ')
+        data = data.replace('<br>', ' ')
+        return data
     def clean_password(self):
         data = self.cleaned_data['password']
         if len(data) > 8:
