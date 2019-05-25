@@ -19,7 +19,7 @@ table {
 
 td, th {
     border: 1px solid #43768F;
-    text-align: left;
+    text-align: center;
     padding: 8px;
 }
 
@@ -27,8 +27,16 @@ tr:nth-child(even) {
     background-color: #D7ECFA;
 }
 </style>
-<p>ORDER DETAIL</p>
+    <div>
+    <p>VISUALIZATION</p>
+<div class="chart" style="height: 40%;width: 70%;overflow: scroll;float: left;">
+  <canvas id="bargraph" width="500" height="400"></canvas>
+    </div>
+
 <table>
+<tr>
+    <th colspan="4">Order Detail</th>
+</tr>
   <tr style="color: red">
     <th>OrderID</th>
     <th>Product</th>
@@ -45,9 +53,7 @@ tr:nth-child(even) {
 {% endfor %}
 
 </table>
-    <p>VISUALIZATION</p>
-<div class="chart" style="height: 40%;width: 70%;overflow: scroll;float: left;">
-  <canvas id="bargraph" width="500" height="400"></canvas>
+
 
 </div>
 
