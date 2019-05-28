@@ -25,7 +25,7 @@ SECRET_KEY = '!#f&%w1%v(12^m2xz!(u3%=f(68*re=2m8yl_n6p+bm%$n$pd+'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['128.199.165.186']
+ALLOWED_HOSTS = []
 
 
 # Application definition
@@ -81,9 +81,8 @@ DATABASES = {
         'NAME': 'project',
         'USER': 'root',
         'PASSWORD': 'password',
-        'HOST': '128.199.164.77',
+        'HOST': '128.199.138.206',
         'PORT': '3306'
-
     }
 }
 # DATABASES = {
